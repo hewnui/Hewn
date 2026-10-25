@@ -55,8 +55,20 @@ function checkPackage(pkgDir: string, workDir: string): string[] {
   const pkg = JSON.parse(readFileSync(join(packageRoot, "package.json"), "utf8")) as {
     name: string;
     exports?: Record<string, ExportValue>;
-    publishConfig?: { exports?: Record<string, ExportValue> };
+    dependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+    optionalDependencies?: Record<string, string>;
   };
+
+  // What consumers install is the packed manifest itself, so check that and
+  // not publishConfig (0.1.0 shipped workspace:* deps and ./src exports).
+  for (const field of ["dependencies", "peerDependencies", "optionalDependencies"] as const) {
+    for (const [dep, range] of Object.entries(pkg[field] ?? {})) {
+      if (range.startsWith("workspace:")) {
+        errors.push(`${pkg.name}: packed ${field}.${dep} is "${range}"`);
+      }
+    }
+  }
 
   for (const required of REQUIRED_ROOT_FILES) {
     if (!existsSync(join(packageRoot, required))) {
@@ -64,10 +76,13 @@ function checkPackage(pkgDir: string, workDir: string): string[] {
     }
   }
 
-  const exports = pkg.publishConfig?.exports ?? pkg.exports ?? {};
+  const exports = pkg.exports ?? {};
   for (const file of flattenExports(exports)) {
     const target = file.replace(/^\.\//, "");
     if (target === "package.json") continue;
+    if (/\.[cm]?tsx?$/.test(target) && !/\.d\.[cm]?ts$/.test(target)) {
+      errors.push(`${pkg.name}: export points at TypeScript source: ${file}`);
+    }
     if (!existsSync(join(packageRoot, target))) {
       errors.push(`${pkg.name}: export target missing from tarball: ${file}`);
     }

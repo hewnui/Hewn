@@ -37,6 +37,7 @@ export type ShadcnItem = {
   title?: string;
   description?: string;
   dependencies?: string[];
+  devDependencies?: string[];
   registryDependencies?: string[];
   files: ShadcnFile[];
   cssVars?: ShadcnCssVars;

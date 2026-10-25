@@ -47,7 +47,7 @@ describe("shadcn helpers", () => {
         ['import { Button } from "react-aria-components";'],
         ["@tanstack/react-table"],
       ),
-    ).toEqual(["@tanstack/react-table@8.21.3", "react-aria-components"]);
+    ).toEqual(["@tanstack/react-table@8.21.3", "react-aria-components@^1.19.0"]);
 
     expect(
       collectRegistryDependencies({

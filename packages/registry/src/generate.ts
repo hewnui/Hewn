@@ -2,8 +2,18 @@ import { existsSync } from "fs";
 import { join } from "path";
 import { emitFoundation, emitRegistry, type BuiltItem } from "./emit";
 import { transformToJsx } from "./jsx";
+import {
+  isOnDemandShared,
+  rewriteSharedComponentImports,
+  rewriteSharedImportDepth,
+  sharedComponentRefs,
+} from "./layout";
 import { scanComponents, scanSharedFiles } from "./scan";
 import { validateRegistryItem } from "./schema";
+import {
+  detectNpmDependencies,
+  detectTypeDependencies,
+} from "./shadcn/deps";
 import { emitShadcnRegistry } from "./shadcn/emit";
 
 export type GenerateOptions = {
@@ -42,6 +52,10 @@ export async function generateRegistry(
   );
   const names = new Set<string>();
   const built: BuiltItem[] = [];
+  const sharedFiles =
+    options.sharedRoots && options.sharedRoots.length > 0
+      ? await scanSharedFiles(options.sharedRoots)
+      : [];
 
   for (const component of found) {
     const result = validateRegistryItem(component.metadata);
@@ -67,21 +81,66 @@ export async function generateRegistry(
       errors.push(`${item.name}: docs page missing at ${item.docsPath}.mdx`);
     }
 
+
+    // The CLI writes <root>/<name>/<file> beside <root>/utils|providers|…,
+    // so ../../shared imports from the source tree must become ../shared.
+    const installFiles = component.files.map((file) => ({
+      ...file,
+      content: rewriteSharedImportDepth(file.content),
+    }));
+    const onDemandDirs = new Set(
+      component.derivedShared
+        .filter(isOnDemandShared)
+        .map((shared) => shared.split("/")[0]),
+    );
+    const onDemandFiles = sharedFiles.filter((file) =>
+      onDemandDirs.has(file.path.split("/")[0]),
+    );
+    const extraFiles = onDemandFiles.map((file) => ({
+      ...file,
+      path: `../${file.path}`,
+      content: rewriteSharedComponentImports(file.content),
+    }));
+    // chart/frame.tsx imports ../components/skeleton, so chart users need it.
     const internalDependencies = [
       ...new Set([
         ...(item.internalDependencies ?? []),
         ...component.derivedInternal,
+        ...onDemandFiles.flatMap((file) => sharedComponentRefs(file.content)),
       ]),
-    ].sort();
+    ]
+      .filter((name) => name !== item.name)
+      .sort();
+    const usedSharedContents = sharedFiles
+      .filter((file) =>
+        component.derivedShared.some(
+          (shared) => file.path.replace(/\.[cm]?[jt]sx?$/, "") === shared,
+        ),
+      )
+      .map((file) => file.content);
+    const dependencies = detectNpmDependencies(
+      [
+        ...component.files.map((file) => file.content),
+        ...usedSharedContents,
+        ...extraFiles.map((file) => file.content),
+      ],
+      item.dependencies ?? [],
+    );
+    const devDependencies = detectTypeDependencies(dependencies);
 
     built.push({
       item: {
         ...item,
+        ...(dependencies.length > 0 ? { dependencies } : {}),
+        ...(devDependencies.length > 0 ? { devDependencies } : {}),
         internalDependencies,
         sharedDependencies: component.derivedShared,
       },
-      files: component.files,
-      jsxFiles: transformToJsx(component.files),
+      files: installFiles,
+      jsxFiles: transformToJsx(installFiles),
+      ...(extraFiles.length > 0
+        ? { extraFiles, extraJsxFiles: transformToJsx(extraFiles) }
+        : {}),
     });
   }
 
@@ -106,17 +165,14 @@ export async function generateRegistry(
   const emitted = await emitRegistry(built, options.outDir);
 
   let foundationFiles = 0;
-  const sharedFiles =
-    options.sharedRoots && options.sharedRoots.length > 0
-      ? await scanSharedFiles(options.sharedRoots)
-      : [];
-  if (sharedFiles.length > 0) {
+  const foundation = sharedFiles.filter((file) => !isOnDemandShared(file.path));
+  if (foundation.length > 0) {
     await emitFoundation(
       options.outDir,
-      sharedFiles,
-      transformToJsx(sharedFiles),
+      foundation,
+      transformToJsx(foundation),
     );
-    foundationFiles = sharedFiles.length;
+    foundationFiles = foundation.length;
   }
 
   const summary: GenerateSummary = {

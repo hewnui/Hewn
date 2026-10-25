@@ -2,6 +2,7 @@ import { join } from "path";
 import { detectProject } from "../lib/detect.js";
 import { pathExists, writeFileEnsured } from "../lib/fsx.js";
 import { confirm } from "../lib/prompt.js";
+import { pinnedSpecs } from "../lib/peer-ranges.js";
 import { createRegistryClient, registryBase } from "../lib/registry.js";
 
 export type CliConfig = {
@@ -48,7 +49,13 @@ export async function initCommand(options: {
   console.log(`\nwrote hewn.json (${project.tsx ? "TypeScript" : "JavaScript"} project)`);
   console.log(`wrote ${files.length} foundation files to ${root}/`);
   console.log("\nnext steps:");
-  console.log(`  1. ${install} react-aria-components motion @hewnui/motion @hewnui/themes`);
+  const packages = pinnedSpecs([
+    "react-aria-components",
+    "motion",
+    "@hewnui/motion",
+    "@hewnui/themes",
+  ]);
+  console.log(`  1. ${install} ${packages.join(" ")}`);
   console.log('  2. import "@hewnui/themes/tokens.css" in your global css');
   console.log("  3. hewn add <name> to add components");
   return 0;

@@ -1,3 +1,5 @@
+import { rewriteSharedImportDepth } from "../layout";
+
 const MOTION_PACKAGE = "@hewnui/motion";
 
 /**
@@ -9,15 +11,12 @@ const MOTION_PACKAGE = "@hewnui/motion";
  * live beside component folders, so the relative depth becomes ../.
  */
 export function rewriteShadcnContent(content: string): string {
-  return content
-    .replace(
+  return rewriteSharedImportDepth(
+    content.replace(
       /from\s+["']@hewnui\/motion(?:\/[^"']*)?["']/g,
       'from "../motion-presets"',
-    )
-    .replace(
-      /from\s+["']\.\.\/\.\.\/(utils|providers|styles|theme|chart)(\/[^"']*)?["']/g,
-      'from "../$1$2"',
-    );
+    ),
+  );
 }
 
 export function contentNeedsMotionPresets(content: string): boolean {

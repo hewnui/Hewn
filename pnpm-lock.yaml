@@ -270,7 +270,7 @@ importers:
         specifier: workspace:*
         version: link:../themes
       '@internationalized/date':
-        specifier: 3.12.2
+        specifier: ^3.12.2
         version: 3.12.2
       '@tanstack/react-table':
         specifier: 8.21.3
