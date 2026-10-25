@@ -1,0 +1,36 @@
+---
+title: DonutChart
+description: Part-to-whole radial chart with a required summary and focusable slices.
+status: new
+tier: free
+---
+
+DonutChart is the radial sibling of Area and Bar: same status frames, same
+tooltip, slices you can Tab through.
+
+## Usage
+
+```tsx
+import { DonutChart } from "@hewnui/ui";
+
+<DonutChart
+  summary="Traffic share last 24h"
+  slices={[
+    { id: "edge", label: "Edge", value: 62 },
+    { id: "origin", label: "Origin", value: 38 },
+  ]}
+>
+  <DonutChart.Tooltip />
+</DonutChart>
+```
+
+## Preview
+
+<DonutChartDemo />
+
+## Accessibility
+
+- The SVG is `role="img"` named by the required `summary`
+- Every slice is focusable and labelled `"{name}: {value}"`
+- Focus opens the same tooltip as hover
+- `status="loading"` and empty (sum ≤ 0) use `role="status"`; `status="error"` uses `role="alert"`

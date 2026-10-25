@@ -1,0 +1,48 @@
+---
+title: ColorPicker
+description: Composable color picker with area, hue and alpha sliders, hex field, and swatch presets.
+status: new
+tier: free
+---
+
+ColorPicker synchronizes React Aria ColorArea, ColorSlider, ColorField, and
+swatch presets. Returns a hex string and can show a read-only OKLCH readout.
+Lives under **Pickers** in the component gallery.
+
+<ColorPickerDemo />
+
+## Usage
+
+```tsx
+import { ColorPicker } from "@hewnui/ui";
+
+<ColorPicker label="Brand accent" defaultValue="#1a6b4a" />
+```
+
+## Inline panel
+
+```tsx
+<ColorPicker
+  label="Fill color"
+  variant="inline"
+  showOklch
+  description="Hex is editable; OKLCH is display-only."
+/>
+```
+
+## Presets and alpha
+
+```tsx
+<ColorPicker
+  label="Opaque only"
+  showAlpha={false}
+  presets={["#1a6b4a", "#0f766e", "#b45309", "#334155"]}
+/>
+```
+
+## Accessibility
+
+- Labeled saturation/brightness area, hue slider, and alpha slider
+- Hex field for precise entry
+- Keyboard navigation across area, sliders, field, and swatches
+- Hidden `name` input for HTML form submission

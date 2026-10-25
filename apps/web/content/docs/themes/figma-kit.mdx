@@ -1,0 +1,36 @@
+---
+title: Figma kit
+description: Import curated Hewn tokens into Figma via Tokens Studio.
+status: new
+tier: free
+---
+
+The Figma kit is generated from the same curated packs as Theme Lab — six
+identities, supported modes only, plus a sticker sheet for surfaces, button,
+and input. No Figma plugin to maintain: Tokens Studio imports the JSON.
+
+## Download
+
+- [hewn.tokens.json](/figma/hewn.tokens.json) — Tokens Studio document
+- [sticker-sheet.svg](/figma/sticker-sheet.svg) — visual reference sheet
+
+Regenerate locally with `pnpm --filter @hewnui/themes generate`.
+
+## Import into Figma
+
+1. Install [Tokens Studio](https://tokens.studio/) in your Figma file
+2. Open Tokens → Import → select `hewn.tokens.json`
+3. Switch themes (for example `forest / light`) and create Figma variables
+4. Paste or place `sticker-sheet.svg` as a starting sticker sheet
+
+Full component parity in Figma is future scope — this kit covers variables and
+the core surface vocabulary.
+
+## CLI
+
+```bash
+hewn theme export
+```
+
+Prints paths and import notes (groundwork). Studio Pro exporters can also emit
+a Tokens Studio document for a single authored pack.

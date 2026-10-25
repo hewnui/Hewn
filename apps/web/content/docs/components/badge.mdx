@@ -1,0 +1,45 @@
+---
+title: Badge
+description: Status pill and tag indicator with solid, soft, outline, glass, and live dot variants.
+status: new
+tier: free
+---
+
+Compact status indicator for tags, metadata, and active counts.
+
+<BadgeDemo />
+
+## Usage
+
+```tsx
+import { Badge } from "@hewnui/ui";
+
+export function Example() {
+  return <Badge variant="soft" color="accent">New</Badge>;
+}
+```
+
+## Variants
+
+- `solid` — Bold filled background
+- `soft` — Tinted surface background (default)
+- `outline` — Bordered outline
+- `glass` — Frosted glass material fill
+- `dot` — Status dot indicator with accompanying label
+
+## Colors
+
+`accent`, `muted`, `danger`, `success`, and `warning`.
+
+## Sizes
+
+`sm`, `md` (default), and `lg`.
+
+## Accessibility
+
+- Badge renders a plain `<span>` with no implicit role, so it is announced as part of the
+  surrounding text rather than as a widget
+- The `dot` variant's indicator is `aria-hidden` — the label text has to carry the meaning
+  ("Degraded", not colour alone)
+- When a badge reflects live state, put it inside a `role="status"` region so changes are announced
+- Pass `aria-label` through `...props` when the visible text is an abbreviation (`"P1"` → `"Priority 1"`)

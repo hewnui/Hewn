@@ -1,0 +1,32 @@
+---
+title: Tabs
+description: Sectioned content with a shared motion indicator.
+status: new
+tier: free
+---
+
+Tabs use React Aria keyboard behavior. When motion is enabled, the active
+indicator shares a layout spring across tabs.
+
+<TabsDemo />
+
+## Usage
+
+```tsx
+import { Tab, TabList, TabPanel, Tabs } from "@hewnui/ui";
+
+<Tabs defaultSelectedKey="overview">
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="tokens">Tokens</Tab>
+  </TabList>
+  <TabPanel id="overview">Overview content</TabPanel>
+  <TabPanel id="tokens">Token content</TabPanel>
+</Tabs>
+```
+
+## Accessibility
+
+- Tablist / tab / tabpanel roles
+- Arrow key navigation between tabs
+- Selected tab remains discoverable to assistive tech

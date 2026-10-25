@@ -1,0 +1,37 @@
+/* clay — Tailwind v4 @theme */
+@theme {
+  --color-background: oklch(0.955 0.02 55);
+  --color-foreground: oklch(0.27 0.045 40);
+  --color-surface: oklch(0.98 0.012 50);
+  --color-surface-raised: oklch(0.995 0.006 45);
+  --color-muted: oklch(0.915 0.025 50);
+  --color-muted-foreground: oklch(0.5 0.045 40);
+  --color-accent: oklch(0.55 0.12 40);
+  --color-accent-foreground: oklch(0.98 0.01 50);
+  --color-border: oklch(0.4 0.05 40 / 16%);
+  --color-ring: oklch(0.6 0.13 40);
+  --color-danger: oklch(0.54 0.17 28);
+  --color-danger-foreground: oklch(0.985 0.01 28);
+  --color-danger-subtle: oklch(0.94 0.035 28);
+  --color-danger-border: oklch(0.56 0.12 28 / 40%);
+  --color-success: oklch(0.55 0.15 145);
+  --color-success-foreground: oklch(0.985 0.01 145);
+  --color-success-subtle: oklch(0.94 0.035 145);
+  --color-success-border: oklch(0.55 0.12 145 / 40%);
+  --color-warning: oklch(0.75 0.14 55);
+  --color-warning-foreground: oklch(0.25 0.05 55);
+  --color-warning-subtle: oklch(0.94 0.04 55);
+  --color-warning-border: oklch(0.72 0.12 55 / 40%);
+  --color-info: oklch(0.52 0.11 230);
+  --color-info-foreground: oklch(0.985 0.01 230);
+  --color-info-subtle: oklch(0.94 0.03 230);
+  --color-info-border: oklch(0.52 0.09 230 / 40%);
+  --color-glass-tint: oklch(0.74 0.1 45 / 28%);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.8rem;
+  --radius-lg: 1.05rem;
+  --radius-panel: 1.05rem;
+  --font-sans: var(--font-plex-sans, "IBM Plex Sans"), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono, "IBM Plex Mono"), ui-monospace, monospace;
+  --font-display: var(--font-space-grotesk, "Space Grotesk"), var(--font-sans);
+}

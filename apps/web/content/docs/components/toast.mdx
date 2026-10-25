@@ -1,0 +1,57 @@
+---
+title: Toast
+description: Motion-aware notification stack with global provider.
+status: new
+tier: free
+---
+
+Toasts stack from the corner with a tone well, lifetime bar, and dismiss
+control. Tones: `default`, `success`, `danger`, `warning`, and `info`.
+Reduced motion softens entrance and freezes the lifetime bar.
+
+<ToastDemo />
+
+## Usage
+
+```tsx
+import { Button, ToastProvider, useToast } from "@hewnui/ui";
+
+function Notify() {
+  const { toast } = useToast();
+  return (
+    <Button
+      onPress={() =>
+        toast({ title: "Draft saved", tone: "success" })
+      }
+    >
+      Notify
+    </Button>
+  );
+}
+```
+
+Wrap the app with `ToastProvider` once — already included in the docs shell.
+
+## Tones
+
+| Tone | Use |
+|------|-----|
+| `default` | Neutral status |
+| `success` | Completed save or sync |
+| `danger` | Failure that needs attention |
+| `warning` | Soft risk or quota pressure |
+| `info` | Tip or non-blocking guidance |
+
+## Accessibility
+
+- `danger` toasts render `role="alert"` with `aria-live="assertive"`; every other tone uses
+  `role="status"` with `aria-live="polite"`, so routine confirmations never interrupt
+- The dismiss control is a real button labelled "Dismiss notification"
+- The countdown bar is `aria-hidden` and freezes when motion is off
+- Toasts auto-dismiss after 4200ms by default. Raise `duration` for longer messages, and do not
+  put an action's only affordance inside a toast — the timer does not pause on hover or focus.
+
+<Callout type="warn">
+  A toast is the wrong home for anything the user must act on. For blocking errors or decisions,
+  use an inline message or a Dialog, which stay on screen until dismissed.
+</Callout>

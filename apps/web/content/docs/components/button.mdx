@@ -1,0 +1,41 @@
+---
+title: Button
+description: Pressable action control with variants, sizes, and loading state.
+status: new
+tier: free
+---
+
+A concise action control built on React Aria. Press scale, focus rings, and
+loading feedback follow the global motion setting.
+
+<ButtonDemo />
+
+## Usage
+
+```tsx
+import { Button } from "@hewnui/ui";
+
+export function Example() {
+  return <Button variant="primary">Save changes</Button>;
+}
+```
+
+## Variants
+
+`primary`, `secondary`, `outline`, `ghost`, `glass`, `soft`, `glow`, `danger`, `danger-outline`, and `danger-soft`.
+
+## Sizes
+
+`sm` (40px min height), `md`, and `lg`.
+
+## States
+
+- **Loading** — sets `isDisabled`, shows a spinner glyph
+- **Disabled** — reduces opacity and blocks pointer events
+- **Focus** — visible ring using semantic `--kp-ring`
+
+## Accessibility
+
+- Native button semantics from React Aria
+- Keyboard activation with Enter and Space
+- Loading and disabled states expose `disabled` to assistive tech

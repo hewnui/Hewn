@@ -1,0 +1,46 @@
+---
+title: Checkbox
+description: Binary selection control with motion-aware check feedback.
+status: new
+tier: free
+---
+
+Checkbox uses React Aria selection behavior and a compact indicator. When motion
+is on, the check mark springs in; reduced motion keeps an instant mark.
+
+<CheckboxDemo />
+
+## Usage
+
+```tsx
+import { Checkbox } from "@hewnui/ui";
+
+export function Example() {
+  return <Checkbox defaultSelected>Email product updates</Checkbox>;
+}
+```
+
+Use `isSelected` / `onChange` for controlled forms. Pair related options with
+`CheckboxGroup` when they share one label and validation message.
+
+## States
+
+- **Selected / unselected** — animated check mark when motion is enabled
+- **Indeterminate** — set `isIndeterminate` for partial selection parents
+- **Invalid** — set `isInvalid` to mark a required unchecked choice
+- **Disabled** — reduces opacity and blocks activation
+- **Pressed** — scale feedback on the indicator when motion is on
+- **Focus** — ring on the indicator via `--kp-ring`
+
+## Keyboard
+
+- `Tab` moves focus to the checkbox
+- `Space` toggles selection
+- Disabled checkboxes are not focusable
+
+## Accessibility
+
+- Native checkbox role and checked state from React Aria
+- Indeterminate is exposed to assistive tech separately from checked
+- Keep the label as children so the hit target includes the text
+- Visible focus ring stays on the indicator box

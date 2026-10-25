@@ -1,0 +1,102 @@
+---
+title: Motion
+description: Duration and easing tokens, MotionProvider modes, and the transform-and-opacity contract.
+status: stable
+tier: free
+---
+
+Hewn treats motion as a **global contract**, not a per-component prop.
+Tokens set timing, `MotionProvider` sets the mode, and sources may only animate
+transform, opacity, and filter.
+
+<MotionDemo />
+
+## Tokens
+
+CSS custom properties live in `@hewnui/themes/motion.css` (imported by
+`tokens.css`). Theme packs still tune `--kp-motion-duration` for character;
+the scale below is shared.
+
+| Token | Role | Default |
+|-------|------|---------|
+| `--kp-motion-duration-instant` | Immediate / disabled | `0ms` |
+| `--kp-motion-duration-fast` | Micro feedback | `120ms` |
+| `--kp-motion-duration` | Pack base (theme character) | pack-specific |
+| `--kp-motion-duration-slow` | Presence / draws | `360ms` |
+| `--kp-motion-ease-standard` | Default CSS easing | `cubic-bezier(0.2, 0, 0, 1)` |
+| `--kp-motion-ease-emphasized` | Emphasized settle | `cubic-bezier(0.16, 1, 0.3, 1)` |
+| `--kp-motion-ease-exit` | Exit curves | `cubic-bezier(0.4, 0, 1, 1)` |
+| `--kp-motion-ease-linear` | Progress / meters | `linear` |
+
+TypeScript mirrors for Motion transitions ship from `@hewnui/motion`:
+
+```ts
+import { durations, easings, springs } from "@hewnui/motion";
+
+durations.fast; // 0.12
+easings.standard; // [0.2, 0, 0, 1]
+springs.snappy; // { type: "spring", stiffness: 420, … }
+```
+
+Use CSS vars in class strings (`duration-[var(--kp-motion-duration-fast)]`,
+`ease-[var(--kp-motion-ease-standard)]`) and the TS constants in
+`transition={{ … }}` props. Do not hard-code millisecond or bezier values in
+components.
+
+## Modes
+
+`MotionProvider` exposes three modes:
+
+| Mode | Behavior |
+|------|----------|
+| `full` | Springs, press scale, chart draws, layout presence |
+| `reduced` | `MotionConfig reducedMotion="always"`; CSS durations collapse to `0` |
+| `off` | Same hard stop as reduced for Motion + CSS; static fallbacks only |
+
+Resolution rules:
+
+1. Default preference is `full`.
+2. `prefers-reduced-motion: reduce` caps effective mode at `reduced` — a user
+   preference of `full` cannot win.
+3. Users may only reduce motion further (`full` → `reduced` → `off`).
+4. The effective mode is written to `document.documentElement.dataset.motion`
+   so CSS-only surfaces can key off `[data-motion="reduced"]` / `"off"`.
+
+```tsx
+import { MotionProvider, useMotionMode } from "@hewnui/ui";
+
+<MotionProvider defaultMotion="full">{children}</MotionProvider>
+
+const { motion, effectiveMode, motionEnabled, reducedMotion, setMotion } =
+  useMotionMode();
+```
+
+| Field | Meaning |
+|-------|---------|
+| `motion` | Stored user preference |
+| `effectiveMode` | Preference after OS clamp |
+| `motionEnabled` | `effectiveMode === "full"` |
+| `reducedMotion` | OS preference is active |
+| `setMotion` | Update preference |
+
+`MotionConfig` receives `reducedMotion="never"` in full mode and `"always"`
+otherwise.
+
+## Rules
+
+- Animate **transform, opacity, and filter** only. Never animate layout
+  properties (`width`, `height`, `top`, `left`, `margin`, …).
+- Never use `transition: all` or Tailwind `transition-all`.
+- Press feedback uses `scale(0.96)`.
+- Reduced motion always wins over product defaults and user “more motion”
+  choices.
+- Infinite motion must be isolated, memoized, and disabled when
+  `motionEnabled` is false.
+- `pnpm check:motion` fails the build if `packages/ui` sources violate the
+  transition contract.
+
+## Appearance controls
+
+Docs and Theme Lab appearance docks include the motion mode control next to
+theme, mode, material, and radius. Choices persist in `localStorage`
+(`kp-motion`). Legacy `on` values migrate to `full`.

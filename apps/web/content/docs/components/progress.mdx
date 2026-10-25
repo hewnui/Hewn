@@ -1,0 +1,29 @@
+---
+title: Progress
+description: Determinate and indeterminate progress feedback.
+status: new
+tier: free
+---
+
+Progress uses React Aria progressbar semantics and tabular percentages.
+
+<ProgressDemo />
+
+## Usage
+
+```tsx
+import { Progress } from "@hewnui/ui";
+
+<Progress label="Bundle sync" value={47} />
+```
+
+## Accessibility
+
+- React Aria progressbar semantics: `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` track
+  `value`, `minValue`, and `maxValue`
+- `label` renders a real `<Label>` tied to the bar — pass one whenever the bar is not already
+  described by nearby text
+- `isIndeterminate` drops the numeric value so assistive tech announces "busy" rather than a
+  misleading percentage
+- The percentage readout uses tabular numerals so it does not jitter while counting
+- The indeterminate sweep falls back to a pulse under `prefers-reduced-motion`

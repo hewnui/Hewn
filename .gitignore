@@ -1,0 +1,27 @@
+node_modules/
+.tools/
+.pnpm-store/
+.next/
+.turbo/
+.source/
+generated/
+dist/
+apps/web/public/r/
+apps/web/public/figma/
+apps/web/public/themes/
+apps/web/public/ai/
+coverage/
+playwright-report/
+test-results/
+# Regenerated contact sheet copies land here during local runs; CI uploads artifacts.
+# Committed review sheet stays under apps/web/e2e/visual/artifacts/.
+apps/web/e2e/visual/artifacts/*.png
+!apps/web/e2e/visual/artifacts/theme-mode-contact-sheet.png
+
+.DS_Store
+*.log1
+.env
+.env.local
+.vercel/
+.npmrc
+*.tsbuildinfo

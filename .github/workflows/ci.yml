@@ -1,0 +1,146 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.15.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # next/font/google can flake on DNS/turbopack; one retry.
+      - run: pnpm build || pnpm build
+
+      - run: pnpm typecheck
+
+      - run: pnpm test
+
+      - run: pnpm lint:hewn
+
+      - run: pnpm sync:exports --check
+
+      - run: pnpm check:site-url
+
+      - run: pnpm check:component-census
+
+      - run: pnpm check:pack
+
+      - run: pnpm check:bundle
+
+      - run: pnpm check:docs-seo
+
+      - run: pnpm check:web-budgets
+
+      - run: pnpm check:shadcn-e2e
+
+      - run: pnpm check:motion
+
+      - run: pnpm check:honest-copy
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.15.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install Playwright Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter web test:e2e:install
+
+      - name: Install Playwright system deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm --filter web exec playwright install-deps chromium
+
+      - name: Build workspace
+        run: pnpm build
+
+      - name: Run Playwright smoke tests
+        run: pnpm --filter web test:e2e
+        env:
+          CI: true
+          E2E_PORT: 3100
+
+  visual:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-jammy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.15.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build workspace
+        run: pnpm build
+
+      - name: Run Playwright visual tests
+        run: pnpm --filter web test:visual
+        env:
+          CI: true
+          E2E_PORT: 3100
+          PLAYWRIGHT_VISUAL: "1"
+          # Browsers ship inside the Playwright image.
+          PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+
+      - name: Build theme × mode contact sheet
+        if: always()
+        run: pnpm --filter web visual:contact-sheet
+
+      - name: Upload visual contact sheet
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-contact-sheet
+          path: |
+            apps/web/e2e/visual/artifacts/theme-mode-contact-sheet.png
+            apps/web/test-results/visual-contact-sheet.png
+          if-no-files-found: warn
+
+      - name: Upload visual diff report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff-report
+          path: |
+            apps/web/playwright-report/
+            apps/web/test-results/
+          if-no-files-found: warn

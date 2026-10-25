@@ -1,0 +1,63 @@
+---
+title: CommandPalette
+description: Modal ⌘K command finder with grouped actions, shortcuts, and async loading.
+status: new
+tier: free
+---
+
+CommandPalette pairs a dialog trigger with React Aria Autocomplete and Menu.
+Filter grouped commands, show shortcut hints, and wire an optional global hotkey.
+
+<CommandPaletteDemo />
+
+## Usage
+
+```tsx
+import {
+  Button,
+  CommandPalette,
+  CommandPaletteGroup,
+  CommandPaletteInput,
+  CommandPaletteItem,
+  CommandPaletteList,
+  CommandPaletteTrigger,
+  useCommandPaletteHotkey,
+} from "@hewnui/ui";
+
+const [isOpen, setOpen] = useState(false);
+useCommandPaletteHotkey({ onOpenChange: setOpen });
+
+<CommandPaletteTrigger isOpen={isOpen} onOpenChange={setOpen}>
+  <Button>Commands</Button>
+  <CommandPalette>
+    <CommandPaletteInput />
+    <CommandPaletteList>
+      <CommandPaletteGroup heading="Actions">
+        <CommandPaletteItem id="new" shortcut="⌘N" textValue="New file">
+          New file
+        </CommandPaletteItem>
+      </CommandPaletteGroup>
+    </CommandPaletteList>
+  </CommandPalette>
+</CommandPaletteTrigger>
+```
+
+## States
+
+- Loading — `CommandPaletteList isLoading` shows a polite status with spinner
+- Empty — filtered Menu `renderEmptyState` via `emptyLabel`
+- Disabled — `CommandPaletteItem isDisabled`
+
+## Accessibility
+
+- Dialog role with an accessible name; focus moves into the search field on open
+- Escape and outside click dismiss; focus returns to the trigger
+- Arrow keys move between commands; Enter activates; typeahead filtering via Autocomplete
+- Shortcut hints use the `Keyboard` element; icons are presentational
+- Reduced motion: enter/exit transitions fall back with `motion-reduce`
+
+## Docs search note
+
+The docs site still uses Fumadocs search. CommandPalette could wrap that surface later
+(same trigger + Autocomplete pattern) without changing this component’s API — not
+refactored in this release.

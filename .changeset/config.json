@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [
+    [
+      "@hewnui/ui",
+      "@hewnui/motion",
+      "@hewnui/themes",
+      "hewnui"
+    ]
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "@hewnui/docs-metadata",
+    "@hewnui/mcp",
+    "@hewnui/registry",
+    "@hewnui/site-url",
+    "@hewnui/tsconfig",
+    "web"
+  ]
+}

@@ -1,0 +1,59 @@
+---
+title: DateRangePicker
+description: Accessible start and end date fields with a range calendar popover and optional presets.
+status: new
+tier: free
+---
+
+DateRangePicker wraps React Aria date segments and RangeCalendar navigation with
+optional quick-select presets. Lives under **Date and Time** in the component
+gallery.
+
+<DateRangePickerDemo />
+
+## Usage
+
+```tsx
+import { DateRangePicker } from "@hewnui/ui";
+
+<DateRangePicker
+  label="Travel dates"
+  description="Inclusive stay"
+  startName="start"
+  endName="end"
+/>
+```
+
+## Presets
+
+Built-in presets cover Today, Last 7 days, Last 30 days, and This month. Pass
+`showPresets={false}` to hide them, or supply a custom `presets` list.
+
+```tsx
+<DateRangePicker
+  label="Report range"
+  presets={["today", "last-7-days", "this-month"]}
+/>
+```
+
+## Bounds and unavailable dates
+
+```tsx
+import { getLocalTimeZone, today } from "@internationalized/date";
+
+const now = today(getLocalTimeZone());
+
+<DateRangePicker
+  label="Booking window"
+  minValue={now}
+  maxValue={now.add({ months: 3 })}
+  isDateUnavailable={(date) => date.toDate(getLocalTimeZone()).getDay() === 0}
+/>
+```
+
+## Accessibility
+
+- Dual segmented date fields for start and end
+- Range calendar grid keyboard navigation
+- Localized formatting via React Aria
+- Form submission through `startName` and `endName`

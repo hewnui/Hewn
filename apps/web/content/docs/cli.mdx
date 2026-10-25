@@ -1,0 +1,100 @@
+---
+title: CLI
+description: Copy components into your project with the Hewn CLI.
+status: stable
+tier: free
+---
+
+{/* Install command strings: packages/docs-metadata/src/distribution.ts — flip PACKAGES_PUBLISHED after npm publish. */}
+
+The Hewn CLI copies component source from the registry into your
+project. You own the code — edit it, fork it, keep it in sync with your
+design system.
+
+**Status:** the CLI package is not on npm yet. Every npx command in the
+sections below is labeled **available at launch**. Today you can fetch free
+component JSON from the live registry without the CLI:
+
+```bash
+curl -s https://hewnui.dev/r/button.json
+```
+
+Or browse the [free registry index](https://hewnui.dev/r/index.free.json).
+
+## Commands (available at launch)
+
+```bash
+# Available at launch: npx hewnui@latest <command>
+```
+
+### init
+
+```bash
+# Available at launch: npx hewnui@latest init
+```
+
+Detects your project and sets up the foundation:
+
+- TypeScript or JavaScript detection (presence of `tsconfig.json`)
+- Writes `hewn.json` with your component root and language
+- Copies foundation files (providers, shared styles, utilities) in the
+  matching language variant
+- Prints the peer dependencies and CSS import to finish setup
+
+Options: `--root <dir>` to change the component root (default
+`components/hewn`), `--yes` to skip prompts.
+
+### add
+
+```bash
+# Available at launch: npx hewnui@latest add button file-upload
+```
+
+Copies components from the free registry into your component root.
+Dependencies between components resolve automatically — adding `file-upload`
+also adds `button` and `spinner`. TypeScript projects receive `.tsx` source;
+JavaScript projects receive the generated `.jsx` variant.
+
+Options: `--overwrite` to replace existing files without prompting,
+`--yes` to accept all prompts.
+
+### theme
+
+```bash
+# Available at launch: npx hewnui@latest theme
+# Available at launch: npx hewnui@latest theme export
+```
+
+`theme` lists installed packs and supported modes from `@hewnui/themes`.
+`theme export` prints local Figma kit paths (Tokens Studio JSON + sticker
+sheet) when generated, plus import notes.
+
+### lint
+
+```bash
+# Available at launch: npx hewnui@latest lint
+# Available at launch: npx hewnui@latest lint --json
+# Available at launch: npx hewnui@latest lint --fix
+```
+
+Checks tokens-only colour usage, theme AA contrast, reduced-motion patterns,
+labelled overlays, and destructive confirm heuristics. See [CLI lint](/docs/cli-lint)
+for the rule reference, `hewn.json` config, and JSON schema.
+
+## Registry URL
+
+The CLI fetches registry JSON from the canonical site origin
+(`https://hewnui.dev` by default — see `packages/site-url`). Override for local development or mirrors:
+
+```bash
+# Available at launch: HEWN_REGISTRY_URL=https://your-mirror.example.com npx hewnui@latest add button
+```
+
+`hewn init` can also set a per-project `registry` field in `hewn.json`.
+
+## npm, Hewn CLI, or shadcn?
+
+All paths ship the same canonical source. npm packages and the CLI publish at
+launch — until then, use the docs examples or the live `/r/*.json` registry.
+When your project already uses `components.json`, see the
+[shadcn CLI registry](/docs/shadcn).

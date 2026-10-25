@@ -1,0 +1,56 @@
+---
+title: Table
+description: Accessible data table foundation with sorting and empty states.
+status: new
+tier: free
+---
+
+Lightweight table built on React Aria. Sorting stays client-side for the
+foundation; TanStack-powered advanced tables come later.
+
+<TableDemo />
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@hewnui/ui";
+
+<Table aria-label="Team">
+  <TableHeader>
+    <TableColumn isRowHeader>Name</TableColumn>
+    <TableColumn>Role</TableColumn>
+  </TableHeader>
+  <TableBody items={rows}>
+    {(item) => (
+      <TableRow id={item.id}>
+        <TableCell>{item.name}</TableCell>
+        <TableCell>{item.role}</TableCell>
+      </TableRow>
+    )}
+  </TableBody>
+</Table>
+```
+
+## States
+
+- Sorted columns via `allowsSorting` + `sortDescriptor`
+- `TableEmpty` for zero-result layouts
+- `TableLoading` for pending fetches
+
+## Accessibility
+
+- Grid semantics from React Aria Table
+- Sortable column announcements
+- Keyboard focus for rows and columns
+
+## Compound API
+
+`TableRoot.Header`, `TableRoot.Column`, `TableRoot.Body`, `TableRoot.Row`,
+`TableRoot.Cell`, `TableRoot.Empty`, and `TableRoot.Loading` are also exported.

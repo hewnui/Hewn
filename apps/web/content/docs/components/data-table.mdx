@@ -1,0 +1,34 @@
+---
+title: DataTable
+description: Advanced table powered by TanStack Table on Hewn surfaces.
+status: new
+tier: free
+---
+
+DataTable keeps Hewn visuals while TanStack owns sorting state and
+column definitions. Use the foundation Table for simpler static grids.
+
+<DataTableDemo />
+
+## Usage
+
+```tsx
+import { DataTable, type ColumnDef } from "@hewnui/ui";
+
+const columns: ColumnDef<Row>[] = [
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "score", header: "Score" },
+];
+
+<DataTable aria-label="Scores" columns={columns} data={rows} />
+```
+
+## Accessibility
+
+- `aria-label` is a required prop, so the table is never unnamed
+- React Aria grid semantics: arrow keys move between cells, Home/End jump along a row
+- The first column is the row header, giving each row a name when a cell is read in isolation
+- Sortable headers expose `aria-sort` (`none`, `ascending`, `descending`) and toggle with Enter or
+  Space — the caret glyph is `aria-hidden`, so sort state never depends on seeing it
+- Sorting is driven through React Aria's `sortDescriptor`, so the announcement stays in sync with
+  the TanStack sort state

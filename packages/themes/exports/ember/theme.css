@@ -1,0 +1,37 @@
+/* ember — Tailwind v4 @theme */
+@theme {
+  --color-background: oklch(0.17 0.02 40);
+  --color-foreground: oklch(0.93 0.02 70);
+  --color-surface: oklch(0.21 0.025 40);
+  --color-surface-raised: oklch(0.255 0.03 42);
+  --color-muted: oklch(0.275 0.028 40);
+  --color-muted-foreground: oklch(0.72 0.03 60);
+  --color-accent: oklch(0.7 0.15 50);
+  --color-accent-foreground: oklch(0.985 0.015 50);
+  --color-border: oklch(0.84 0.03 60 / 14%);
+  --color-ring: oklch(0.7 0.15 50);
+  --color-danger: oklch(0.66 0.17 28);
+  --color-danger-foreground: oklch(0.985 0.01 28);
+  --color-danger-subtle: oklch(0.32 0.05 28);
+  --color-danger-border: oklch(0.72 0.1 28 / 40%);
+  --color-success: oklch(0.72 0.14 145);
+  --color-success-foreground: oklch(0.985 0.01 145);
+  --color-success-subtle: oklch(0.32 0.045 145);
+  --color-success-border: oklch(0.72 0.1 145 / 40%);
+  --color-warning: oklch(0.78 0.12 70);
+  --color-warning-foreground: oklch(0.22 0.04 70);
+  --color-warning-subtle: oklch(0.34 0.04 70);
+  --color-warning-border: oklch(0.78 0.1 70 / 40%);
+  --color-info: oklch(0.72 0.1 230);
+  --color-info-foreground: oklch(0.985 0.01 230);
+  --color-info-subtle: oklch(0.32 0.035 230);
+  --color-info-border: oklch(0.72 0.08 230 / 40%);
+  --color-glass-tint: oklch(0.58 0.15 50 / 28%);
+  --radius-sm: 0.45rem;
+  --radius-md: 0.7rem;
+  --radius-lg: 0.95rem;
+  --radius-panel: 0.95rem;
+  --font-sans: var(--font-plex-sans, "IBM Plex Sans"), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono, "IBM Plex Mono"), ui-monospace, monospace;
+  --font-display: var(--font-space-grotesk, "Space Grotesk"), var(--font-sans);
+}

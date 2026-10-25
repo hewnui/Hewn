@@ -1,0 +1,66 @@
+{
+  "name": "@hewnui/mcp",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hewnui/Hewn.git",
+    "directory": "packages/mcp"
+  },
+  "type": "module",
+  "bin": {
+    "hewn-mcp": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "README.md",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@hewnui/tsconfig": "workspace:*",
+    "@types/node": "26.1.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  },
+  "homepage": "https://hewnui.dev",
+  "bugs": {
+    "url": "https://github.com/hewnui/Hewn/issues"
+  },
+  "author": "Himanshu Kumar",
+  "description": "Read-only Model Context Protocol (stdio) server that lets AI coding tools list and inspect Hewn components, themes, tokens and install commands.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "cursor",
+    "claude",
+    "llm",
+    "react",
+    "components",
+    "design-system",
+    "hewnui"
+  ],
+  "private": true,
+  "sideEffects": false
+}

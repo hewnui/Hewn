@@ -1,0 +1,32 @@
+---
+title: InputOTP
+description: Segmented one-time code entry with paste and keyboard navigation.
+status: new
+tier: free
+---
+
+Compositional OTP control for email codes and short PINs. Digits advance on
+entry, Backspace retreats, and paste fills the whole code.
+
+<InputOtpDemo />
+
+## Usage
+
+```tsx
+import { InputOTP } from "@hewnui/ui";
+
+<InputOTP label="Email code" length={6} onComplete={(code) => console.log(code)} />
+```
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+- Controlled `value` or `defaultValue`
+
+## Accessibility
+
+- Group role with labeled digit slots
+- Arrow keys move between digits
+- Hidden `name` input for form submission when provided

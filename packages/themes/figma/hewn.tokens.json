@@ -1,0 +1,1308 @@
+{
+  "$metadata": {
+    "tokenSetOrder": [
+      "forest/structural",
+      "forest/light",
+      "forest/dark",
+      "tide/structural",
+      "tide/light",
+      "tide/dark",
+      "graphite/structural",
+      "graphite/light",
+      "graphite/dark",
+      "dune/structural",
+      "dune/light",
+      "clay/structural",
+      "clay/light",
+      "ember/structural",
+      "ember/dark"
+    ],
+    "activeThemeEditor": "forest-light"
+  },
+  "$themes": [
+    {
+      "id": "forest-light",
+      "name": "forest / light",
+      "selectedTokenSets": {
+        "forest/structural": "source",
+        "forest/light": "enabled"
+      }
+    },
+    {
+      "id": "forest-dark",
+      "name": "forest / dark",
+      "selectedTokenSets": {
+        "forest/structural": "source",
+        "forest/dark": "enabled"
+      }
+    },
+    {
+      "id": "tide-light",
+      "name": "tide / light",
+      "selectedTokenSets": {
+        "tide/structural": "source",
+        "tide/light": "enabled"
+      }
+    },
+    {
+      "id": "tide-dark",
+      "name": "tide / dark",
+      "selectedTokenSets": {
+        "tide/structural": "source",
+        "tide/dark": "enabled"
+      }
+    },
+    {
+      "id": "graphite-light",
+      "name": "graphite / light",
+      "selectedTokenSets": {
+        "graphite/structural": "source",
+        "graphite/light": "enabled"
+      }
+    },
+    {
+      "id": "graphite-dark",
+      "name": "graphite / dark",
+      "selectedTokenSets": {
+        "graphite/structural": "source",
+        "graphite/dark": "enabled"
+      }
+    },
+    {
+      "id": "dune-light",
+      "name": "dune / light",
+      "selectedTokenSets": {
+        "dune/structural": "source",
+        "dune/light": "enabled"
+      }
+    },
+    {
+      "id": "clay-light",
+      "name": "clay / light",
+      "selectedTokenSets": {
+        "clay/structural": "source",
+        "clay/light": "enabled"
+      }
+    },
+    {
+      "id": "ember-dark",
+      "name": "ember / dark",
+      "selectedTokenSets": {
+        "ember/structural": "source",
+        "ember/dark": "enabled"
+      }
+    }
+  ],
+  "forest/structural": {
+    "radius-sm": {
+      "value": "0.5rem",
+      "type": "sizing"
+    },
+    "radius-md": {
+      "value": "0.75rem",
+      "type": "sizing"
+    },
+    "radius-lg": {
+      "value": "1rem",
+      "type": "sizing"
+    },
+    "radius-panel": {
+      "value": "1rem",
+      "type": "sizing"
+    },
+    "density": {
+      "value": 1,
+      "type": "number"
+    },
+    "motion-duration": {
+      "value": "260ms",
+      "type": "sizing"
+    },
+    "motion-stiffness": {
+      "value": 360,
+      "type": "number"
+    },
+    "motion-damping": {
+      "value": 28,
+      "type": "number"
+    }
+  },
+  "forest/light": {
+    "color": {
+      "background": {
+        "value": "oklch(0.972 0.012 145)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.225 0.028 145)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.995 0.004 145)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(1 0 0)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.925 0.022 145)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.49 0.035 145)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.49 0.105 148)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.985 0.008 145)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.36 0.035 145 / 14%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.55 0.12 148)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.56 0.17 27)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 27)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.94 0.035 27)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.56 0.12 27 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.55 0.15 148)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 148)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.94 0.035 148)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.55 0.12 148 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.75 0.14 78)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.25 0.05 78)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.94 0.04 78)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.72 0.12 78 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.52 0.11 220)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 220)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.94 0.03 220)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.52 0.09 220 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.72 0.12 148 / 28%)",
+        "type": "color"
+      }
+    }
+  },
+  "forest/dark": {
+    "color": {
+      "background": {
+        "value": "oklch(0.185 0.018 145)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.93 0.018 145)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.225 0.024 145)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(0.265 0.028 145)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.285 0.026 145)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.715 0.03 145)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.71 0.12 148)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.985 0.01 145)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.86 0.025 145 / 13%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.71 0.12 148)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.68 0.16 27)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 27)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.32 0.05 27)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.72 0.1 27 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.72 0.14 148)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 148)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.32 0.045 148)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.72 0.1 148 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.78 0.12 78)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.22 0.04 78)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.34 0.04 78)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.78 0.1 78 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.72 0.1 220)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 220)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.32 0.035 220)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.72 0.08 220 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.63 0.13 148 / 24%)",
+        "type": "color"
+      }
+    }
+  },
+  "tide/structural": {
+    "radius-sm": {
+      "value": "0.45rem",
+      "type": "sizing"
+    },
+    "radius-md": {
+      "value": "0.7rem",
+      "type": "sizing"
+    },
+    "radius-lg": {
+      "value": "0.95rem",
+      "type": "sizing"
+    },
+    "radius-panel": {
+      "value": "0.95rem",
+      "type": "sizing"
+    },
+    "density": {
+      "value": 1,
+      "type": "number"
+    },
+    "motion-duration": {
+      "value": "240ms",
+      "type": "sizing"
+    },
+    "motion-stiffness": {
+      "value": 380,
+      "type": "number"
+    },
+    "motion-damping": {
+      "value": 30,
+      "type": "number"
+    }
+  },
+  "tide/light": {
+    "color": {
+      "background": {
+        "value": "oklch(0.97 0.01 220)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.24 0.03 230)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.995 0.004 220)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(1 0 0)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.93 0.015 220)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.48 0.03 230)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.52 0.07 210)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.98 0.01 210)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.35 0.03 230 / 14%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.58 0.08 210)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.56 0.17 27)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 27)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.94 0.035 27)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.56 0.12 27 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.55 0.15 165)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 165)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.94 0.035 165)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.55 0.12 165 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.75 0.14 75)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.25 0.05 75)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.94 0.04 75)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.72 0.12 75 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.52 0.11 230)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 230)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.94 0.03 230)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.52 0.09 230 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.72 0.08 210 / 28%)",
+        "type": "color"
+      }
+    }
+  },
+  "tide/dark": {
+    "color": {
+      "background": {
+        "value": "oklch(0.18 0.02 230)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.92 0.015 220)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.22 0.025 230)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(0.26 0.028 230)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.28 0.025 230)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.72 0.025 220)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.72 0.08 205)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.985 0.01 220)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.86 0.02 220 / 13%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.72 0.08 205)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.68 0.16 27)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 27)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.32 0.05 27)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.72 0.1 27 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.71 0.14 165)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 165)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.32 0.045 165)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.72 0.1 165 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.78 0.12 75)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.22 0.04 75)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.34 0.04 75)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.78 0.1 75 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.72 0.1 230)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 230)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.32 0.035 230)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.72 0.08 230 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.6 0.09 205 / 24%)",
+        "type": "color"
+      }
+    }
+  },
+  "graphite/structural": {
+    "radius-sm": {
+      "value": "0.4rem",
+      "type": "sizing"
+    },
+    "radius-md": {
+      "value": "0.6rem",
+      "type": "sizing"
+    },
+    "radius-lg": {
+      "value": "0.85rem",
+      "type": "sizing"
+    },
+    "radius-panel": {
+      "value": "0.85rem",
+      "type": "sizing"
+    },
+    "density": {
+      "value": 1.05,
+      "type": "number"
+    },
+    "motion-duration": {
+      "value": "220ms",
+      "type": "sizing"
+    },
+    "motion-stiffness": {
+      "value": 420,
+      "type": "number"
+    },
+    "motion-damping": {
+      "value": 32,
+      "type": "number"
+    }
+  },
+  "graphite/light": {
+    "color": {
+      "background": {
+        "value": "oklch(0.965 0.005 255)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.23 0.02 255)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.99 0.003 255)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(1 0 0)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.925 0.008 255)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.47 0.02 255)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.48 0.06 250)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.98 0.01 250)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.34 0.02 255 / 14%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.55 0.07 250)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.55 0.17 27)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 27)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.94 0.035 27)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.56 0.12 27 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.55 0.15 150)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 150)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.94 0.035 150)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.55 0.12 150 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.75 0.14 75)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.25 0.05 75)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.94 0.04 75)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.72 0.12 75 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.52 0.11 250)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 250)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.94 0.03 250)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.52 0.09 250 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.7 0.06 250 / 26%)",
+        "type": "color"
+      }
+    }
+  },
+  "graphite/dark": {
+    "color": {
+      "background": {
+        "value": "oklch(0.17 0.012 255)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.93 0.01 255)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.21 0.015 255)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(0.25 0.018 255)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.27 0.016 255)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.715 0.015 255)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.7 0.07 245)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.985 0.008 255)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.85 0.012 255 / 12%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.7 0.07 245)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.68 0.16 27)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 27)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.32 0.05 27)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.72 0.1 27 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.72 0.14 150)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 150)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.32 0.045 150)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.72 0.1 150 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.78 0.12 75)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.22 0.04 75)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.34 0.04 75)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.78 0.1 75 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.72 0.1 250)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 250)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.32 0.035 250)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.72 0.08 250 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.58 0.07 245 / 22%)",
+        "type": "color"
+      }
+    }
+  },
+  "dune/structural": {
+    "radius-sm": {
+      "value": "0.55rem",
+      "type": "sizing"
+    },
+    "radius-md": {
+      "value": "0.85rem",
+      "type": "sizing"
+    },
+    "radius-lg": {
+      "value": "1.15rem",
+      "type": "sizing"
+    },
+    "radius-panel": {
+      "value": "1.15rem",
+      "type": "sizing"
+    },
+    "density": {
+      "value": 0.95,
+      "type": "number"
+    },
+    "motion-duration": {
+      "value": "280ms",
+      "type": "sizing"
+    },
+    "motion-stiffness": {
+      "value": 300,
+      "type": "number"
+    },
+    "motion-damping": {
+      "value": 26,
+      "type": "number"
+    }
+  },
+  "dune/light": {
+    "color": {
+      "background": {
+        "value": "oklch(0.96 0.02 85)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.28 0.04 65)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.985 0.012 90)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(0.995 0.006 95)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.92 0.025 85)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.5 0.04 70)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.58 0.11 70)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.98 0.01 90)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.4 0.04 70 / 16%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.62 0.12 70)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.55 0.16 30)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 30)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.94 0.035 30)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.56 0.12 30 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.55 0.15 140)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 140)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.94 0.035 140)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.55 0.12 140 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.75 0.14 70)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.25 0.05 70)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.94 0.04 70)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.72 0.12 70 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.52 0.11 230)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 230)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.94 0.03 230)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.52 0.09 230 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.78 0.09 80 / 30%)",
+        "type": "color"
+      }
+    }
+  },
+  "clay/structural": {
+    "radius-sm": {
+      "value": "0.5rem",
+      "type": "sizing"
+    },
+    "radius-md": {
+      "value": "0.8rem",
+      "type": "sizing"
+    },
+    "radius-lg": {
+      "value": "1.05rem",
+      "type": "sizing"
+    },
+    "radius-panel": {
+      "value": "1.05rem",
+      "type": "sizing"
+    },
+    "density": {
+      "value": 1,
+      "type": "number"
+    },
+    "motion-duration": {
+      "value": "270ms",
+      "type": "sizing"
+    },
+    "motion-stiffness": {
+      "value": 320,
+      "type": "number"
+    },
+    "motion-damping": {
+      "value": 27,
+      "type": "number"
+    }
+  },
+  "clay/light": {
+    "color": {
+      "background": {
+        "value": "oklch(0.955 0.02 55)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.27 0.045 40)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.98 0.012 50)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(0.995 0.006 45)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.915 0.025 50)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.5 0.045 40)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.55 0.12 40)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.98 0.01 50)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.4 0.05 40 / 16%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.6 0.13 40)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.54 0.17 28)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 28)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.94 0.035 28)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.56 0.12 28 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.55 0.15 145)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 145)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.94 0.035 145)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.55 0.12 145 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.75 0.14 55)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.25 0.05 55)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.94 0.04 55)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.72 0.12 55 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.52 0.11 230)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 230)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.94 0.03 230)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.52 0.09 230 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.74 0.1 45 / 28%)",
+        "type": "color"
+      }
+    }
+  },
+  "ember/structural": {
+    "radius-sm": {
+      "value": "0.45rem",
+      "type": "sizing"
+    },
+    "radius-md": {
+      "value": "0.7rem",
+      "type": "sizing"
+    },
+    "radius-lg": {
+      "value": "0.95rem",
+      "type": "sizing"
+    },
+    "radius-panel": {
+      "value": "0.95rem",
+      "type": "sizing"
+    },
+    "density": {
+      "value": 1.05,
+      "type": "number"
+    },
+    "motion-duration": {
+      "value": "230ms",
+      "type": "sizing"
+    },
+    "motion-stiffness": {
+      "value": 400,
+      "type": "number"
+    },
+    "motion-damping": {
+      "value": 28,
+      "type": "number"
+    }
+  },
+  "ember/dark": {
+    "color": {
+      "background": {
+        "value": "oklch(0.17 0.02 40)",
+        "type": "color"
+      },
+      "foreground": {
+        "value": "oklch(0.93 0.02 70)",
+        "type": "color"
+      },
+      "surface": {
+        "value": "oklch(0.21 0.025 40)",
+        "type": "color"
+      },
+      "surface-raised": {
+        "value": "oklch(0.255 0.03 42)",
+        "type": "color"
+      },
+      "muted": {
+        "value": "oklch(0.275 0.028 40)",
+        "type": "color"
+      },
+      "muted-foreground": {
+        "value": "oklch(0.72 0.03 60)",
+        "type": "color"
+      },
+      "accent": {
+        "value": "oklch(0.7 0.15 50)",
+        "type": "color"
+      },
+      "accent-foreground": {
+        "value": "oklch(0.985 0.015 50)",
+        "type": "color"
+      },
+      "border": {
+        "value": "oklch(0.84 0.03 60 / 14%)",
+        "type": "color"
+      },
+      "ring": {
+        "value": "oklch(0.7 0.15 50)",
+        "type": "color"
+      },
+      "danger": {
+        "value": "oklch(0.66 0.17 28)",
+        "type": "color"
+      },
+      "danger-foreground": {
+        "value": "oklch(0.985 0.01 28)",
+        "type": "color"
+      },
+      "danger-subtle": {
+        "value": "oklch(0.32 0.05 28)",
+        "type": "color"
+      },
+      "danger-border": {
+        "value": "oklch(0.72 0.1 28 / 40%)",
+        "type": "color"
+      },
+      "success": {
+        "value": "oklch(0.72 0.14 145)",
+        "type": "color"
+      },
+      "success-foreground": {
+        "value": "oklch(0.985 0.01 145)",
+        "type": "color"
+      },
+      "success-subtle": {
+        "value": "oklch(0.32 0.045 145)",
+        "type": "color"
+      },
+      "success-border": {
+        "value": "oklch(0.72 0.1 145 / 40%)",
+        "type": "color"
+      },
+      "warning": {
+        "value": "oklch(0.78 0.12 70)",
+        "type": "color"
+      },
+      "warning-foreground": {
+        "value": "oklch(0.22 0.04 70)",
+        "type": "color"
+      },
+      "warning-subtle": {
+        "value": "oklch(0.34 0.04 70)",
+        "type": "color"
+      },
+      "warning-border": {
+        "value": "oklch(0.78 0.1 70 / 40%)",
+        "type": "color"
+      },
+      "info": {
+        "value": "oklch(0.72 0.1 230)",
+        "type": "color"
+      },
+      "info-foreground": {
+        "value": "oklch(0.985 0.01 230)",
+        "type": "color"
+      },
+      "info-subtle": {
+        "value": "oklch(0.32 0.035 230)",
+        "type": "color"
+      },
+      "info-border": {
+        "value": "oklch(0.72 0.08 230 / 40%)",
+        "type": "color"
+      },
+      "glass-tint": {
+        "value": "oklch(0.58 0.15 50 / 28%)",
+        "type": "color"
+      }
+    }
+  }
+}

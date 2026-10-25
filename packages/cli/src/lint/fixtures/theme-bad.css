@@ -1,0 +1,10 @@
+[data-theme="test"][data-mode="light"] {
+  --kp-background: oklch(0.98 0 0);
+  --kp-foreground: oklch(0.9 0 0);
+  --kp-surface: oklch(1 0 0);
+  --kp-muted: oklch(0.94 0 0);
+  --kp-muted-foreground: oklch(0.88 0 0);
+  --kp-accent: oklch(0.95 0.02 140);
+  --kp-accent-foreground: oklch(0.92 0 0);
+  --kp-danger: oklch(0.95 0.02 30);
+}

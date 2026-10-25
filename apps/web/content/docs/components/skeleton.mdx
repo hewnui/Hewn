@@ -1,0 +1,36 @@
+---
+title: Skeleton
+description: Placeholder blocks for loading layouts.
+status: new
+tier: free
+---
+
+Skeleton is a lightweight pulse surface. Compose multiple blocks to match
+content geometry.
+
+<SkeletonDemo />
+
+## Usage
+
+```tsx
+import { Skeleton } from "@hewnui/ui";
+
+<Skeleton className="h-4 w-full" />
+```
+
+## Accessibility
+
+- Skeleton is `aria-hidden` — it is decorative geometry, never an announcement
+- Because it is silent, pair it with a live region so screen reader users learn that content is
+  loading:
+
+```tsx
+<div role="status" aria-live="polite">
+  <span className="sr-only">Loading rows…</span>
+  <Skeleton className="h-4 w-full" />
+  <Skeleton className="h-4 w-2/3" />
+</div>
+```
+
+- Remove the live region once the real content lands, or the announcement repeats
+- The pulse is a CSS animation and is suppressed by `prefers-reduced-motion`

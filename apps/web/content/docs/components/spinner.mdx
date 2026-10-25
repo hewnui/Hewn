@@ -1,0 +1,62 @@
+---
+title: Spinner
+description: Indeterminate loading indicator for inline and status feedback.
+status: stable
+tier: free
+---
+
+Spinner is a decorative indeterminate indicator. It renders `aria-hidden` —
+announce loading through the surrounding region or control text instead.
+
+<SpinnerDemo />
+
+## Usage
+
+```tsx
+import { Spinner } from "@hewnui/ui";
+
+<Spinner />
+```
+
+## Sizing and color
+
+Spinner is a 1rem square by default and inherits `currentColor`, so it takes
+the color of whatever it sits inside. Override either with `className`:
+
+```tsx
+<Spinner className="size-6" />
+<Spinner className="size-8 text-accent" />
+```
+
+## Inside a button
+
+`Button` renders a Spinner for you when `isLoading` is set — you do not need to
+compose one yourself:
+
+```tsx
+<Button isLoading>Saving</Button>
+```
+
+## Accessibility
+
+Spinner is `aria-hidden` by design. A spinning shape carries no meaning for a
+screen reader, so it is never announced on its own — the surrounding context
+has to do that work.
+
+- Pair it with a live region when the spinner is the only signal that something
+  is happening:
+
+```tsx
+<p role="status">
+  <Spinner />
+  Loading results
+</p>
+```
+
+- Inside `Button`, the accessible name already conveys state and the button is
+  disabled while loading — no extra live region is needed.
+- Do not add `role="status"` or `aria-label` to Spinner itself. Announce the
+  state on the region that owns it, or the message is read out of context.
+- Motion respects `prefers-reduced-motion: reduce` in CSS: the rotation stops
+  and the ring resolves to a static, dimmed indicator. No JavaScript involved,
+  so it works before hydration.

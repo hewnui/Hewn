@@ -1,0 +1,51 @@
+---
+title: Breadcrumbs
+description: Hierarchical trail linking ancestors to the current page.
+status: new
+tier: free
+---
+
+Compound `Breadcrumbs` and `Breadcrumb` built on React Aria. Ancestor crumbs
+render as links; the current page renders as plain text with
+`aria-current="page"`.
+
+<BreadcrumbsDemo />
+
+## Usage
+
+```tsx
+import { Breadcrumb, Breadcrumbs } from "@hewnui/ui";
+
+export function Example() {
+  return (
+    <Breadcrumbs>
+      <Breadcrumb href="/docs">Docs</Breadcrumb>
+      <Breadcrumb href="/docs/components">Components</Breadcrumb>
+      <Breadcrumb>Button</Breadcrumb>
+    </Breadcrumbs>
+  );
+}
+```
+
+Omit `href` (or set `isCurrent`) on the final crumb. Set `aria-label` on
+`Breadcrumbs` when the page has more than one navigation landmark.
+
+## States
+
+- **Current** — last crumb without `href`, announced as the current page
+- **Disabled** — `isDisabled` on `Breadcrumbs` mutes the whole trail
+- **Focus** — link crumbs show a focus ring on keyboard focus
+
+## Keyboard
+
+- `Tab` moves through ancestor links
+- `Enter` activates the focused ancestor
+- The current page crumb is not a link and is skipped as a tab stop
+- Disabled trails remove all crumbs from the tab order
+
+## Accessibility
+
+- Renders a navigation landmark; provide `aria-label` when needed
+- Current page is marked with `aria-current="page"`
+- Separators are presentational and hidden from the accessibility tree
+- Keep crumb labels short and unique within the trail

@@ -1,0 +1,44 @@
+---
+title: Switch
+description: Immediate on/off control for preferences and modes.
+status: new
+tier: free
+---
+
+Switch is for instant settings, not delayed form commits. The track and thumb
+use CSS transforms, and press scale follows the global motion setting.
+
+<SwitchDemo />
+
+## Usage
+
+```tsx
+import { Switch } from "@hewnui/ui";
+
+export function Example() {
+  return <Switch defaultSelected>Enable motion</Switch>;
+}
+```
+
+Controlled usage takes `isSelected` with `onChange`. Uncontrolled usage prefers
+`defaultSelected`.
+
+## States
+
+- **Selected / unselected** — thumb travels along the track
+- **Disabled** — reduces opacity and blocks pointer and keyboard activation
+- **Focus** — visible ring on the track via `--kp-ring`
+- **Pressed** — scale feedback when motion is enabled
+
+## Keyboard
+
+- `Tab` moves focus to the switch
+- `Space` toggles the value
+- Disabled switches are skipped in the tab order
+
+## Accessibility
+
+- Exposes the native `switch` role from React Aria
+- The label text is associated with the control; keep meaningful children
+- Selected state is announced to assistive tech
+- Focus-visible ring stays on the track, not the label text

@@ -1,0 +1,420 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "@hewnui/themes/tokens.css";
+@import "@hewnui/themes/glass.css";
+@import "@hewnui/themes/glass-buttons.css";
+@import "@hewnui/themes/radius.css";
+
+@source "../../../packages/ui/src/**/*.{ts,tsx}";
+
+:root {
+  --color-fd-background: var(--kp-background);
+  --color-fd-foreground: var(--kp-foreground);
+  --color-fd-card: var(--kp-surface);
+  --color-fd-card-foreground: var(--kp-foreground);
+  --color-fd-popover: var(--kp-surface-raised);
+  --color-fd-popover-foreground: var(--kp-foreground);
+  --color-fd-primary: var(--kp-accent);
+  --color-fd-primary-foreground: var(--kp-accent-foreground);
+  --color-fd-secondary: var(--kp-muted);
+  --color-fd-secondary-foreground: var(--kp-foreground);
+  --color-fd-muted: var(--kp-muted);
+  --color-fd-muted-foreground: var(--kp-muted-foreground);
+  --color-fd-accent: color-mix(
+    in oklch,
+    var(--kp-accent) 14%,
+    transparent
+  );
+  --color-fd-accent-foreground: var(--kp-foreground);
+  --color-fd-border: var(--kp-border);
+  --color-fd-ring: var(--kp-ring);
+}
+
+* {
+  border-color: var(--kp-border);
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--kp-background);
+  color: var(--kp-foreground);
+  text-wrap: pretty;
+}
+
+/* Let glass atmosphere show through Fumadocs chrome */
+html[data-material="glass"] .bg-fd-background,
+html[data-material="glass"] .bg-fd-card,
+html[data-material="glass"] .bg-fd-secondary,
+html[data-material="glass"] .bg-fd-muted {
+  background-color: color-mix(
+    in oklch,
+    var(--kp-surface) 55%,
+    transparent
+  ) !important;
+}
+
+html[data-material="glass"] .bg-fd-background\/80,
+html[data-material="glass"] .bg-fd-background\/60,
+html[data-material="glass"] .bg-fd-popover\/80,
+html[data-material="glass"] .bg-fd-popover\/60 {
+  background-color: color-mix(
+    in oklch,
+    var(--kp-surface) 42%,
+    transparent
+  ) !important;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: color-mix(in oklch, var(--kp-accent) 24%, transparent);
+}
+
+/*
+  Fumadocs Shiki defaults to light token colors unless `.dark` is present.
+  Hewn also keys off `data-mode`, so keep both in sync for every theme pack.
+*/
+html[data-mode="dark"] .shiki:not(.not-fumadocs-codeblock *) code span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+}
+
+html[data-mode="dark"] code.shiki:not(.not-fumadocs-code *) span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+}
+
+html[data-mode="light"] .shiki:not(.not-fumadocs-codeblock *) code span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+}
+
+html[data-mode="light"] code.shiki:not(.not-fumadocs-code *) span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+}
+
+/* Docs layout — instruments live in the sidebar; header is mobile-only */
+#nd-docs-layout {
+  --fd-header-height: 0px;
+  --fd-layout-width: 100%;
+}
+
+@media (max-width: 767px) {
+  #nd-docs-layout {
+    --fd-header-height: 3.5rem;
+  }
+}
+
+/*
+ * Size the main column from the live sidebar column so collapse does not
+ * leave a centered content island.
+ */
+#nd-docs-layout.kp-docs-layout {
+  grid-template-columns:
+    minmax(0, 1fr)
+    var(--fd-sidebar-col)
+    minmax(0, calc(100% - var(--fd-sidebar-col) - var(--fd-toc-width)))
+    var(--fd-toc-width)
+    minmax(0, 1fr) !important;
+}
+
+#nd-docs-layout #nd-sidebar {
+  border-color: color-mix(in oklch, var(--kp-border) 65%, transparent);
+  background: color-mix(in oklch, var(--kp-background) 82%, transparent);
+}
+
+#nd-docs-layout #nd-toc {
+  border-color: color-mix(in oklch, var(--kp-border) 55%, transparent);
+  top: var(--fd-docs-row-1);
+  height: calc(var(--fd-docs-height) - var(--fd-docs-row-1));
+  padding-top: 1.25rem;
+}
+
+html[data-docs-mode="soft"] .kp-docs-atmosphere {
+  opacity: 1;
+}
+
+html[data-docs-mode="studio"] .kp-docs-atmosphere {
+  opacity: 0.55;
+}
+
+html[data-docs-mode="studio"] #nd-docs-layout #nd-sidebar {
+  background: color-mix(in oklch, var(--kp-surface) 42%, transparent);
+}
+
+/* Article + specimen stage */
+#nd-page {
+  --fd-page-width: 46rem;
+}
+
+/*
+ * Fumadocs TOC title crossfade keeps an opacity-0 clone in the tree. Hide it
+ * from layout/a11y so muted text does not fail color-contrast while invisible.
+ */
+#nd-docs-layout .pointer-events-none.opacity-0 {
+  visibility: hidden;
+}
+
+/* Mobile TOC popover trigger uses muted text — bump to foreground for WCAG AA. */
+#nd-docs-layout [data-toc-popover-trigger] {
+  color: var(--kp-foreground);
+}
+
+#nd-page .prose {
+  text-wrap: pretty;
+}
+
+#nd-page .prose :where(h2, h3) {
+  font-family: var(--font-display, inherit);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Docs code snippets — studio chrome, not a faint card */
+#nd-page figure.kp-docs-code,
+#nd-page figure.shiki.kp-docs-code {
+  margin-block: 1.25rem 1.75rem;
+  border-radius: var(--kp-radius-panel);
+  border: 1px solid color-mix(in oklch, var(--kp-border) 88%, transparent);
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklch, var(--kp-accent) 8%, transparent),
+      transparent 40%
+    ),
+    var(--kp-surface-raised);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklch, white 8%, transparent),
+    var(--kp-shadow-surface);
+  overflow: hidden;
+}
+
+#nd-page figure.kp-docs-code > div:first-child {
+  height: 2.75rem;
+  padding-inline: 0.9rem 0.65rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--kp-border) 70%, transparent);
+  background: color-mix(in oklch, var(--kp-muted) 55%, transparent);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--kp-muted-foreground);
+}
+
+#nd-page figure.kp-docs-code .kp-docs-code-viewport {
+  padding-block: 1.1rem;
+  --padding-left: 1.15rem;
+  --padding-right: 1.15rem;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#nd-page .prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+#nd-page figure.kp-docs-code button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid color-mix(in oklch, var(--kp-border) 85%, transparent);
+  border-radius: var(--kp-radius-md);
+  background: color-mix(in oklch, var(--kp-surface) 70%, transparent);
+  color: var(--kp-foreground);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, white 7%, transparent);
+  transition:
+    transform 160ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 160ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 160ms cubic-bezier(0.2, 0, 0, 1),
+    color 160ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+#nd-page figure.kp-docs-code button:hover {
+  background: color-mix(in oklch, var(--kp-muted) 80%, transparent);
+  border-color: color-mix(in oklch, var(--kp-accent) 35%, var(--kp-border));
+  color: var(--kp-accent);
+}
+
+#nd-page figure.kp-docs-code button:active {
+  transform: scale(0.96);
+}
+
+#nd-page figure.kp-docs-code button[data-checked] {
+  border-color: color-mix(in oklch, var(--kp-accent) 45%, var(--kp-border));
+  color: var(--kp-accent);
+}
+
+html[data-material="glass"] #nd-page figure.kp-docs-code,
+html[data-material="glass"] #nd-page figure.shiki.kp-docs-code {
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklch, var(--kp-accent) 10%, transparent),
+      transparent 42%
+    ),
+    color-mix(in oklch, var(--kp-surface-raised) 78%, transparent) !important;
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+}
+
+/* Install + TS/JS tab chrome — hairline, not card stack */
+#nd-page .kp-docs-install-tabs,
+#nd-page .kp-docs-code-tabs {
+  margin-block: 0;
+  border-radius: var(--kp-radius-panel);
+  border-color: color-mix(in oklch, var(--kp-border) 88%, transparent);
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklch, var(--kp-accent) 6%, transparent),
+      transparent 42%
+    ),
+    var(--kp-surface-raised);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, white 8%, transparent);
+  overflow: hidden;
+}
+
+#nd-page .kp-docs-install-tabs [role="tablist"],
+#nd-page .kp-docs-code-tabs [role="tablist"] {
+  border-bottom: 1px solid color-mix(in oklch, var(--kp-border) 70%, transparent);
+  background: color-mix(in oklch, var(--kp-muted) 45%, transparent);
+}
+
+#nd-page .kp-docs-install-tabs [role="tab"],
+#nd-page .kp-docs-code-tabs [role="tab"] {
+  min-height: 2.5rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+#nd-page [data-kp-surface].not-prose,
+#nd-page .not-prose[data-kp-surface] {
+  border-color: color-mix(in oklch, var(--kp-border) 75%, transparent);
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in oklch, var(--kp-accent) 6%, transparent),
+    transparent 42%
+  );
+}
+
+#nd-toc #toc-title {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--kp-muted-foreground);
+}
+
+/* Search dialog skin */
+[data-search-full] kbd {
+  font-variant-numeric: tabular-nums;
+}
+
+.fd-scroll-container,
+#nd-docs-layout {
+  scrollbar-color: color-mix(in oklch, var(--kp-border) 80%, transparent)
+    transparent;
+}
+
+@keyframes kp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kp-progress {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.kp-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: 9999px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent;
+  border-top-color: currentColor;
+  border-right-color: color-mix(in oklch, currentColor 35%, transparent);
+  animation: kp-spin 0.7s linear infinite;
+  will-change: transform;
+}
+
+.kp-progress-indeterminate {
+  animation: kp-progress 1.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kp-spinner {
+    animation: none;
+    opacity: 0.72;
+    border-color: color-mix(in oklch, currentColor 35%, transparent);
+    border-top-color: currentColor;
+  }
+
+  .kp-progress-indeterminate {
+    animation: none;
+    opacity: 0.7;
+    left: 33%;
+  }
+
+  [data-kp-control="skeleton"] {
+    animation: none;
+    opacity: 0.85;
+  }
+
+  @keyframes kp-progress {
+    0%,
+    100% {
+      transform: translateX(100%);
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+/*
+  Theme Studio specimen — draft tokens own this subtree.
+  Keep the frame solid so docs-shell glass !important rules cannot paint
+  the html theme onto the live preview chrome.
+*/
+[data-studio-specimen].kp-studio-specimen {
+  background-color: var(--kp-background);
+  background-image: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-material="glass"] [data-studio-specimen].kp-studio-specimen {
+  background-color: var(--kp-background) !important;
+  background-image: none !important;
+  box-shadow: var(--kp-shadow-surface);
+}

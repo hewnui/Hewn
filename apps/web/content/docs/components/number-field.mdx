@@ -1,0 +1,36 @@
+---
+title: NumberField
+description: Localized number input with accessible increment and decrement steppers.
+status: new
+tier: free
+---
+
+Built on React Aria NumberField. Values use tabular numerals and format through
+`Intl.NumberFormat` options.
+
+<NumberFieldDemo />
+
+## Usage
+
+```tsx
+import { NumberField } from "@hewnui/ui";
+
+<NumberField label="Quantity" defaultValue={3} minValue={0} />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled / read-only
+- Min and max bounds
+
+## Accessibility
+
+- Stepper buttons labeled for increment and decrement
+- Arrow keys adjust the value
+- Hit targets are at least 40×40px

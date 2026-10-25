@@ -1,0 +1,59 @@
+---
+title: Theme export
+description: Download DESIGN.md, DTCG tokens, Tailwind v4 @theme, and agent skills for every curated pack.
+status: stable
+tier: free
+---
+
+Every curated Hewn theme can be exported in four free formats — from Theme
+Lab for the active pack, from Theme Studio for a draft, or as static files under
+`/themes/{pack}/`.
+
+## Formats
+
+| Format | File | Use |
+|--------|------|-----|
+| Design brief | `DESIGN.md` | Human- and AI-readable palette, typography, radius, motion, do/don't |
+| DTCG tokens | `tokens.dtcg.json` | W3C Design Tokens (`$value` / `$type`) with light and dark modes |
+| Tailwind v4 | `theme.css` | `@theme` block plus mode remaps |
+| Agent skill | `SKILL.md` | Cursor-style skill telling agents how to apply the theme |
+
+All six packs are free. Advanced Studio exporters (Style Dictionary, Figma
+variables) remain structured for a future unlock and are separate from these
+formats.
+
+## Static paths
+
+Files are generated at build time. Replace `{pack}` with `forest`, `tide`,
+`graphite`, `dune`, `clay`, or `ember`:
+
+- [`/themes/{pack}/DESIGN.md`](/themes/forest/DESIGN.md)
+- [`/themes/{pack}/tokens.dtcg.json`](/themes/forest/tokens.dtcg.json)
+- [`/themes/{pack}/theme.css`](/themes/forest/theme.css)
+- [`/themes/{pack}/SKILL.md`](/themes/forest/SKILL.md)
+- [`/themes/index.json`](/themes/index.json) — catalog of packs and formats
+
+Regenerate with `pnpm --filter @hewnui/themes generate` (also runs during
+`pnpm generate` / docs build).
+
+## Theme Lab
+
+Open [Theme Lab](/docs/theme-lab), pick a pack in the appearance controls, then
+use **Download** or **Copy** on each format. Buttons are keyboard-focusable with
+visible labels and live regions for copy confirmation.
+
+## Theme Studio
+
+Author a custom accent pack in [Theme Studio](/docs/theme-studio), open the
+**Export** tab, and download the same four formats for your draft (plus drop-in
+pack CSS).
+
+## Engine
+
+Exporters are pure functions in `@hewnui/themes/authoring`:
+
+- `exportDesignMd`
+- `exportDtcg`
+- `exportTailwindTheme`
+- `exportSkillMd`
+- `THEME_EXPORT_FORMATS` — catalog with `tier: "free"` today

@@ -1,0 +1,200 @@
+{
+  "$description": "Hewn clay theme — DTCG design tokens (light).",
+  "meta": {
+    "packId": {
+      "$type": "string",
+      "$value": "clay"
+    },
+    "basePackId": {
+      "$type": "string",
+      "$value": "clay"
+    },
+    "supportedModes": {
+      "$type": "string",
+      "$value": "light"
+    },
+    "colorScheme": {
+      "$type": "string",
+      "$value": "light"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "IBM Plex Sans",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif"
+        ]
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "IBM Plex Mono",
+          "ui-monospace",
+          "monospace"
+        ]
+      },
+      "display": {
+        "$type": "fontFamily",
+        "$value": [
+          "Space Grotesk",
+          "IBM Plex Sans",
+          "sans-serif"
+        ]
+      }
+    }
+  },
+  "modes": {
+    "light": {
+      "color": {
+        "background": {
+          "$type": "color",
+          "$value": "oklch(0.955 0.02 55)"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "oklch(0.27 0.045 40)"
+        },
+        "surface": {
+          "$type": "color",
+          "$value": "oklch(0.98 0.012 50)"
+        },
+        "surface-raised": {
+          "$type": "color",
+          "$value": "oklch(0.995 0.006 45)"
+        },
+        "muted": {
+          "$type": "color",
+          "$value": "oklch(0.915 0.025 50)"
+        },
+        "muted-foreground": {
+          "$type": "color",
+          "$value": "oklch(0.5 0.045 40)"
+        },
+        "accent": {
+          "$type": "color",
+          "$value": "oklch(0.55 0.12 40)"
+        },
+        "accent-foreground": {
+          "$type": "color",
+          "$value": "oklch(0.98 0.01 50)"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "oklch(0.4 0.05 40 / 16%)"
+        },
+        "ring": {
+          "$type": "color",
+          "$value": "oklch(0.6 0.13 40)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "oklch(0.54 0.17 28)"
+        },
+        "danger-foreground": {
+          "$type": "color",
+          "$value": "oklch(0.985 0.01 28)"
+        },
+        "danger-subtle": {
+          "$type": "color",
+          "$value": "oklch(0.94 0.035 28)"
+        },
+        "danger-border": {
+          "$type": "color",
+          "$value": "oklch(0.56 0.12 28 / 40%)"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "oklch(0.55 0.15 145)"
+        },
+        "success-foreground": {
+          "$type": "color",
+          "$value": "oklch(0.985 0.01 145)"
+        },
+        "success-subtle": {
+          "$type": "color",
+          "$value": "oklch(0.94 0.035 145)"
+        },
+        "success-border": {
+          "$type": "color",
+          "$value": "oklch(0.55 0.12 145 / 40%)"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "oklch(0.75 0.14 55)"
+        },
+        "warning-foreground": {
+          "$type": "color",
+          "$value": "oklch(0.25 0.05 55)"
+        },
+        "warning-subtle": {
+          "$type": "color",
+          "$value": "oklch(0.94 0.04 55)"
+        },
+        "warning-border": {
+          "$type": "color",
+          "$value": "oklch(0.72 0.12 55 / 40%)"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "oklch(0.52 0.11 230)"
+        },
+        "info-foreground": {
+          "$type": "color",
+          "$value": "oklch(0.985 0.01 230)"
+        },
+        "info-subtle": {
+          "$type": "color",
+          "$value": "oklch(0.94 0.03 230)"
+        },
+        "info-border": {
+          "$type": "color",
+          "$value": "oklch(0.52 0.09 230 / 40%)"
+        },
+        "glass-tint": {
+          "$type": "color",
+          "$value": "oklch(0.74 0.1 45 / 28%)"
+        }
+      },
+      "radius": {
+        "sm": {
+          "$type": "dimension",
+          "$value": "0.5rem"
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "0.8rem"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "1.05rem"
+        },
+        "panel": {
+          "$type": "dimension",
+          "$value": "1.05rem"
+        }
+      },
+      "motion": {
+        "duration": {
+          "$type": "duration",
+          "$value": "270ms"
+        },
+        "stiffness": {
+          "$type": "number",
+          "$value": 320
+        },
+        "damping": {
+          "$type": "number",
+          "$value": 27
+        }
+      },
+      "density": {
+        "$type": "number",
+        "$value": 1
+      }
+    }
+  }
+}

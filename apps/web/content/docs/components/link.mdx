@@ -1,0 +1,48 @@
+---
+title: Link
+description: Accessible navigation link with accent, muted, and underline variants.
+status: new
+tier: free
+---
+
+Styled React Aria Link for in-app and external navigation. Prefer Link over raw
+anchors so focus, press, and disabled states stay consistent with the rest of
+the system.
+
+<LinkDemo />
+
+## Usage
+
+```tsx
+import { Link } from "@hewnui/ui";
+
+export function Example() {
+  return <Link href="/docs/getting-started">Getting started</Link>;
+}
+```
+
+Pass `href` for navigation. For external destinations, React Aria still owns
+keyboard and focus behavior; add `target` / `rel` only when you need them.
+
+## Variants
+
+`accent` (default), `muted`, and `underline`.
+
+## States
+
+- **Hover / press** — color shift and press scale when motion is on
+- **Focus** — visible ring using semantic `--kp-ring`
+- **Disabled** — set `isDisabled` to block navigation and mute the style
+
+## Keyboard
+
+- `Tab` moves focus to the link
+- `Enter` activates navigation
+- Disabled links are removed from the tab order
+
+## Accessibility
+
+- Native link semantics from React Aria
+- Press scale feedback does not replace a clear focus ring
+- Disabled state exposes `aria-disabled` and prevents activation
+- Prefer descriptive link text over “click here”

@@ -1,0 +1,75 @@
+{
+  "name": "hewnui",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hewnui/Hewn.git",
+    "directory": "packages/cli"
+  },
+  "type": "module",
+  "bin": {
+    "hewn": "./dist/cli.js",
+    "hewnui": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/cli.d.ts",
+      "default": "./dist/cli.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsx ../../tooling/sync-site-url.ts && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "typescript": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@hewnui/site-url": "workspace:*",
+    "@hewnui/tsconfig": "workspace:*",
+    "@types/node": "26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  },
+  "homepage": "https://hewnui.dev",
+  "bugs": {
+    "url": "https://github.com/hewnui/Hewn/issues"
+  },
+  "author": "Himanshu Kumar",
+  "description": "Copy typed Hewn React components into your project and lint it against your theme: hewn init, add, theme, lint.",
+  "keywords": [
+    "cli",
+    "react",
+    "components",
+    "registry",
+    "copy-paste",
+    "scaffolding",
+    "lint",
+    "design-tokens",
+    "wcag",
+    "tailwindcss",
+    "react-aria",
+    "hewnui"
+  ],
+  "sideEffects": false
+}

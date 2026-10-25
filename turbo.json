@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "generate": {
+      "outputs": [".source/**", "generated/**"]
+    },
+    "web#generate": {
+      "dependsOn": ["@hewnui/registry#generate"],
+      "outputs": [
+        ".source/**",
+        "public/r/**",
+        "public/figma/**",
+        "public/themes/**",
+        "public/pro/previews/**",
+        "public/llms.txt",
+        "public/ai/**",
+        "public/ai/api/**"
+      ]
+    },
+    "@hewnui/themes#generate": {
+      "outputs": ["figma/**", "exports/**"]
+    },
+    "@hewnui/docs-metadata#generate": {
+      "dependsOn": ["@hewnui/registry#generate"],
+      "outputs": ["generated/**"]
+    },
+    "build": {
+      "dependsOn": ["^build", "generate"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck", "generate"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

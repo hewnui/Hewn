@@ -1,0 +1,100 @@
+{
+  "name": "@hewnui/themes",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hewnui/Hewn.git",
+    "directory": "packages/themes"
+  },
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      "./tokens.css": "./src/tokens.css",
+      "./motion.css": "./src/motion.css",
+      "./glass.css": "./src/glass.css",
+      "./glass-buttons.css": "./src/glass-buttons.css",
+      "./radius.css": "./src/radius.css",
+      "./packs/clay.css": "./src/packs/clay.css",
+      "./packs/dune.css": "./src/packs/dune.css",
+      "./packs/ember.css": "./src/packs/ember.css",
+      "./packs/forest.css": "./src/packs/forest.css",
+      "./packs/graphite.css": "./src/packs/graphite.css",
+      "./packs/tide.css": "./src/packs/tide.css",
+      "./authoring": {
+        "types": "./dist/authoring/index.d.ts",
+        "default": "./dist/authoring/index.js"
+      },
+      "./figma/hewn.tokens.json": "./figma/hewn.tokens.json",
+      "./figma/sticker-sheet.svg": "./figma/sticker-sheet.svg",
+      "./package.json": "./package.json"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && tsx ../../tooling/fix-esm-relative-extensions.ts dist/authoring",
+    "generate": "tsx ../../tooling/build-figma-kit.ts && tsx ../../tooling/build-theme-exports.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist",
+    "src",
+    "figma",
+    "exports",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "!**/__tests__/**"
+  ],
+  "exports": {
+    "./tokens.css": "./src/tokens.css",
+    "./motion.css": "./src/motion.css",
+    "./glass.css": "./src/glass.css",
+    "./glass-buttons.css": "./src/glass-buttons.css",
+    "./radius.css": "./src/radius.css",
+    "./packs/clay.css": "./src/packs/clay.css",
+    "./packs/dune.css": "./src/packs/dune.css",
+    "./packs/ember.css": "./src/packs/ember.css",
+    "./packs/forest.css": "./src/packs/forest.css",
+    "./packs/graphite.css": "./src/packs/graphite.css",
+    "./packs/tide.css": "./src/packs/tide.css",
+    "./authoring": {
+      "types": "./src/authoring/index.ts",
+      "default": "./src/authoring/index.ts"
+    },
+    "./figma/hewn.tokens.json": "./figma/hewn.tokens.json",
+    "./figma/sticker-sheet.svg": "./figma/sticker-sheet.svg",
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@hewnui/tsconfig": "workspace:*",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  },
+  "homepage": "https://hewnui.dev",
+  "bugs": {
+    "url": "https://github.com/hewnui/Hewn/issues"
+  },
+  "author": "Himanshu Kumar",
+  "description": "Semantic OKLCH design tokens, motion tokens and six curated theme packs (forest, tide, graphite, dune, clay, ember), with DESIGN.md, DTCG and Tailwind v4 exports.",
+  "keywords": [
+    "design-tokens",
+    "oklch",
+    "css-variables",
+    "themes",
+    "tailwindcss",
+    "tailwind-v4",
+    "dtcg",
+    "design-md",
+    "dark-mode",
+    "glassmorphism",
+    "wcag",
+    "figma-tokens",
+    "hewnui"
+  ]
+}

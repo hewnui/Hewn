@@ -1,0 +1,34 @@
+---
+title: CheckboxGroup
+description: Labeled multi-select checkbox set with shared validation messaging.
+status: new
+tier: free
+---
+
+Wraps React Aria CheckboxGroup around Hewn `Checkbox` items. Use when
+several related toggles share one label and error channel.
+
+<CheckboxGroupDemo />
+
+## Usage
+
+```tsx
+import { Checkbox, CheckboxGroup } from "@hewnui/ui";
+
+<CheckboxGroup label="Notify me about" defaultValue={["billing"]}>
+  <Checkbox value="billing">Billing</Checkbox>
+  <Checkbox value="product">Product updates</Checkbox>
+</CheckboxGroup>
+```
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled group or individual checkboxes
+
+## Accessibility
+
+- Group label associates with the set
+- Each checkbox keeps its own accessible name
+- Keyboard and screen reader behavior from React Aria

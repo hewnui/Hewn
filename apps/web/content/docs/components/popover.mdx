@@ -1,0 +1,37 @@
+---
+title: Popover
+description: Anchored content panel for short explanations without a modal layer.
+status: new
+tier: free
+---
+
+DialogTrigger + Popover pattern for lightweight overlays. Heavier confirmations
+still belong in Dialog.
+
+<PopoverDemo />
+
+## Usage
+
+```tsx
+import {
+  Button,
+  Popover,
+  PopoverBody,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@hewnui/ui";
+
+<PopoverTrigger>
+  <Button>Details</Button>
+  <Popover>
+    <PopoverTitle>Latency</PopoverTitle>
+    <PopoverBody>Median response is 47.2ms.</PopoverBody>
+  </Popover>
+</PopoverTrigger>
+```
+
+## Accessibility
+
+- Opens as a dialog for focus management
+- Esc and outside click dismiss
+- Title uses the dialog heading slot

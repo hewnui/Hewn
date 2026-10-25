@@ -1,0 +1,45 @@
+---
+title: InputGroup
+description: Text field with prefix and suffix affixes inside shared input chrome.
+status: new
+tier: free
+---
+
+Compose units, schemes, or icons beside an input without leaving the shared
+field surface. Concise `prefix` / `suffix` props cover most cases; compound
+parts support custom layouts.
+
+<InputGroupDemo />
+
+## Usage
+
+```tsx
+import { InputGroup } from "@hewnui/ui";
+
+<InputGroup label="Site" prefix="https://" suffix=".studio" placeholder="andruia" />
+```
+
+## Compound API
+
+```tsx
+<InputGroup label="Amount">
+  <InputGroup.Prefix>$</InputGroup.Prefix>
+  <InputGroup.Input placeholder="4,280" />
+  <InputGroup.Suffix>USD</InputGroup.Suffix>
+</InputGroup>
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+
+## Accessibility
+
+- Affixes are presentational; the input keeps the accessible name
+- Focus ring applies to the shared group surface

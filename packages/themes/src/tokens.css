@@ -1,0 +1,104 @@
+@import "./motion.css";
+@import "./packs/forest.css";
+@import "./packs/tide.css";
+@import "./packs/graphite.css";
+@import "./packs/dune.css";
+@import "./packs/clay.css";
+@import "./packs/ember.css";
+
+@theme inline {
+  --color-background: var(--kp-background);
+  --color-foreground: var(--kp-foreground);
+  --color-surface: var(--kp-surface);
+  --color-surface-raised: var(--kp-surface-raised);
+  --color-muted: var(--kp-muted);
+  --color-muted-foreground: var(--kp-muted-foreground);
+  --color-accent: var(--kp-accent);
+  --color-accent-foreground: var(--kp-accent-foreground);
+  --color-border: var(--kp-border);
+  --color-ring: var(--kp-ring);
+  --color-danger: var(--kp-danger);
+  --color-danger-foreground: var(--kp-danger-foreground);
+  --color-danger-subtle: var(--kp-danger-subtle);
+  --color-danger-border: var(--kp-danger-border);
+  --color-success: var(--kp-success);
+  --color-success-foreground: var(--kp-success-foreground);
+  --color-success-subtle: var(--kp-success-subtle);
+  --color-success-border: var(--kp-success-border);
+  --color-warning: var(--kp-warning);
+  --color-warning-foreground: var(--kp-warning-foreground);
+  --color-warning-subtle: var(--kp-warning-subtle);
+  --color-warning-border: var(--kp-warning-border);
+  --color-info: var(--kp-info);
+  --color-info-foreground: var(--kp-info-foreground);
+  --color-info-subtle: var(--kp-info-subtle);
+  --color-info-border: var(--kp-info-border);
+  --font-sans: var(--kp-font-sans);
+  --font-mono: var(--kp-font-mono);
+  --font-display: var(--kp-font-display);
+}
+
+html {
+  background: var(--kp-background);
+  color: var(--kp-foreground);
+  font-family: var(--kp-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes kp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kp-progress {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.kp-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: 9999px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent;
+  border-top-color: currentColor;
+  border-right-color: color-mix(in oklch, currentColor 35%, transparent);
+  animation: kp-spin 0.7s linear infinite;
+  will-change: transform;
+}
+
+.kp-progress-indeterminate {
+  animation: kp-progress 1.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kp-spinner {
+    animation: none;
+    opacity: 0.72;
+    border-color: color-mix(in oklch, currentColor 35%, transparent);
+    border-top-color: currentColor;
+  }
+
+  .kp-progress-indeterminate {
+    animation: none;
+    opacity: 0.7;
+    left: 33%;
+  }
+
+  [data-kp-control="skeleton"] {
+    animation: none;
+    opacity: 0.85;
+  }
+}
+

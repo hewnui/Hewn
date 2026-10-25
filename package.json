@@ -1,0 +1,44 @@
+{
+  "name": "hewn-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.15.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "generate": "turbo run generate",
+    "sync:exports": "tsx tooling/sync-exports.ts",
+    "sync:site-url": "tsx tooling/sync-site-url.ts",
+    "check:pack": "tsx tooling/check-pack.ts",
+    "check:bundle": "tsx tooling/check-bundle.ts",
+    "check:docs-seo": "tsx tooling/check-docs-seo.ts",
+    "check:site-url": "tsx tooling/check-site-url.ts",
+    "check:web-budgets": "tsx tooling/check-web-budgets.ts",
+    "check:shadcn-e2e": "tsx tooling/check-shadcn-e2e.ts",
+    "check:motion": "tsx tooling/check-motion.ts",
+    "check:honest-copy": "tsx tooling/check-honest-copy.ts",
+    "check:component-census": "tsx tooling/check-component-census.ts",
+    "lint:hewn": "pnpm --filter hewnui build && node packages/cli/dist/cli.js lint packages/ui apps/web",
+    "changeset": "changeset",
+    "version": "changeset version && pnpm install --no-frozen-lockfile",
+    "release": "pnpm build && pnpm check:pack && changeset publish",
+    "check": "pnpm typecheck && pnpm test && pnpm build && pnpm check:pack && pnpm check:bundle && pnpm check:docs-seo && pnpm check:site-url && pnpm check:component-census && pnpm check:web-budgets && pnpm check:shadcn-e2e && pnpm check:motion && pnpm check:honest-copy && pnpm lint:hewn",
+    "test:e2e": "pnpm --filter web build && pnpm --filter web test:e2e",
+    "test:visual": "pnpm --filter web build && pnpm --filter web test:visual",
+    "test:visual:update": "pnpm --filter web build && pnpm --filter web test:visual:update",
+    "test:visual:docker": "bash tooling/visual-docker.sh",
+    "test:visual:docker:update": "bash tooling/visual-docker.sh --update-snapshots",
+    "waitlist:export": "tsx tooling/waitlist-export.ts"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.1",
+    "tsx": "^4.23.1",
+    "turbo": "2.10.5",
+    "typescript": "6.0.3"
+  }
+}

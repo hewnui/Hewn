@@ -1,0 +1,32 @@
+---
+title: Combobox
+description: Searchable single-select built on React Aria ComboBox.
+status: new
+tier: free
+---
+
+Combobox keeps typing and list filtering in one field. Lives under **Pickers**
+in the component gallery.
+
+<ComboboxDemo />
+
+## Usage
+
+```tsx
+import { Combobox, ComboboxItem } from "@hewnui/ui";
+
+<Combobox label="City" defaultSelectedKey="lisbon">
+  <ComboboxItem id="lisbon">Lisbon</ComboboxItem>
+  <ComboboxItem id="porto">Porto</ComboboxItem>
+</Combobox>
+```
+
+## Accessibility
+
+- The input carries `role="combobox"` with `aria-expanded` and is wired to the listbox popover
+- `label` renders a real `<Label>` bound to the input — pass `aria-label` instead only when the
+  field is already labelled by adjacent text
+- Arrow keys move through options, Enter selects the focused option, Escape closes the popover
+- The toggle button is labelled by React Aria, so the ▾ glyph is never read aloud
+- Pass `textValue` on `ComboboxItem` when its children are not plain text, so typeahead and
+  announcements still have something to say

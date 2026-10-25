@@ -1,0 +1,25 @@
+/* Must beat theme-pack selectors: [data-theme][data-mode]
+   Controls use sm/md (may be fully pill). Panels use --kp-radius-panel (never 9999). */
+
+html[data-theme][data-mode][data-radius="sharp"] {
+  --kp-radius-sm: 0.125rem;
+  --kp-radius-md: 0.2rem;
+  --kp-radius-lg: 0.3rem;
+  --kp-radius-panel: 0.25rem;
+}
+
+/* soft = theme pack values (no override) */
+
+html[data-theme][data-mode][data-radius="rounded"] {
+  --kp-radius-sm: 0.85rem;
+  --kp-radius-md: 1.15rem;
+  --kp-radius-lg: 1.5rem;
+  --kp-radius-panel: 1.25rem;
+}
+
+html[data-theme][data-mode][data-radius="pill"] {
+  --kp-radius-sm: 9999px;
+  --kp-radius-md: 9999px;
+  --kp-radius-lg: 1.5rem;
+  --kp-radius-panel: 1.15rem;
+}

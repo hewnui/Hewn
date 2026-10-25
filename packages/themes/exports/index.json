@@ -1,0 +1,45 @@
+{
+  "generated": true,
+  "packs": [
+    "forest",
+    "tide",
+    "graphite",
+    "dune",
+    "clay",
+    "ember"
+  ],
+  "formats": [
+    {
+      "id": "design-md",
+      "label": "DESIGN.md",
+      "description": "Human- and AI-readable design brief with OKLCH roles and rules",
+      "tier": "free",
+      "basename": "DESIGN.md",
+      "pathTemplate": "/themes/{packId}/DESIGN.md"
+    },
+    {
+      "id": "dtcg",
+      "label": "DTCG tokens",
+      "description": "W3C Design Tokens JSON ($value / $type) with light and dark modes",
+      "tier": "free",
+      "basename": "tokens.dtcg.json",
+      "pathTemplate": "/themes/{packId}/tokens.dtcg.json"
+    },
+    {
+      "id": "tailwind-theme",
+      "label": "Tailwind @theme",
+      "description": "Tailwind CSS v4 @theme file with mode remaps",
+      "tier": "free",
+      "basename": "theme.css",
+      "pathTemplate": "/themes/{packId}/theme.css"
+    },
+    {
+      "id": "skill-md",
+      "label": "Agent skill",
+      "description": "SKILL.md instructions for coding agents using this theme",
+      "tier": "free",
+      "basename": "SKILL.md",
+      "pathTemplate": "/themes/{packId}/SKILL.md"
+    }
+  ]
+}

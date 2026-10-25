@@ -1,0 +1,29 @@
+---
+title: Card
+description: Elevated panel with optional header, body, and footer.
+status: stable
+tier: free
+---
+
+Card is for hierarchy that needs a surface — not a wrapper around every metric.
+Prefer `divide` and spacing on dense desks.
+
+<CardDemo />
+
+## Usage
+
+```tsx
+import { Card } from "@hewnui/ui";
+
+<Card>
+  <Card.Header>Latency</Card.Header>
+  <Card.Body>p95 is 211ms across the canary.</Card.Body>
+  <Card.Footer>vs prior window</Card.Footer>
+</Card>
+```
+
+## Accessibility
+
+- Card is a generic grouping element with no implicit widget role
+- Put headings in `Card.Header` so the structure is readable without color
+- Do not nest interactive regions that already have their own labels without a heading

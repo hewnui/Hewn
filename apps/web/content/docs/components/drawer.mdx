@@ -1,0 +1,57 @@
+---
+title: Drawer
+description: Side panel overlay for filters and dense tools.
+status: new
+tier: free
+---
+
+Drawer docks to the left or right edge for filters and dense tools. Escape,
+overlay click, and the header close button all dismiss it while restoring focus
+to the trigger.
+
+<DrawerDemo />
+
+## Usage
+
+```tsx
+import { Button, Drawer, DrawerTrigger } from "@hewnui/ui";
+
+export function Example() {
+  return (
+    <DrawerTrigger>
+      <Button>Filters</Button>
+      <Drawer title="Filters" side="right">
+        Content
+      </Drawer>
+    </DrawerTrigger>
+  );
+}
+```
+
+Wrap the trigger and panel in `DrawerTrigger`. Control open state with `isOpen`
+and `onOpenChange` when the host page owns the lifecycle.
+
+## Variants
+
+`side="right"` (default) and `side="left"`. Title is required so the dialog has
+an accessible name.
+
+## States
+
+- **Closed / open** — focus moves into the panel while open
+- **Dismissing** — Escape, overlay press, and the close button all close it
+- **Focus** — close control and in-panel controls keep visible focus rings
+
+## Keyboard
+
+- Activate the trigger with `Enter` or `Space`
+- `Tab` / `Shift+Tab` cycle focus inside the open drawer
+- `Escape` dismisses and returns focus to the trigger
+- The header close button is reachable by keyboard and named “Close drawer”
+
+## Accessibility
+
+- Dialog semantics with a titled heading from the `title` prop
+- Overlay is dismissible; outside click and Escape both close when enabled
+- Focus is trapped in the panel while open
+- Close glyph is decorative; the button carries an accessible name

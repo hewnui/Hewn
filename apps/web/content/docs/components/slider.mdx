@@ -1,0 +1,31 @@
+---
+title: Slider
+description: Single-value range control with tabular output and accessible thumb.
+status: new
+tier: free
+---
+
+Built on React Aria Slider. Output uses tabular numerals; the thumb keeps a
+40×40 hit target.
+
+<SliderDemo />
+
+## Usage
+
+```tsx
+import { Slider } from "@hewnui/ui";
+
+<Slider label="Opacity" defaultValue={42} minValue={0} maxValue={100} />
+```
+
+## States
+
+- Description helper text
+- Disabled
+- Dragging press scale on the thumb
+
+## Accessibility
+
+- Role `slider` with keyboard arrow support
+- Label and output are associated automatically
+- Focus ring on the thumb

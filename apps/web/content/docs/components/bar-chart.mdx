@@ -1,0 +1,42 @@
+---
+title: BarChart
+description: Categorical bar chart with optional multi-series grouping.
+status: new
+tier: free
+---
+
+BarChart maps categories on a band scale and groups series side-by-side.
+Heights animate with a spring when motion is enabled.
+
+<BarChartDemo />
+
+## Usage
+
+```tsx
+import { BarChart } from "@hewnui/ui";
+
+<BarChart
+  summary="Tickets by status"
+  series={[
+    {
+      id: "open",
+      label: "Open",
+      data: [
+        { x: "Mon", y: 4 },
+        { x: "Tue", y: 6 },
+        { x: "Wed", y: 3 },
+      ],
+    },
+  ]}
+>
+  <BarChart.Tooltip />
+</BarChart>
+```
+
+## Accessibility
+
+- The SVG is `role="img"` named by the required `summary`, which is also rendered as an `sr-only` caption
+- Every bar is focusable and labelled `"{series}: {category}, {value}"`, so the data is reachable with Tab alone
+- Focus opens the same tooltip as hover, and blur closes it
+- Axis ticks and gridlines are `aria-hidden` — the summary carries the comparison
+- `status="loading"` and `status="empty"` announce through `role="status"`; `status="error"` uses `role="alert"`

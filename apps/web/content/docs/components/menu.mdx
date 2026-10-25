@@ -1,0 +1,33 @@
+---
+title: Menu
+description: Action menu triggered from a button.
+status: new
+tier: free
+---
+
+Use Menu for compact action lists. Separators group destructive choices.
+
+<MenuDemo />
+
+## Usage
+
+```tsx
+import { Menu, MenuButton, MenuItem, MenuTrigger } from "@hewnui/ui";
+
+<MenuTrigger>
+  <MenuButton>Actions</MenuButton>
+  <Menu>
+    <MenuItem id="edit">Edit</MenuItem>
+    <MenuItem id="archive">Archive</MenuItem>
+  </Menu>
+</MenuTrigger>
+```
+
+## Accessibility
+
+- `MenuTrigger` wires `aria-haspopup` and `aria-expanded` onto the button and moves focus into the
+  menu when it opens
+- Arrow keys move between items, Home/End jump to the ends, and typeahead matches by first letters
+- Enter or Space fires `onAction`; Escape closes the menu and returns focus to the trigger
+- Items marked `isDisabled` are exposed as disabled and cannot be activated
+- `MenuSeparator` renders `role="separator"` so groups are announced as distinct

@@ -1,0 +1,36 @@
+---
+title: SearchField
+description: Search input with clear control and Escape-to-clear behavior.
+status: new
+tier: free
+---
+
+Built on React Aria SearchField. Escape clears the value; Enter can submit via
+`onSubmit`.
+
+<SearchFieldDemo />
+
+## Usage
+
+```tsx
+import { SearchField } from "@hewnui/ui";
+
+<SearchField label="Find projects" placeholder="Name or owner" />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+- Clear button when the field has a value
+
+## Accessibility
+
+- Native search semantics
+- Clear button has an accessible name
+- Escape clears; Enter submits when `onSubmit` is provided

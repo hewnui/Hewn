@@ -1,0 +1,43 @@
+---
+title: AreaChart
+description: Filled area chart for cumulative or volume trends.
+status: new
+tier: free
+---
+
+AreaChart fills under each series with a translucent accent tint and draws the
+same monotone stroke as LineChart.
+
+<AreaChartDemo />
+
+## Usage
+
+```tsx
+import { AreaChart } from "@hewnui/ui";
+
+<AreaChart
+  summary="Active users this month"
+  series={[
+    {
+      id: "users",
+      label: "Active",
+      data: [
+        { x: 1, y: 20 },
+        { x: 2, y: 28 },
+        { x: 3, y: 24 },
+        { x: 4, y: 35 },
+      ],
+    },
+  ]}
+>
+  <AreaChart.Tooltip />
+</AreaChart>
+```
+
+## Accessibility
+
+- The SVG is `role="img"` named by the required `summary`, which is also rendered as an `sr-only` caption
+- Every point is focusable and labelled `"{series}: {x}, {y}"`, so the series can be read with Tab alone
+- Focus opens the same tooltip as hover, and blur closes it
+- Axis ticks and gridlines are `aria-hidden` — the summary carries the shape of the data
+- `status="loading"` and `status="empty"` announce through `role="status"`; `status="error"` uses `role="alert"`

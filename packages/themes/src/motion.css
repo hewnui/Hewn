@@ -1,0 +1,60 @@
+/* Shared motion scale. Packs still set --kp-motion-duration / spring
+   character; these tokens are the free-library contract for CSS transitions. */
+
+:root {
+  --kp-motion-duration-instant: 0ms;
+  --kp-motion-duration-fast: 120ms;
+  --kp-motion-duration-slow: 360ms;
+  --kp-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --kp-motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --kp-motion-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --kp-motion-ease-linear: linear;
+  --kp-motion-ease: var(--kp-motion-ease-standard);
+}
+
+/* Pack default when no theme pack has applied yet. */
+:root {
+  --kp-motion-duration: 200ms;
+  --kp-motion-stiffness: 360;
+  --kp-motion-damping: 28;
+}
+
+/*
+  Mode attribute is written by MotionProvider (effective mode).
+  reduced/off zero timing tokens so CSS-only surfaces collapse safely.
+  Transform/layout animation remains forbidden in sources (see check:motion).
+*/
+html[data-motion="reduced"],
+html[data-motion="off"] {
+  --kp-motion-duration-instant: 0ms;
+  --kp-motion-duration-fast: 0ms;
+  --kp-motion-duration: 0ms;
+  --kp-motion-duration-slow: 0ms;
+}
+
+html[data-motion="reduced"] .kp-spinner,
+html[data-motion="off"] .kp-spinner,
+html[data-motion="reduced"] .kp-progress-indeterminate,
+html[data-motion="off"] .kp-progress-indeterminate,
+html[data-motion="reduced"] [data-kp-control="skeleton"],
+html[data-motion="off"] [data-kp-control="skeleton"] {
+  animation: none;
+}
+
+html[data-motion="reduced"] .kp-spinner,
+html[data-motion="off"] .kp-spinner {
+  opacity: 0.72;
+  border-color: color-mix(in oklch, currentColor 35%, transparent);
+  border-top-color: currentColor;
+}
+
+html[data-motion="reduced"] .kp-progress-indeterminate,
+html[data-motion="off"] .kp-progress-indeterminate {
+  opacity: 0.7;
+  left: 33%;
+}
+
+html[data-motion="reduced"] [data-kp-control="skeleton"],
+html[data-motion="off"] [data-kp-control="skeleton"] {
+  opacity: 0.85;
+}

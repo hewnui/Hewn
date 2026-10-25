@@ -1,0 +1,48 @@
+---
+title: DatePicker
+description: Accessible date field with calendar popover.
+status: new
+tier: free
+---
+
+DatePicker wraps React Aria date segments and calendar navigation. Lives under
+**Date and Time** in the component gallery.
+
+<DatePickerDemo />
+
+## Usage
+
+```tsx
+import { DatePicker } from "@hewnui/ui";
+
+export function Example() {
+  return <DatePicker label="Ship date" />;
+}
+```
+
+The field shows localized segments (year, month, day). Open the calendar from
+the trailing button or by completing segment focus and activating the popover
+trigger.
+
+## States
+
+- **Empty / valued** — segments show placeholders until filled
+- **Required** — set `isRequired` when the date cannot be blank
+- **Disabled** — set `isDisabled` to block segment editing and the calendar
+- **Focus** — focused segments and calendar cells use a visible ring
+
+## Keyboard
+
+- `Tab` moves between the date group and the calendar button
+- Arrow keys and typing edit the focused segment
+- `Enter` or `Space` on the calendar button opens the popover
+- Inside the grid, arrows move between days; `Enter` selects
+- `Escape` closes the calendar and returns focus to the field
+- `PageUp` / `PageDown` move by month when the grid is focused
+
+## Accessibility
+
+- Segmented date editing keeps each part individually reachable
+- Calendar grid supports full keyboard navigation
+- Localized formatting and calendar labels come from React Aria
+- The field group is named by the `label` prop

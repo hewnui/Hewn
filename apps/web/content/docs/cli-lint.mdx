@@ -1,0 +1,118 @@
+---
+title: CLI lint
+description: Static checks for Hewn tokens, contrast, motion, and overlay a11y.
+status: stable
+tier: free
+---
+
+`hewn lint` walks your project (and this monorepo in CI) for design-system
+guarantees. It uses the TypeScript compiler API when available and prints
+`file:line:column` findings with rule ids.
+
+```bash
+# Available at launch: npx hewnui@latest lint
+# Available at launch: npx hewnui@latest lint src/components --json
+# Available at launch: npx hewnui@latest lint --fix
+```
+
+Exit code is `1` when any **error**-severity finding remains. Warnings do not
+fail the process.
+
+## Configuration
+
+Extend `hewn.json` (created by `hewn init`):
+
+```json
+{
+  "root": "components/hewn",
+  "tsx": true,
+  "lint": {
+    "include": ["**/*.{ts,tsx,css}"],
+    "ignore": ["**/*.test.*", "**/dist/**"],
+    "themes": ["**/node_modules/@hewnui/themes/**/*.css"],
+    "rules": {
+      "tokens-only": "error",
+      "aa-contrast": "error",
+      "reduced-motion": "error",
+      "labelled-overlays": "error",
+      "destructive-confirms": "warn"
+    }
+  }
+}
+```
+
+Set a rule to `"off"` to disable it. `ignore` globs apply to source files and
+theme CSS used by `aa-contrast`.
+
+## Rule reference
+
+### `tokens-only`
+
+Flags raw colour literals in components — hex, `rgb`/`hsl`/`oklch`/`oklab`, and
+Tailwind arbitrary colours such as `bg-[#…]`. Prefer semantic tokens
+(`var(--kp-foreground)`, `bg-accent`, …).
+
+Allowlisted: Hewn token definitions (`--kp-*`), fragment `href="#…"`
+anchors, and neutral black/white OKLCH recipes used for shadows and glass
+refraction (`oklch(0 0 0 / α)`, `oklch(1 0 0 / α)`).
+
+### `aa-contrast`
+
+Reads theme pack CSS (or paths in `lint.themes`) and checks semantic pairs:
+
+| Pair | Minimum |
+|------|---------|
+| `--kp-foreground` on `--kp-background` / `--kp-surface` | 4.5:1 text |
+| `--kp-accent-foreground` on `--kp-accent` | 4.5:1 text |
+| `--kp-muted-foreground` on `--kp-background` / `--kp-muted` | 3:1 large/UI |
+| `--kp-accent` / `--kp-danger` on `--kp-background` | 3:1 UI |
+
+Contrast math converts OKLCH → sRGB → WCAG relative luminance.
+
+### `reduced-motion`
+
+Flags `transition-all` / `transition: all`, and Motion usage
+(`motion/react` or `framer-motion`) without a statically detectable
+reduced-motion path (`useReducedMotion`, `useMotionMode`, `motionEnabled`,
+`MotionConfig`, or `prefers-reduced-motion`).
+
+`--fix` rewrites `transition-all` to an explicit property list
+(`color`, `background-color`, `border-color`, `opacity`, `transform`,
+`box-shadow`).
+
+### `labelled-overlays`
+
+Flags `Dialog` / `Modal` / `Sheet` / `Drawer` usages without an accessible
+name (`aria-label`, `aria-labelledby`, `title` prop, or `Heading` slot).
+Passthrough composition shells (`<Dialog>{children}</Dialog>`) are skipped.
+Popovers are not flagged — they typically inherit the trigger name.
+
+### `destructive-confirms` (warning)
+
+Heuristic: `Button` with a danger/destructive variant whose press handler or
+label looks delete-like (`delete`, `remove`, …) without a confirm pattern
+(`Dialog`, `AlertDialog`, `window.confirm`, …) in the same file.
+
+## JSON output
+
+```bash
+# Available at launch: npx hewnui@latest lint --json
+```
+
+```json
+{
+  "errorCount": 1,
+  "warnCount": 0,
+  "fixed": 0,
+  "findings": [
+    {
+      "ruleId": "tokens-only",
+      "severity": "error",
+      "message": "Raw colour literal — use a semantic token…",
+      "file": "src/Button.tsx",
+      "line": 12,
+      "column": 18
+    }
+  ]
+}
+```

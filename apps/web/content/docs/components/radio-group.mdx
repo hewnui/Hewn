@@ -1,0 +1,38 @@
+---
+title: RadioGroup
+description: Mutually exclusive choice set with animated selection indicator.
+status: new
+tier: free
+---
+
+Compound `RadioGroup` and `Radio` built on React Aria. Use for single-select
+settings where options should stay visible.
+
+<RadioGroupDemo />
+
+## Usage
+
+```tsx
+import { Radio, RadioGroup } from "@hewnui/ui";
+
+<RadioGroup label="Plan" defaultValue="pro">
+  <Radio value="free">Free</Radio>
+  <Radio value="pro">Pro</Radio>
+</RadioGroup>
+```
+
+## Orientation
+
+`vertical` (default) or `horizontal`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled group or individual radios
+
+## Accessibility
+
+- Arrow keys move selection within the group
+- Selection indicator respects reduced motion
+- Focus ring on the active radio

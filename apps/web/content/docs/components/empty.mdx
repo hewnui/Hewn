@@ -1,0 +1,27 @@
+---
+title: Empty
+description: Status region for lists and tables with nothing to show.
+status: stable
+tier: free
+---
+
+Empty tells people the region is intentional, not broken. Pair it with an action
+when they can populate it.
+
+<EmptyDemo />
+
+## Usage
+
+```tsx
+import { Button, Empty } from "@hewnui/ui";
+
+<Empty title="No jobs" action={<Button>Queue deploy</Button>}>
+  Routed work will land here.
+</Empty>
+```
+
+## Accessibility
+
+- Renders `role="status"` so a newly empty region is announced
+- `title` is the name of the state; supporting copy is optional
+- Keep the action a real control (Button, Link) — do not put the only next step in placeholder art

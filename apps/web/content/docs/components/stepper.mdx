@@ -1,0 +1,39 @@
+---
+title: Stepper
+description: Multi-step progress indicator with horizontal and vertical orientations.
+status: new
+tier: free
+---
+
+Stepper tracks wizard progress with complete, current, upcoming, error, and
+optional states. Pair it with `useStepper` for controlled flows.
+
+<StepperDemo />
+
+## Usage
+
+```tsx
+import { Stepper, StepperStep, useStepper } from "@hewnui/ui";
+
+const { currentIndex, goTo, next, previous } = useStepper({ count: 3 });
+
+<Stepper currentIndex={currentIndex} onStepChange={goTo}>
+  <StepperStep description="Name and owners">Account</StepperStep>
+  <StepperStep>Details</StepperStep>
+  <StepperStep isOptional>Review</StepperStep>
+</Stepper>
+```
+
+## States
+
+- Complete, current, upcoming (derived or explicit)
+- Error — alert glyph in the indicator
+- Optional — dashed indicator + Optional label
+
+## Accessibility
+
+- Navigation landmark with an accessible name
+- Current step exposes `aria-current="step"`
+- Indicators are presentational; titles provide the accessible name
+- Clickable completed steps are real buttons with 40×40 indicators and press scale
+- Connectors are `aria-hidden`

@@ -1,0 +1,66 @@
+{
+  "name": "@hewnui/motion",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hewnui/Hewn.git",
+    "directory": "packages/motion"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "motion": "^12.42.2",
+    "react": "^19.2.7"
+  },
+  "devDependencies": {
+    "@hewnui/tsconfig": "workspace:*",
+    "motion": "12.42.2",
+    "react": "19.2.7",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "homepage": "https://hewnui.dev",
+  "bugs": {
+    "url": "https://github.com/hewnui/Hewn/issues"
+  },
+  "author": "Himanshu Kumar",
+  "description": "Shared motion tokens and reduced-motion-aware primitives (full, reduced, off) used by Hewn components.",
+  "keywords": [
+    "react",
+    "motion",
+    "framer-motion",
+    "animation",
+    "reduced-motion",
+    "accessibility",
+    "design-tokens",
+    "hewnui"
+  ]
+}

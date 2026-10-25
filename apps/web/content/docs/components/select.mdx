@@ -1,0 +1,56 @@
+---
+title: Select
+description: Single-select control with popover listbox.
+status: new
+tier: free
+---
+
+Select keeps a concise labeled trigger while list items stay composable. Lives
+under **Pickers** in the component gallery.
+
+<SelectDemo />
+
+## Usage
+
+```tsx
+import { Select, SelectItem } from "@hewnui/ui";
+
+export function Example() {
+  return (
+    <Select label="Theme pack" defaultSelectedKey="forest">
+      <SelectItem id="forest">Forest</SelectItem>
+      <SelectItem id="tide">Tide</SelectItem>
+    </Select>
+  );
+}
+```
+
+Use `selectedKey` / `onSelectionChange` for controlled value. Pass `textValue`
+on `SelectItem` when children are not plain text so typeahead still works.
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`. Under the global glass
+material, boxed variants pick up tinted frost; `flushed` stays underline-only.
+
+## States
+
+- **Placeholder** — shown until a key is selected
+- **Disabled** — `isDisabled` mutes the trigger and blocks opening
+- **Invalid / required** — `isInvalid` and `isRequired` for form validation
+- **Focus** — ring on the trigger; list items highlight on keyboard focus
+
+## Keyboard
+
+- `Tab` focuses the trigger
+- `Enter`, `Space`, or `ArrowDown` / `ArrowUp` opens the listbox
+- Arrow keys move through options; typeahead jumps by printable characters
+- `Enter` selects the focused option; `Escape` closes without changing value
+- Disabled selects are skipped in the tab order
+
+## Accessibility
+
+- Trigger uses button/combobox semantics from React Aria with `aria-expanded`
+- `label` renders a real field label bound to the trigger
+- Selected option is announced when the popover closes
+- Listbox items expose selected and disabled states to assistive tech

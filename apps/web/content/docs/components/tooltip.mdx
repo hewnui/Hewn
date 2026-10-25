@@ -1,0 +1,32 @@
+---
+title: Tooltip
+description: Short contextual hint anchored to a trigger on hover or focus.
+status: new
+tier: free
+---
+
+Built on React Aria TooltipTrigger and Tooltip. Prefer for brief labels; use
+Popover when the content needs a title or actions.
+
+<TooltipDemo />
+
+## Usage
+
+```tsx
+import { Button, Tooltip, TooltipTrigger } from "@hewnui/ui";
+
+<TooltipTrigger>
+  <Button>Help</Button>
+  <Tooltip>Keyboard shortcut</Tooltip>
+</TooltipTrigger>
+```
+
+## Placement
+
+Defaults to `top`. Pass `placement` for other overlay sides.
+
+## Accessibility
+
+- Appears on hover and keyboard focus
+- Exposed with `role="tooltip"`
+- Delay defaults to 400ms; demos often use a shorter delay

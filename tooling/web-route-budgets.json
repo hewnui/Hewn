@@ -1,0 +1,37 @@
+{
+  "description": "First-load JS budgets for prerendered apps/web routes. Measured from <script src> tags in emitted HTML + .next/static chunk sizes (raw bytes, not gzip). Headroom covers Turbopack vs webpack chunk variance without flaking on normal changes.",
+  "routes": [
+    {
+      "label": "home",
+      "html": "apps/web/.next/server/app/index.html",
+      "maxJsKb": 1150
+    },
+    {
+      "label": "docs index",
+      "html": "apps/web/.next/server/app/docs.html",
+      "maxJsKb": 1200
+    },
+    {
+      "label": "docs button",
+      "html": "apps/web/.next/server/app/docs/components/button.html",
+      "maxJsKb": 1200
+    },
+    {
+      "label": "docs data-table",
+      "html": "apps/web/.next/server/app/docs/components/data-table.html",
+      "maxJsKb": 1200
+    },
+    {
+      "label": "docs date-picker",
+      "html": "apps/web/.next/server/app/docs/components/date-picker.html",
+      "maxJsKb": 1200
+    }
+  ],
+  "securityHeaderKeys": [
+    "Content-Security-Policy",
+    "X-Frame-Options",
+    "Referrer-Policy",
+    "X-Content-Type-Options",
+    "Permissions-Policy"
+  ]
+}

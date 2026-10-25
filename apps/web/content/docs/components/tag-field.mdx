@@ -1,0 +1,44 @@
+---
+title: TagField
+description: Filterable multi-select that shows selections as removable tags.
+status: new
+tier: free
+---
+
+TagField (also exported as `MultiSelect`) combines React Aria ComboBox
+multi-select with a TagGroup of removable chips. Lives under **Pickers** in the
+component gallery.
+
+<TagFieldDemo />
+
+## Usage
+
+```tsx
+import { TagField, TagFieldItem } from "@hewnui/ui";
+
+<TagField label="Skills" defaultValue={["react"]} maxSelections={3} name="skills">
+  <TagFieldItem id="react">React</TagFieldItem>
+  <TagFieldItem id="svelte">Svelte</TagFieldItem>
+  <TagFieldItem id="vue" isDisabled>
+    Vue
+  </TagFieldItem>
+</TagField>
+```
+
+`MultiSelect` / `MultiSelectItem` are aliases for the same API.
+
+## States
+
+- Empty tag list (optional `emptyLabel`)
+- Empty filtered list (`listEmptyLabel`)
+- Disabled field and disabled items
+- Invalid + `errorMessage`
+- Maximum selections reached (announced live)
+
+## Accessibility
+
+- Combobox + listbox semantics from React Aria
+- Selected values render in a TagGroup grid with remove buttons
+- Backspace on an empty input removes the last tag
+- Arrow keys move between tags; Delete/remove clears the focused tag
+- Screen readers hear selection count and max-selection announcements

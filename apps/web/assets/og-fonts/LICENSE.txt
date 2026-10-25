@@ -1,0 +1,3 @@
+IBM Plex Sans / IBM Plex Mono — SIL Open Font License 1.1 (Copyright IBM Corp.)
+Space Grotesk — SIL Open Font License 1.1 (Copyright Florian Karsten)
+Downloaded as Latin static TTFs from Fontsource CDN for next/og (Satori) build-time rendering.

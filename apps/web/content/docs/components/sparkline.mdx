@@ -1,0 +1,33 @@
+---
+title: Sparkline
+description: Compact inline trend line for dense data surfaces.
+status: new
+tier: free
+---
+
+Sparkline is a minimal trend line for tables, cards, and dashboards. It uses
+`role="img"` with a required summary and respects reduced motion.
+
+<SparklineDemo />
+
+## Usage
+
+```tsx
+import { Sparkline } from "@hewnui/ui";
+
+<Sparkline
+  data={[4, 6, 5, 9, 7, 11]}
+  summary="Signups over the last six weeks"
+/>
+```
+
+## States
+
+- `loading` — skeleton placeholder
+- `empty` — dashed empty message (also when `data` is empty)
+- `error` — alert message
+
+## Accessibility
+
+Provide a concrete `summary`. Prefer a surrounding visually-hidden data table
+when the exact values matter.

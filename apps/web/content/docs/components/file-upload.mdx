@@ -1,0 +1,41 @@
+---
+title: FileUpload
+description: Drag-and-drop file zone with browse trigger and removable file list.
+status: new
+tier: free
+---
+
+Combines React Aria DropZone and FileTrigger. Browse or drop files, then remove
+items from the list before submit.
+
+<FileUploadDemo />
+
+## Usage
+
+```tsx
+import { FileUpload } from "@hewnui/ui";
+
+<FileUpload
+  label="Brand mark"
+  acceptedFileTypes={["image/png", "image/svg+xml"]}
+  allowsMultiple={false}
+  onFilesChange={(files) => console.log(files)}
+/>
+```
+
+## States
+
+- Empty drop prompt with browse action
+- Drop target highlight (solid accent edge + press scale)
+- Selected file list with remove actions
+- Invalid + `errorMessage`
+- Disabled
+
+Under the global **glass** material, the zone and file rows pick up tinted frost
+while the dashed drop edge stays readable.
+
+## Accessibility
+
+- Drop zone is keyboard focusable
+- Browse uses a pressable Button via FileTrigger
+- Remove actions are named per file

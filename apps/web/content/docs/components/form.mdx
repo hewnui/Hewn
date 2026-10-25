@@ -1,0 +1,33 @@
+---
+title: Form
+description: Accessible form container for native and custom field validation.
+status: new
+tier: free
+---
+
+Thin wrapper around React Aria Form. Compose Hewn fields inside and use
+native constraint validation or `validationErrors` for server feedback.
+
+<FormDemo />
+
+## Usage
+
+```tsx
+import { Button, Form, TextField } from "@hewnui/ui";
+
+<Form onSubmit={(event) => event.preventDefault()}>
+  <TextField label="Email" name="email" type="email" isRequired />
+  <Button type="submit">Continue</Button>
+</Form>
+```
+
+## Notes
+
+- No React Hook Form or Formik dependency
+- Fields keep their own labels, descriptions, and errors
+- Use `validationErrors` for server-side messages keyed by field name
+
+## Accessibility
+
+- Landmark `form` role when labeled
+- Focus moves to the first invalid field on failed submit

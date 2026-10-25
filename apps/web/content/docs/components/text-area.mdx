@@ -1,0 +1,39 @@
+---
+title: TextArea
+description: Multiline labeled field with description and validation messaging.
+status: new
+tier: free
+---
+
+Built on React Aria TextField with a TextArea control. Labels sit above the
+control with optional helper and error text below.
+
+<TextAreaDemo />
+
+## Usage
+
+```tsx
+import { TextArea } from "@hewnui/ui";
+
+<TextArea label="Notes" placeholder="Add context" rows={4} />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## Sizes
+
+`sm`, `md` (default), and `lg`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+
+## Accessibility
+
+- Label association through React Aria
+- Error text connected via field semantics
+- Keyboard focus ring on the textarea

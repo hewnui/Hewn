@@ -1,0 +1,39 @@
+---
+title: Theme Lab
+description: Dashboard preview of packs across foundation tokens and component levels.
+status: stable
+tier: free
+---
+
+Theme Lab is a **dashboard-style preview**: one active pack at a time, inspected
+by level — foundation tokens, actions, forms, navigation, data, and feedback.
+Use the sidebar appearance control to change theme, compatible mode, material,
+radius, and motion. Choices persist while you browse.
+
+<DocsThemeLabFrame />
+
+## Levels
+
+| Level | What you inspect |
+|-------|------------------|
+| Foundation | Semantic colors, typography, surface stack |
+| Actions | Button variants, states, links |
+| Forms | Fields, toggles, slider |
+| Navigation | Breadcrumbs, tabs |
+| Data | Metrics, sparkline, table |
+| Feedback | Progress, skeleton, spinner |
+
+## Exports
+
+The **Free exports** panel downloads or copies four formats for the active pack:
+`DESIGN.md`, DTCG tokens JSON, Tailwind v4 `@theme`, and an agent `SKILL.md`.
+Static copies also live under `/themes/{pack}/` — see
+[Theme export](/docs/themes/export).
+
+## Rules
+
+- One theme at a time
+- Mode options only show curated combinations
+- Glass and motion are global, never per-component props
+- Motion modes are `full` | `reduced` | `off`; OS reduced-motion always wins over `full`
+- Theme Studio authors custom packs; Theme Lab evaluates curated ones in context

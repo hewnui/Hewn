@@ -1,0 +1,44 @@
+---
+title: LineChart
+description: Multi-series line chart with optional tooltip.
+status: new
+tier: free
+---
+
+LineChart plots one or more series with theme-token colors, grid/axis labels,
+and draw-in motion. Use `LineChart.Tooltip` for point details.
+
+<LineChartDemo />
+
+## Usage
+
+```tsx
+import { LineChart } from "@hewnui/ui";
+
+<LineChart
+  summary="Revenue by weekday"
+  series={[
+    {
+      id: "rev",
+      label: "Revenue",
+      data: [
+        { x: "Mon", y: 12 },
+        { x: "Tue", y: 18 },
+        { x: "Wed", y: 15 },
+      ],
+    },
+  ]}
+>
+  <LineChart.Tooltip />
+</LineChart>
+```
+
+## States
+
+`loading`, `empty`, and `error` via the `status` prop (empty also when series
+have no points).
+
+## Accessibility
+
+`role="img"` plus required `summary`. Points are keyboard-focusable when a
+tooltip is used.

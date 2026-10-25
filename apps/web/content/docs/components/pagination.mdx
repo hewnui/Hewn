@@ -1,0 +1,43 @@
+---
+title: Pagination
+description: Accessible page navigation with numbered pages, ellipsis, and optional links.
+status: new
+tier: free
+---
+
+Pagination is a navigation landmark with previous/next controls, numbered pages,
+ellipsis gaps, and an optional link mode for SEO-friendly listings. Lives under
+**Navigation** in the component gallery.
+
+<PaginationDemo />
+
+## Usage
+
+```tsx
+import { Pagination } from "@hewnui/ui";
+
+<Pagination total={12} defaultPage={1} onPageChange={(page) => console.log(page)} />
+```
+
+### Link mode
+
+```tsx
+<Pagination
+  total={12}
+  page={2}
+  getHref={(page) => `/docs?page=${page}`}
+/>
+```
+
+## States
+
+- Current page marked with `aria-current="page"`
+- Previous/next disabled at the ends
+- Optional fully disabled pager
+
+## Accessibility
+
+- `nav` landmark with an accessible name
+- Keyboard focusable controls activated with Enter or Space
+- Page numbers use tabular numerals
+- Ellipsis markers are presentational

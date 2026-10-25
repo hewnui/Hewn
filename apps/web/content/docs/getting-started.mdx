@@ -1,0 +1,154 @@
+---
+title: Getting started
+description: Wire providers and Tailwind CSS v4. Packages publish at launch.
+status: stable
+tier: free
+---
+
+{/* Install command strings: packages/docs-metadata/src/distribution.ts — flip PACKAGES_PUBLISHED after npm publish. */}
+
+Hewn is a motion-native React component library built on React Aria,
+Tailwind CSS v4, and Motion. The public docs and free registry are live today.
+npm packages and the CLI are **available at launch** — until then, copy
+examples from these docs or fetch component JSON from the [live
+registry](https://hewnui.dev/r/index.free.json).
+
+## Install
+
+Packages are not on npm yet. When they publish, install with:
+
+```bash
+# Available at launch: pnpm add @hewnui/ui
+```
+
+Until then, use a component page example or pull registry source:
+
+```bash
+curl -s https://hewnui.dev/r/button.json
+```
+
+Peer dependencies (needed once you own the source or install from npm):
+
+```bash
+pnpm add react react-dom react-aria-components motion
+```
+
+| Peer | Supported range |
+|------|-----------------|
+| `react` | `^19.2.7` |
+| `react-dom` | `^19.2.7` |
+| `react-aria-components` | `^1.19.0` |
+| `motion` | `^12.42.2` |
+
+Prefer a copy-to-project CLI? Commands are documented on the
+[CLI reference](/docs/cli) and labeled **available at launch**; today the
+working path is the live registry JSON above.
+
+## Tailwind CSS v4
+
+Hewn targets Tailwind v4, which is configured in CSS rather than a
+`tailwind.config.js`. Import Tailwind and the theme layers in your global
+stylesheet. After npm publish these resolve from `@hewnui/themes`; until
+then copy the CSS from the monorepo `packages/themes` package or follow a
+component docs example that already imports tokens on this site.
+
+```css
+@import "tailwindcss";
+
+@import "@hewnui/themes/tokens.css";
+@import "@hewnui/themes/radius.css";
+@import "@hewnui/themes/glass.css";
+@import "@hewnui/themes/glass-buttons.css";
+```
+
+`tokens.css` is required — it defines the semantic `--kp-*` custom properties
+every component reads. The rest are opt-in: `radius.css` powers the global
+radius scale, and the two `glass` layers are only needed if you use the tinted
+glass material.
+
+Tailwind v4 only generates classes it can see, so point `@source` at the
+installed package or it will strip the component styles:
+
+```css
+@source "../node_modules/@hewnui/ui/dist/**/*.js";
+```
+
+If you copied source instead, point `@source` at your component root (for
+example `components/hewn`) — or omit it entirely when the files already
+sit inside your default content paths.
+
+<Callout type="warn">
+  Do not configure the Tailwind v3 PostCSS plugin. Hewn requires
+  `@tailwindcss/postcss`; the legacy plugin will not resolve the `@import`
+  layers above.
+</Callout>
+
+## Providers
+
+Wrap your app once, as high as possible. Each provider owns one global concern
+and writes a `data-*` attribute on `<html>` that the token layers respond to.
+
+```tsx
+"use client";
+
+import {
+  MaterialProvider,
+  MotionProvider,
+  RadiusProvider,
+  ThemeProvider,
+  ToastProvider,
+} from "@hewnui/ui";
+import type { ReactNode } from "react";
+
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider defaultTheme="forest" defaultMode="light">
+      <MaterialProvider defaultMaterial="solid">
+        <RadiusProvider defaultRadius="soft">
+          <MotionProvider defaultMotion="full">
+            <ToastProvider>{children}</ToastProvider>
+          </MotionProvider>
+        </RadiusProvider>
+      </MaterialProvider>
+    </ThemeProvider>
+  );
+}
+```
+
+| Provider | Controls | Values |
+|----------|----------|--------|
+| `ThemeProvider` | Active pack and mode | `forest`, `tide`, `graphite`, `dune`, `clay`, `ember` |
+| `MaterialProvider` | Global surface material | `solid`, `glass` |
+| `RadiusProvider` | Global radius scale | `sharp`, `soft`, `rounded`, `pill` |
+| `MotionProvider` | Global motion mode | `full`, `reduced`, `off` |
+| `ToastProvider` | Toast queue and region | — |
+
+Only `ThemeProvider` is strictly required. Add the others when you want global
+control over material, radius, motion, or toasts.
+
+Not every pack supports both modes — Dune and Clay are light-only, Ember is
+dark-only, and Forest, Tide, and Graphite support both. Requesting an
+unsupported mode falls back to the pack's first allowed mode. See
+[Themes](/docs/themes) for the full matrix.
+
+<Callout>
+  `MotionProvider` never overrides the OS. `prefers-reduced-motion: reduce`
+  caps the effective mode at `reduced` — a `full` preference cannot win. See
+  [Motion](/docs/motion) for tokens and the transform-only contract.
+</Callout>
+
+## First component
+
+```tsx
+import { Button } from "@hewnui/ui";
+
+export function Example() {
+  return <Button variant="primary">Save changes</Button>;
+}
+```
+
+## Next steps
+
+- [Browse the components](/docs/components) — every free component with live examples
+- [Theme Lab](/docs/theme-lab) — preview a theme across every state and variant
+- [Theme Studio](/docs/theme-studio) — author your own pack from an accent seed

@@ -1,0 +1,36 @@
+{
+  "root": "packages/ui/src/components",
+  "tsx": true,
+  "lint": {
+    "include": [
+      "packages/ui/**/*.{ts,tsx,css}",
+      "apps/web/**/*.{ts,tsx,css}"
+    ],
+    "ignore": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/*.test.*",
+      "**/fixtures/**",
+      "packages/cli/src/lint/**",
+      "apps/web/app/apple-icon.tsx",
+      "apps/web/app/manifest.ts",
+      "apps/web/app/opengraph-image.tsx",
+      "apps/web/lib/deployment-indexing.ts",
+      "apps/web/components/theme-studio/**",
+      "apps/web/lib/og/**",
+      "apps/web/e2e/**",
+      "apps/web/public/themes/**",
+      "apps/web/components/demos/color-picker-demo.tsx",
+      "packages/ui/src/components/color-picker/**"
+    ],
+    "themes": ["packages/themes/src/packs/*.css"],
+    "rules": {
+      "tokens-only": "error",
+      "aa-contrast": "error",
+      "reduced-motion": "error",
+      "labelled-overlays": "error",
+      "destructive-confirms": "warn"
+    }
+  }
+}

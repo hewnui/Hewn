@@ -1,0 +1,40 @@
+---
+title: Dialog
+description: Modal surface for confirmations and focused tasks.
+status: new
+tier: free
+---
+
+Dialog pairs a trigger with a dismissible modal. Content uses compound parts
+for title, body, and actions.
+
+<DialogDemo />
+
+## Usage
+
+```tsx
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogTrigger,
+} from "@hewnui/ui";
+
+<DialogTrigger>
+  <Button>Open</Button>
+  <Dialog title="Confirm">
+    <DialogBody>Archive this draft?</DialogBody>
+    <DialogActions>
+      <Button variant="secondary" slot="close">Cancel</Button>
+      <Button slot="close">Confirm</Button>
+    </DialogActions>
+  </Dialog>
+</DialogTrigger>
+```
+
+## Accessibility
+
+- Dialog role and labeled title
+- Escape and outside click dismiss
+- Focus moves into the modal while open

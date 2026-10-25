@@ -1,0 +1,39 @@
+{
+  "budgets": [
+    {
+      "label": "ui root + shared modules",
+      "paths": [
+        "packages/ui/dist/index.js",
+        "packages/ui/dist/providers",
+        "packages/ui/dist/styles",
+        "packages/ui/dist/utils"
+      ],
+      "gzipKb": 10
+    },
+    {
+      "label": "ui button subpath",
+      "paths": ["packages/ui/dist/components/button"],
+      "gzipKb": 5
+    },
+    {
+      "label": "ui data-table subpath",
+      "paths": ["packages/ui/dist/components/data-table"],
+      "gzipKb": 5
+    },
+    {
+      "label": "ui select subpath",
+      "paths": ["packages/ui/dist/components/select"],
+      "gzipKb": 5
+    },
+    {
+      "label": "motion package",
+      "paths": ["packages/motion/dist"],
+      "gzipKb": 2
+    },
+    {
+      "label": "cli package",
+      "paths": ["packages/cli/dist"],
+      "gzipKb": 20
+    }
+  ]
+}
