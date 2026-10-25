@@ -12,7 +12,7 @@
 import { DEFAULT_SITE_URL } from "../../site-url/src/index";
 
 /** Flip to `true` after `@hewnui/*` packages are published to npm. */
-export const PACKAGES_PUBLISHED = false;
+export const PACKAGES_PUBLISHED = true;
 
 /** Live registry host that serves `/r/*.json` today (no npm required). */
 export const LIVE_REGISTRY_URL = DEFAULT_SITE_URL;
