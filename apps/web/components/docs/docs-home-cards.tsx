@@ -96,7 +96,7 @@ export function DocsHomeCards() {
 
       <div className="border-t border-border/60 pt-6">
         <p className="font-mono text-[11px] tracking-wide text-muted-foreground">
-          6 packs · glass · motion · registry today, npm at launch
+          6 packs · glass · motion · npm + registry
         </p>
         <p className="mt-2 max-w-[52ch] text-xs leading-relaxed text-muted-foreground">
           Canonical TypeScript source. Material and reduced motion are global —

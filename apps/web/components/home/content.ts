@@ -96,23 +96,23 @@ export const positions = [
     id: "ownership",
     label: "On ownership",
     statement:
-      "One canonical TypeScript tree. Docs and registry today; npm and CLI when distribution is public.",
+      "One canonical TypeScript tree, shipped as docs, registry JSON, npm packages, and the CLI.",
   },
 ] as const;
 
-/** Docs paths until packages publish — see docs/release-checklist.md. */
+/** Docs paths for the ownership section. */
 export const ownership = {
   docs: {
     title: "Read Getting started",
     detail:
-      "Providers, Tailwind v4 tokens, and peer ranges. npm packages publish at launch — evaluate the API here until then.",
+      "Install from npm, then wire providers, Tailwind v4 tokens, and peer ranges.",
     href: "/docs/getting-started",
     label: "Open Getting started",
   },
   cli: {
     title: "CLI reference",
     detail:
-      "init, add, and theme are documented now and labeled available at launch. Live today: the `/r/*.json` registry.",
+      "init, add, theme, and lint via `npx hewnui@latest`. The `/r/*.json` registry works without it.",
     href: "/docs/cli",
     label: "Open CLI docs",
   },

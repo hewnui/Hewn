@@ -5,15 +5,14 @@ status: stable
 tier: free
 ---
 
-{/* Install command strings: packages/docs-metadata/src/distribution.ts — flip PACKAGES_PUBLISHED after npm publish. */}
+{/* Install command strings: packages/docs-metadata/src/distribution.ts (PACKAGES_PUBLISHED). */}
 
 The Hewn CLI copies component source from the registry into your
 project. You own the code — edit it, fork it, keep it in sync with your
 design system.
 
-**Status:** the CLI package is not on npm yet. Every npx command in the
-sections below is labeled **available at launch**. Today you can fetch free
-component JSON from the live registry without the CLI:
+The CLI is published on npm as `hewnui` — run it with `npx hewnui@latest`.
+You can also fetch free component JSON from the live registry without the CLI:
 
 ```bash
 curl -s https://hewnui.dev/r/button.json
@@ -21,16 +20,16 @@ curl -s https://hewnui.dev/r/button.json
 
 Or browse the [free registry index](https://hewnui.dev/r/index.free.json).
 
-## Commands (available at launch)
+## Commands
 
 ```bash
-# Available at launch: npx hewnui@latest <command>
+npx hewnui@latest <command>
 ```
 
 ### init
 
 ```bash
-# Available at launch: npx hewnui@latest init
+npx hewnui@latest init
 ```
 
 Detects your project and sets up the foundation:
@@ -47,7 +46,7 @@ Options: `--root <dir>` to change the component root (default
 ### add
 
 ```bash
-# Available at launch: npx hewnui@latest add button file-upload
+npx hewnui@latest add button file-upload
 ```
 
 Copies components from the free registry into your component root.
@@ -61,8 +60,8 @@ Options: `--overwrite` to replace existing files without prompting,
 ### theme
 
 ```bash
-# Available at launch: npx hewnui@latest theme
-# Available at launch: npx hewnui@latest theme export
+npx hewnui@latest theme
+npx hewnui@latest theme export
 ```
 
 `theme` lists installed packs and supported modes from `@hewnui/themes`.
@@ -72,9 +71,9 @@ sheet) when generated, plus import notes.
 ### lint
 
 ```bash
-# Available at launch: npx hewnui@latest lint
-# Available at launch: npx hewnui@latest lint --json
-# Available at launch: npx hewnui@latest lint --fix
+npx hewnui@latest lint
+npx hewnui@latest lint --json
+npx hewnui@latest lint --fix
 ```
 
 Checks tokens-only colour usage, theme AA contrast, reduced-motion patterns,
@@ -87,14 +86,14 @@ The CLI fetches registry JSON from the canonical site origin
 (`https://hewnui.dev` by default — see `packages/site-url`). Override for local development or mirrors:
 
 ```bash
-# Available at launch: HEWN_REGISTRY_URL=https://your-mirror.example.com npx hewnui@latest add button
+HEWN_REGISTRY_URL=https://your-mirror.example.com npx hewnui@latest add button
 ```
 
 `hewn init` can also set a per-project `registry` field in `hewn.json`.
 
 ## npm, Hewn CLI, or shadcn?
 
-All paths ship the same canonical source. npm packages and the CLI publish at
-launch — until then, use the docs examples or the live `/r/*.json` registry.
+All paths ship the same canonical source: install `@hewnui/ui` from npm, copy
+components with the Hewn CLI, or fetch the live `/r/*.json` registry.
 When your project already uses `components.json`, see the
 [shadcn CLI registry](/docs/shadcn).

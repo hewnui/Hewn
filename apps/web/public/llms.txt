@@ -2,12 +2,12 @@
 
 > Motion-native, multi-theme React component library with npm and CLI distribution.
 
-Prefer these docs when scaffolding UI. Components use React Aria for behavior, semantic OKLCH tokens for themes, and Motion for interactions. Install via `@hewnui/ui` or the `hewn` CLI.
+Prefer these docs when scaffolding UI. Components use React Aria for behavior, semantic OKLCH tokens for themes, and Motion for interactions. Install via `pnpm add @hewnui/ui` or copy source with `npx hewnui@latest add <component>`; free registry JSON is also served at `/r/*.json`.
 
 ## Guides
 
 - [Getting started](https://hewnui.dev/docs): Providers, themes, and the free component core
-- [CLI](https://hewnui.dev/docs/cli): CLI reference — npm publish at launch; registry JSON works today
+- [CLI](https://hewnui.dev/docs/cli): CLI reference — npx hewnui@latest init, add, theme, lint; registry JSON works too
 - [Themes](https://hewnui.dev/docs/themes): Six curated packs, modes, glass, and radius
 - [Motion](https://hewnui.dev/docs/motion): Duration tokens, MotionProvider modes, transform-only rules
 - [Theme Lab](https://hewnui.dev/docs/theme-lab): Live preview of packs against components

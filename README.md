@@ -7,16 +7,18 @@ Accessible React components built on React Aria, Tailwind v4 and Motion, with si
 
 ## Install
 
-The public docs and free registry are live today. npm packages and the CLI are **available at launch**. Until then, copy examples from the docs or fetch component JSON from the live registry:
+Install from npm, or copy component source into your project with the CLI:
+
+```bash
+pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components motion
+npx hewnui@latest init
+npx hewnui@latest add button
+```
+
+You can also fetch component JSON straight from the live registry:
 
 ```bash
 curl -s https://hewnui.dev/r/button.json
-```
-
-```bash
-# Available at launch: pnpm add @hewnui/ui react react-dom react-aria-components motion
-# Available at launch: npx hewnui@latest init
-# Available at launch: npx hewnui@latest add button
 ```
 
 Then add this to your global CSS (Tailwind v4):

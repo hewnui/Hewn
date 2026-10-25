@@ -60,7 +60,7 @@ export const GUIDE_LINKS: DocsLink[] = [
   {
     title: "CLI",
     path: "/docs/cli",
-    description: "CLI reference — npm publish at launch; registry JSON works today",
+    description: "CLI reference — npx hewnui@latest init, add, theme, lint; registry JSON works too",
   },
   {
     title: "Themes",

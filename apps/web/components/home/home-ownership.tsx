@@ -21,8 +21,8 @@ export function HomeOwnership() {
           One source. Docs first.
         </h2>
         <p className="mt-4 text-pretty text-muted-foreground">
-          Canonical TypeScript in one tree. Registry JSON and docs work today;
-          npm packages and the CLI publish at launch — same API either way.
+          Canonical TypeScript in one tree. Install from npm, copy source with
+          the CLI, or fetch registry JSON — same API either way.
         </p>
       </div>
 

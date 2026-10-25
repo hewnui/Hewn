@@ -10,9 +10,9 @@ guarantees. It uses the TypeScript compiler API when available and prints
 `file:line:column` findings with rule ids.
 
 ```bash
-# Available at launch: npx hewnui@latest lint
-# Available at launch: npx hewnui@latest lint src/components --json
-# Available at launch: npx hewnui@latest lint --fix
+npx hewnui@latest lint
+npx hewnui@latest lint src/components --json
+npx hewnui@latest lint --fix
 ```
 
 Exit code is `1` when any **error**-severity finding remains. Warnings do not
@@ -96,7 +96,7 @@ label looks delete-like (`delete`, `remove`, …) without a confirm pattern
 ## JSON output
 
 ```bash
-# Available at launch: npx hewnui@latest lint --json
+npx hewnui@latest lint --json
 ```
 
 ```json

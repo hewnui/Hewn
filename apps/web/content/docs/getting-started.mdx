@@ -1,33 +1,32 @@
 ---
 title: Getting started
-description: Wire providers and Tailwind CSS v4. Packages publish at launch.
+description: Install from npm, then wire providers and Tailwind CSS v4.
 status: stable
 tier: free
 ---
 
-{/* Install command strings: packages/docs-metadata/src/distribution.ts — flip PACKAGES_PUBLISHED after npm publish. */}
+{/* Install command strings: packages/docs-metadata/src/distribution.ts (PACKAGES_PUBLISHED). */}
 
 Hewn is a motion-native React component library built on React Aria,
-Tailwind CSS v4, and Motion. The public docs and free registry are live today.
-npm packages and the CLI are **available at launch** — until then, copy
-examples from these docs or fetch component JSON from the [live
+Tailwind CSS v4, and Motion. Install the packages from npm, copy components
+into your project with the CLI, or fetch component JSON from the [live
 registry](https://hewnui.dev/r/index.free.json).
 
 ## Install
 
-Packages are not on npm yet. When they publish, install with:
+Install the components and theme layers from npm:
 
 ```bash
-# Available at launch: pnpm add @hewnui/ui
+pnpm add @hewnui/ui @hewnui/themes
 ```
 
-Until then, use a component page example or pull registry source:
+Or pull a component's source straight from the registry:
 
 ```bash
 curl -s https://hewnui.dev/r/button.json
 ```
 
-Peer dependencies (needed once you own the source or install from npm):
+Peer dependencies (needed whether you install from npm or own the source):
 
 ```bash
 pnpm add react react-dom react-aria-components motion
@@ -40,17 +39,15 @@ pnpm add react react-dom react-aria-components motion
 | `react-aria-components` | `^1.19.0` |
 | `motion` | `^12.42.2` |
 
-Prefer a copy-to-project CLI? Commands are documented on the
-[CLI reference](/docs/cli) and labeled **available at launch**; today the
-working path is the live registry JSON above.
+Prefer to own the source? Run `npx hewnui@latest init`, then
+`npx hewnui@latest add button` — see the [CLI reference](/docs/cli).
 
 ## Tailwind CSS v4
 
 Hewn targets Tailwind v4, which is configured in CSS rather than a
 `tailwind.config.js`. Import Tailwind and the theme layers in your global
-stylesheet. After npm publish these resolve from `@hewnui/themes`; until
-then copy the CSS from the monorepo `packages/themes` package or follow a
-component docs example that already imports tokens on this site.
+stylesheet. These resolve from the `@hewnui/themes` package installed
+above.
 
 ```css
 @import "tailwindcss";
