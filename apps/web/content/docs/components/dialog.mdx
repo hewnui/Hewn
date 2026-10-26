@@ -22,19 +22,24 @@ import {
 } from "@hewnui/ui";
 
 <DialogTrigger>
-  <Button>Open</Button>
-  <Dialog title="Confirm">
-    <DialogBody>Archive this draft?</DialogBody>
+  <Button>Export report</Button>
+  <Dialog title="Export Northwind report?">
+    <DialogBody>Downloads a CSV of the active workspace metrics.</DialogBody>
     <DialogActions>
       <Button variant="secondary" slot="close">Cancel</Button>
-      <Button slot="close">Confirm</Button>
+      <Button slot="close">Export</Button>
     </DialogActions>
   </Dialog>
 </DialogTrigger>
 ```
 
+Use a non-destructive task for the default dismissible `role="dialog"`. For
+delete/archive confirms, prefer an `alertdialog` pattern that is not dismissed by
+an outside click (Hewn lint rule `destructive-confirms`).
+
 ## Accessibility
 
 - Dialog role and labeled title
-- Escape and outside click dismiss
-- Focus moves into the modal while open
+- Escape and outside click dismiss (default `isDismissable`)
+- Tab and Shift+Tab stay inside the dialog while it is open
+- Focus moves into the modal while open and returns to the trigger on close

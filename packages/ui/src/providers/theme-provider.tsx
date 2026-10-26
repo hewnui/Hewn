@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -59,6 +60,21 @@ function normalizeMode(theme: ThemeName, mode: ThemeMode): ThemeMode {
   return modes.includes(mode) ? mode : modes[0]!;
 }
 
+function systemMode(): ThemeMode {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyThemeToDom(theme: ThemeName, mode: ThemeMode): void {
+  const root = document.documentElement;
+  root.dataset.theme = theme;
+  root.dataset.mode = mode;
+  root.classList.toggle("dark", mode === "dark");
+  root.style.colorScheme = mode;
+}
+
 export function ThemeProvider({
   children,
   defaultTheme = "forest",
@@ -66,44 +82,50 @@ export function ThemeProvider({
 }: {
   children: ReactNode;
   defaultTheme?: ThemeName;
+  /** SSR fallback only. With empty storage, the browser follows `prefers-color-scheme`. */
   defaultMode?: ThemeMode;
 }) {
   const [theme, setThemeState] = useState<ThemeName>(defaultTheme);
   const [mode, setModeState] = useState<ThemeMode>(
     normalizeMode(defaultTheme, defaultMode),
   );
+  const hydrated = useRef(false);
+  const persistPreference = useRef(false);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem(THEME_KEY);
     const storedMode = localStorage.getItem(MODE_KEY);
     const nextTheme =
       storedTheme && isThemeId(storedTheme) ? storedTheme : defaultTheme;
-    const parsedMode: ThemeMode =
-      storedMode === "dark" || storedMode === "light"
-        ? storedMode
-        : defaultMode;
+    const hasStoredMode = storedMode === "dark" || storedMode === "light";
+    const parsedMode: ThemeMode = hasStoredMode ? storedMode : systemMode();
     const nextMode = normalizeMode(nextTheme, parsedMode);
+    if (hasStoredMode || (storedTheme && isThemeId(storedTheme))) {
+      persistPreference.current = true;
+    }
     setThemeState(nextTheme);
     setModeState(nextMode);
-  }, [defaultMode, defaultTheme]);
+    applyThemeToDom(nextTheme, nextMode);
+    hydrated.current = true;
+  }, [defaultTheme]);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.dataset.theme = theme;
-    root.dataset.mode = mode;
-    root.classList.toggle("dark", mode === "dark");
-    root.style.colorScheme = mode;
+    if (!hydrated.current) return;
+    applyThemeToDom(theme, mode);
+    if (!persistPreference.current) return;
     localStorage.setItem(THEME_KEY, theme);
     localStorage.setItem(MODE_KEY, mode);
   }, [mode, theme]);
 
   const setTheme = useCallback((nextTheme: ThemeName) => {
+    persistPreference.current = true;
     setThemeState(nextTheme);
     setModeState((current) => normalizeMode(nextTheme, current));
   }, []);
 
   const setMode = useCallback(
     (nextMode: ThemeMode) => {
+      persistPreference.current = true;
       setModeState(normalizeMode(theme, nextMode));
     },
     [theme],

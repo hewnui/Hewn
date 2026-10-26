@@ -15,7 +15,7 @@ const links = [
   {
     href: "/docs/mcp",
     title: "MCP server",
-    detail: "Read-only stdio tools over the registry.",
+    detail: "Coming soon — read-only stdio tools over the registry.",
   },
 ] as const;
 
@@ -35,8 +35,9 @@ export function HomeAi() {
               Docs machines can read.
             </h2>
             <p className="mt-4 text-pretty text-muted-foreground">
-              llms.txt, a versioned component schema, and a read-only MCP server
-              — so agents search the same source of truth your docs do.
+              llms.txt and a versioned component schema are live today. A
+              read-only MCP server is coming soon — so agents will search the
+              same source of truth your docs do.
             </p>
           </div>
 

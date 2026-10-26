@@ -1,6 +1,7 @@
 import type { DocsLink, LlmsTxtInput } from "./types";
 
 function abs(baseUrl: string, path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
   const root = baseUrl.replace(/\/$/, "");
   const suffix = path.startsWith("/") ? path : `/${path}`;
   return `${root}${suffix}`;

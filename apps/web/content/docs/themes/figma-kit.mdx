@@ -14,8 +14,6 @@ and input. No Figma plugin to maintain: Tokens Studio imports the JSON.
 - [hewn.tokens.json](/figma/hewn.tokens.json) — Tokens Studio document
 - [sticker-sheet.svg](/figma/sticker-sheet.svg) — visual reference sheet
 
-Regenerate locally with `pnpm --filter @hewnui/themes generate`.
-
 ## Import into Figma
 
 1. Install [Tokens Studio](https://tokens.studio/) in your Figma file
@@ -29,8 +27,7 @@ the core surface vocabulary.
 ## CLI
 
 ```bash
-hewn theme export
+npx hewnui@latest theme export
 ```
 
-Prints paths and import notes (groundwork). Studio Pro exporters can also emit
-a Tokens Studio document for a single authored pack.
+Prints paths and import notes for the curated packs.

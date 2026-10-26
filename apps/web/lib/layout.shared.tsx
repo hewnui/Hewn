@@ -1,5 +1,7 @@
 import { DocsNav } from "@/components/docs/docs-nav";
 import { HewnLogo } from "@/components/brand/hewn-logo";
+import { GITHUB_REPO_URL } from "@/lib/site-links";
+import { GithubLogoIcon } from "@phosphor-icons/react/dist/ssr/GithubLogo";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 
 export function baseOptions(): BaseLayoutProps {
@@ -11,9 +13,18 @@ export function baseOptions(): BaseLayoutProps {
       transparentMode: "none",
       component: <DocsNav />,
     },
-    // Sidebar page tree already covers Components / Themes / Lab — keep this
-    // empty so marketing-style top links do not reappear as sidebar items.
-    links: [],
+    // Sidebar page tree owns Components / Themes / Lab. Keep a single
+    // external GitHub link so docs chrome matches the marketing header.
+    links: [
+      {
+        type: "icon",
+        icon: <GithubLogoIcon aria-hidden className="size-5" weight="regular" />,
+        text: "GitHub",
+        url: GITHUB_REPO_URL,
+        label: "Hewn UI on GitHub",
+        external: true,
+      },
+    ],
     themeSwitch: {
       enabled: false,
     },
