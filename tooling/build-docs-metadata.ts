@@ -8,7 +8,10 @@ import {
   formatDocsPageErrors,
 } from "../packages/docs-metadata/src/check-docs-pages";
 import {
+  buildLlmsInput,
   buildLlmsTxt,
+  collectDocsPages,
+  generateLlmsFullTxt,
   type RegistryIndexItem,
 } from "../packages/docs-metadata/src/index";
 import {
@@ -27,6 +30,7 @@ const docsComponentsDir = join(
   repoRoot,
   "apps/web/content/docs/components",
 );
+const docsRoot = join(repoRoot, "apps/web/content/docs");
 const publicDir = join(repoRoot, "apps/web/public");
 const packageOutDir = join(repoRoot, "packages/docs-metadata/generated");
 
@@ -69,6 +73,11 @@ async function main(): Promise<void> {
   }
 
   const llms = buildLlmsTxt(parsed.items, baseUrl);
+  const docsPages = await collectDocsPages(docsRoot);
+  const llmsFull = generateLlmsFullTxt(
+    buildLlmsInput(parsed.items, baseUrl),
+    docsPages,
+  );
   const index = buildAiIndex(aiScan.found, parsed.items);
 
   await mkdir(join(publicDir, "ai/components"), { recursive: true });
@@ -77,6 +86,8 @@ async function main(): Promise<void> {
   await mkdir(join(packageOutDir, "api"), { recursive: true });
   await writeFile(join(publicDir, "llms.txt"), llms);
   await writeFile(join(packageOutDir, "llms.txt"), llms);
+  await writeFile(join(publicDir, "llms-full.txt"), llmsFull);
+  await writeFile(join(packageOutDir, "llms-full.txt"), llmsFull);
   await writeFile(
     join(publicDir, "ai/index.json"),
     `${JSON.stringify(index, null, 2)}\n`,
@@ -118,7 +129,7 @@ async function main(): Promise<void> {
   );
 
   console.log(
-    `docs-metadata: llms.txt + ${aiScan.found.length} AI schemas + ${apiDocs.length} API refs → apps/web/public/ai`,
+    `docs-metadata: llms.txt + llms-full.txt (${docsPages.length} pages) + ${aiScan.found.length} AI schemas + ${apiDocs.length} API refs → apps/web/public/ai`,
   );
 }
 

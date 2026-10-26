@@ -2,6 +2,7 @@
 
 import { useDockDismiss } from "@/components/dock-shell";
 import { navLinks } from "@/components/home/content";
+import { GITHUB_REPO_URL } from "@/lib/site-links";
 import { useMotionMode } from "@hewnui/ui";
 import { ListIcon } from "@phosphor-icons/react/dist/csr/List";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
@@ -63,6 +64,16 @@ export function HomeNavMobile() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href={GITHUB_REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Hewn UI on GitHub"
+              onClick={() => setOpen(false)}
+              className="flex min-h-11 items-center rounded-[var(--kp-radius-md)] px-3 text-sm text-muted-foreground transition-[color,background-color] hover:bg-muted/50 hover:text-foreground"
+            >
+              GitHub
+            </a>
           </m.nav>
         ) : null}
       </AnimatePresence>

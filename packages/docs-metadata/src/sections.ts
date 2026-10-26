@@ -90,7 +90,7 @@ export const GUIDE_LINKS: DocsLink[] = [
   {
     title: "MCP",
     path: "/docs/mcp",
-    description: "Local stdio MCP server for registry and AI schema",
+    description: "Local stdio MCP server for registry and AI schema — coming soon",
   },
   {
     title: "Roadmap",

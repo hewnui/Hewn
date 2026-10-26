@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  MCP_PUBLISHED,
   PACKAGES_PUBLISHED,
   cliAddCommand,
   installCommandsForComponent,
   llmsIntro,
+  mcpRunCommand,
   npmUiCommand,
   registryFetchCommand,
   SITE_TAGLINE,
@@ -33,5 +35,14 @@ describe("distribution copy", () => {
     const install = installCommandsForComponent("button");
     expect(install.npm).toMatch(/Available at launch/i);
     expect(install.cli).toMatch(/add button/);
+  });
+
+  it("keeps MCP npx gated until MCP_PUBLISHED", () => {
+    if (MCP_PUBLISHED) {
+      expect(mcpRunCommand()).toBe("npx @hewnui/mcp");
+      return;
+    }
+    expect(mcpRunCommand()).toMatch(/coming soon/i);
+    expect(mcpRunCommand()).toContain("npx @hewnui/mcp");
   });
 });

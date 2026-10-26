@@ -16,11 +16,11 @@ test("Dialog keyboard: open, focus trap, Escape closes, focus returns", async ({
   page,
 }) => {
   await gotoDemo(page, "/docs/components/dialog");
-  const trigger = page.getByRole("button", { name: "Archive project" });
+  const trigger = page.getByRole("button", { name: "Export report" });
   await waitForDemoTrigger(trigger);
   await trigger.click();
 
-  const dialog = page.getByRole("dialog", { name: "Archive Northwind?" });
+  const dialog = page.getByRole("dialog", { name: "Export Northwind report?" });
   await expect(dialog).toBeVisible();
   await expect(dialog).toBeFocused();
 

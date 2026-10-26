@@ -1,6 +1,16 @@
-export { buildLlmsInput, buildLlmsTxt, DEFAULT_SITE_URL } from "./build";
+export {
+  buildLlmsInput,
+  buildLlmsTxt,
+  DEFAULT_SITE_URL,
+  GITHUB_REPO_URL,
+} from "./build";
 export { freeComponentCount } from "./census";
 export { generateLlmsTxt } from "./llms";
+export {
+  collectDocsPages,
+  generateLlmsFullTxt,
+  type LlmsFullPage,
+} from "./llms-full";
 export {
   GUIDE_LINKS,
   componentSections,
@@ -33,11 +43,17 @@ export {
   installCommands,
   type PackageManager,
 } from "./install";
-export { extractPropsFromTypesSource } from "./props-from-types";
+export {
+  extractPropsFromTypesSource,
+  extractPropsFromComponentSource,
+  extractPropsMapsFromSource,
+  extractPropsForPart,
+} from "./props-from-types";
 export {
   resolveComponentApi,
   assertApiComplete,
   type DocsApiDocument,
+  type DocsApiPartDocument,
 } from "./resolve-api";
 export {
   checkComponentDocsPages,
@@ -45,6 +61,7 @@ export {
 } from "./check-docs-pages";
 export {
   PACKAGES_PUBLISHED,
+  MCP_PUBLISHED,
   LIVE_REGISTRY_URL,
   PUBLISHED_COMMANDS,
   SITE_TAGLINE,

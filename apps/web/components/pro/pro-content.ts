@@ -12,12 +12,12 @@ export const proCopy = {
   waitlistSupport:
     "A plain email form, no account needed. We write when Pro is ready to try — no spam, and no prices on this page.",
   blocksIntro: `Blocks (${catalog.blockCount}): ${catalog.blocksLabel}. Pages (${catalog.pageCount}): ${catalog.pagesLabel}. Names below match the catalog — block source never ships to this site.`,
-  consent:
-    "By joining, you agree we may email you about Hewn Pro. See the privacy note.",
-  privacyHref: "#privacy",
-  privacyHeading: "Privacy note",
+  consent: "By joining, you agree we may email you about Hewn Pro. See",
+  privacyHref: "/privacy",
+  privacyLinkLabel: "privacy",
+  privacyHeading: "Privacy",
   privacyBody:
-    "We store your email, the time you joined, and which page you came from. We use Upstash Redis for this waitlist only. You can ask to be removed by emailing the address we reply from. We do not sell waitlist data.",
+    "We store your email, the time you joined, and which page you came from in Upstash Redis (via Vercel) for Pro waitlist updates only. We do not sell waitlist data. Ask for removal via a GitHub issue on hewnui/Hewn — details on the privacy page.",
   blocksHeading: "Pro blocks",
   blocksSupport:
     "Planned application blocks and pages in development. Final designs may change before release. Preview images are withheld until real captures ship.",

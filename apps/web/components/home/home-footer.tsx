@@ -1,5 +1,7 @@
 import { HewnLogo } from "@/components/brand/hewn-logo";
 import { footer } from "@/components/home/content";
+import { HomeGithubLink } from "@/components/home/home-github-link";
+import { GITHUB_LICENSE_URL, GITHUB_REPO_URL } from "@/lib/site-links";
 import Link from "next/link";
 
 export function HomeFooter() {
@@ -12,6 +14,9 @@ export function HomeFooter() {
             <p className="mt-5 max-w-[34ch] text-pretty text-muted-foreground">
               {footer.tagline}
             </p>
+            <div className="mt-6">
+              <HomeGithubLink />
+            </div>
           </div>
 
           <div className="grid gap-10 sm:grid-cols-3">
@@ -40,10 +45,24 @@ export function HomeFooter() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-            {footer.license}
+            <a
+              href={GITHUB_LICENSE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            >
+              {footer.license}
+            </a>
           </p>
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-            Hewn
+            <a
+              href={GITHUB_REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            >
+              GitHub
+            </a>
           </p>
         </div>
       </div>

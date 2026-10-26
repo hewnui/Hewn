@@ -2,9 +2,10 @@
  * Honest distribution copy for the public site, docs, llms.txt, and AI schema.
  *
  * `@hewnui/ui`, `@hewnui/motion`, `@hewnui/themes` and the `hewnui` CLI are
- * published on npm (0.1.0), so `PACKAGES_PUBLISHED = true`. The false-branch
- * helpers below are kept for reference. `@hewnui/mcp` is not published yet;
- * its install copy stays labeled "available at launch" (see packages/mcp).
+ * published on npm (0.1.1), so `PACKAGES_PUBLISHED = true`. The false-branch
+ * helpers below are kept for reference. `@hewnui/mcp` is deliberately held
+ * for a later release — keep `MCP_PUBLISHED = false` until it ships (see
+ * packages/mcp).
  *
  * MIT is decided (root LICENSE). Do not claim "open source" or "built in the
  * open" until repo visibility matches — see docs/release-checklist.md.
@@ -14,6 +15,12 @@ import { DEFAULT_SITE_URL } from "../../site-url/src/index";
 
 /** `true` since the 0.1.0 npm release of the `@hewnui/*` packages and CLI. */
 export const PACKAGES_PUBLISHED = true;
+
+/**
+ * `@hewnui/mcp` is not on npm yet. Flip only when that package is published.
+ * Independent of `PACKAGES_PUBLISHED` so UI/CLI can ship first.
+ */
+export const MCP_PUBLISHED = false;
 
 /** Live registry host that serves `/r/*.json` (no npm required). */
 export const LIVE_REGISTRY_URL = DEFAULT_SITE_URL;
@@ -63,12 +70,13 @@ export function registryFetchCommand(name: string): string {
   return `curl -s ${registryItemUrl(name)}`;
 }
 
+/** MCP npx line — gated on `MCP_PUBLISHED`, not the UI package flag. */
 export function mcpRunCommand(): string {
-  if (PACKAGES_PUBLISHED) return PUBLISHED_COMMANDS.mcpNpx;
-  return `# Available at launch: ${PUBLISHED_COMMANDS.mcpNpx}`;
+  if (MCP_PUBLISHED) return PUBLISHED_COMMANDS.mcpNpx;
+  return `# Coming soon: ${PUBLISHED_COMMANDS.mcpNpx}`;
 }
 
-/** Monorepo MCP path that works without npm publish. */
+/** Monorepo MCP path that works without npm publish (contributors only). */
 export const MCP_MONOREPO_COMMANDS = [
   "pnpm --filter @hewnui/mcp build",
   "node packages/mcp/dist/cli.js",

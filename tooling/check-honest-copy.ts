@@ -2,18 +2,29 @@
  * Fails CI when site-facing copy overclaims openness or shows
  * unpublished npm/npx install commands as if they work today.
  *
- * MIT is decided (see root LICENSE). Flip PACKAGES_PUBLISHED in
- * packages/docs-metadata/src/distribution.ts after the first public
- * release, then this check relaxes install rules.
+ * Flip PACKAGES_PUBLISHED / MCP_PUBLISHED in
+ * packages/docs-metadata/src/distribution.ts when those packages ship.
  */
 import { readdir, readFile, stat } from "fs/promises";
 import { join, relative } from "path";
 import { fileURLToPath } from "url";
-import { PACKAGES_PUBLISHED } from "../packages/docs-metadata/src/distribution";
+import {
+  MCP_PUBLISHED,
+  PACKAGES_PUBLISHED,
+} from "../packages/docs-metadata/src/distribution";
+import {
+  INSTALL_PATTERNS,
+  LICENCE_PATTERNS,
+  MCP_INSTALL_PATTERNS,
+  PRODUCT_PATTERNS,
+  isMetaLine,
+  lineAllowedForInstall,
+} from "./honest-copy-patterns";
 
 const repoRoot = join(fileURLToPath(import.meta.url), "../..");
 
 const ROOTS = [
+  "README.md",
   "apps/web/app",
   "apps/web/components",
   "apps/web/content",
@@ -32,20 +43,6 @@ const TEXT_EXT = new Set([
   ".html",
 ]);
 
-/** Openness claims that still await repo visibility / product decisions. */
-const LICENCE_PATTERNS: Array<{ id: string; re: RegExp }> = [
-  { id: "built in the open", re: /built in the open/i },
-  { id: "open source claim", re: /\bopen[\s-]source\b/i },
-  { id: "free forever", re: /free forever/i },
-];
-
-/** Bare install commands that imply npm publish already happened. */
-const INSTALL_PATTERNS: Array<{ id: string; re: RegExp }> = [
-  { id: "pnpm add @hewnui", re: /(?:^|[^\w#/])pnpm add @hewnui\//m },
-  { id: "npm install @hewnui", re: /(?:^|[^\w#/])npm i(?:nstall)? @hewnui\//m },
-  { id: "npx @hewnui", re: /(?:^|[^\w#/])npx @hewnui\//m },
-];
-
 type Hit = { file: string; line: number; id: string; text: string };
 
 async function walk(path: string, files: string[]): Promise<void> {
@@ -62,23 +59,16 @@ async function walk(path: string, files: string[]): Promise<void> {
   if (!info.isDirectory()) return;
   const entries = await readdir(path);
   for (const name of entries) {
-    if (name === "node_modules" || name === ".next") continue;
+    if (name === "node_modules" || name === ".next" || name === "dist") continue;
     await walk(join(path, name), files);
   }
 }
 
 function isTextFile(file: string): boolean {
+  if (file.endsWith("README.md")) return true;
   const dot = file.lastIndexOf(".");
   if (dot < 0) return false;
   return TEXT_EXT.has(file.slice(dot));
-}
-
-function lineAllowedForInstall(line: string): boolean {
-  // Same-line label, or a shell comment form used in fenced examples.
-  return (
-    /available at launch/i.test(line) ||
-    /^\s*#\s*Available at launch:/i.test(line)
-  );
 }
 
 async function scanFile(file: string): Promise<Hit[]> {
@@ -90,13 +80,27 @@ async function scanFile(file: string): Promise<Hit[]> {
   for (let i = 0; i < lines.length; i += 1) {
     const line = lines[i] ?? "";
     const trimmed = line.trim();
-    if (trimmed.startsWith("//") && /PACKAGES_PUBLISHED|distribution\.ts|Available at launch/.test(line)) {
-      // Allow comments that document the restore path.
-    }
+    if (isMetaLine(line)) continue;
 
     for (const pattern of LICENCE_PATTERNS) {
       if (pattern.re.test(line)) {
-        hits.push({ file: rel, line: i + 1, id: pattern.id, text: trimmed.slice(0, 120) });
+        hits.push({
+          file: rel,
+          line: i + 1,
+          id: pattern.id,
+          text: trimmed.slice(0, 120),
+        });
+      }
+    }
+
+    for (const pattern of PRODUCT_PATTERNS) {
+      if (pattern.re.test(line)) {
+        hits.push({
+          file: rel,
+          line: i + 1,
+          id: pattern.id,
+          text: trimmed.slice(0, 120),
+        });
       }
     }
 
@@ -104,7 +108,26 @@ async function scanFile(file: string): Promise<Hit[]> {
       for (const pattern of INSTALL_PATTERNS) {
         if (!pattern.re.test(line)) continue;
         if (lineAllowedForInstall(line)) continue;
-        hits.push({ file: rel, line: i + 1, id: pattern.id, text: trimmed.slice(0, 120) });
+        if (/@hewnui\/mcp\b/.test(line)) continue;
+        hits.push({
+          file: rel,
+          line: i + 1,
+          id: pattern.id,
+          text: trimmed.slice(0, 120),
+        });
+      }
+    }
+
+    if (!MCP_PUBLISHED) {
+      for (const pattern of MCP_INSTALL_PATTERNS) {
+        if (!pattern.re.test(line)) continue;
+        if (lineAllowedForInstall(line)) continue;
+        hits.push({
+          file: rel,
+          line: i + 1,
+          id: pattern.id,
+          text: trimmed.slice(0, 120),
+        });
       }
     }
   }
@@ -129,14 +152,14 @@ async function main(): Promise<void> {
       console.error(`  ${hit.file}:${hit.line} [${hit.id}] ${hit.text}`);
     }
     console.error(
-      `\nFix copy or flip PACKAGES_PUBLISHED in packages/docs-metadata/src/distribution.ts (currently ${PACKAGES_PUBLISHED}).`,
+      `\nFix copy or flip flags in packages/docs-metadata/src/distribution.ts (PACKAGES_PUBLISHED=${PACKAGES_PUBLISHED}, MCP_PUBLISHED=${MCP_PUBLISHED}).`,
     );
     process.exitCode = 1;
     return;
   }
 
   console.log(
-    `check:honest-copy ok (${files.filter(isTextFile).length} files, PACKAGES_PUBLISHED=${PACKAGES_PUBLISHED})`,
+    `check:honest-copy ok (${files.filter(isTextFile).length} files, PACKAGES_PUBLISHED=${PACKAGES_PUBLISHED}, MCP_PUBLISHED=${MCP_PUBLISHED})`,
   );
 }
 

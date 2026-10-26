@@ -1,4 +1,5 @@
 import { proCopy } from "@/components/pro/pro-content";
+import Link from "next/link";
 
 export function ProPrivacy() {
   return (
@@ -15,7 +16,14 @@ export function ProPrivacy() {
           {proCopy.privacyHeading}
         </h2>
         <p className="mt-3 max-w-[62ch] text-sm text-pretty text-muted-foreground">
-          {proCopy.privacyBody}
+          {proCopy.privacyBody}{" "}
+          <Link
+            href={proCopy.privacyHref}
+            className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+          >
+            Full privacy page
+          </Link>
+          .
         </p>
       </div>
     </section>
