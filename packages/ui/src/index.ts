@@ -140,7 +140,10 @@ export {
   TableRoot,
   TableRow,
 } from "./components/table";
-export { DatePicker } from "./components/date-picker";
+export {
+  DatePicker,
+  type DatePickerProps,
+} from "./components/date-picker";
 export {
   DateRangePicker,
   type CalendarDate,
