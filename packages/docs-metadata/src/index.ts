@@ -37,6 +37,7 @@ export {
 } from "./check-docs-pages";
 export {
   PACKAGES_PUBLISHED,
+  MCP_PUBLISHED,
   LIVE_REGISTRY_URL,
   PUBLISHED_COMMANDS,
   SITE_TAGLINE,

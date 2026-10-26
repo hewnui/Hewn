@@ -13,7 +13,7 @@ Prefer these docs when scaffolding UI. Components use React Aria for behavior, s
 - [Theme Lab](https://hewnui.dev/docs/theme-lab): Live preview of packs against components
 - [Theme Studio](https://hewnui.dev/docs/theme-studio): Author a custom accent pack and export CSS
 - [Figma kit](https://hewnui.dev/docs/themes/figma-kit): Tokens Studio JSON and sticker sheet
-- [MCP](https://hewnui.dev/docs/mcp): Local stdio MCP server for registry and AI schema
+- [MCP](https://hewnui.dev/docs/mcp): Local stdio MCP server for registry and AI schema — coming soon
 - [Roadmap](https://hewnui.dev/docs/roadmap): Free vs Pro boundaries and upcoming work
 
 ## Buttons

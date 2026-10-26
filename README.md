@@ -3,7 +3,7 @@
 **Application UI for teams who care about accessibility and theming.**
 Accessible React components built on React Aria, Tailwind v4 and Motion, with six themes that have guardrails.
 
-[Docs](https://hewnui.dev) · [Getting started](https://hewnui.dev/docs/getting-started) · [Theme Studio](https://hewnui.dev/docs/theme-studio) · [Pro waitlist](https://hewnui.dev/pro#waitlist) · [MCP](https://hewnui.dev/docs/mcp) · [Roadmap](https://hewnui.dev/docs/roadmap)
+[Docs](https://hewnui.dev) · [Getting started](https://hewnui.dev/docs/getting-started) · [Theme Studio](https://hewnui.dev/docs/theme-studio) · [Pro waitlist](https://hewnui.dev/pro#waitlist) · [MCP (coming soon)](https://hewnui.dev/docs/mcp) · [Roadmap](https://hewnui.dev/docs/roadmap) · [Privacy](https://hewnui.dev/privacy)
 
 ## Install
 
@@ -55,7 +55,7 @@ Full guide: [Getting started](https://hewnui.dev/docs/getting-started)
 | **6 theme packs** | forest · tide · graphite (light/dark) · dune · clay (light) · ember (dark) |
 | **Global switches** | Material (solid / glass) · Radius · Motion (`full` / `reduced` / `off`; OS reduced motion caps it) |
 | **Theme Studio** | Accent → OKLCH token ladder with AA checks and CSS export |
-| **AI-ready** | `/ai/index.json` schema and a read-only MCP server |
+| **AI-ready** | `/ai/index.json` schema live; read-only MCP server coming soon |
 | **Docs** | Live examples, generated props, install block, TS/JS examples |
 
 ## Packages
@@ -66,7 +66,7 @@ Full guide: [Getting started](https://hewnui.dev/docs/getting-started)
 | [`@hewnui/themes`](./packages/themes) | Tokens, theme packs, glass/radius/motion CSS, exports |
 | [`@hewnui/motion`](./packages/motion) | Shared motion primitives and tokens |
 | [`hewnui`](./packages/cli) | `hewn` CLI: init, add, theme, lint |
-| [`@hewnui/mcp`](./packages/mcp) | MCP server for registry and AI schema |
+| [`@hewnui/mcp`](./packages/mcp) | MCP server for registry and AI schema — **coming soon** (not published yet) |
 
 ## Requirements
 
@@ -85,6 +85,8 @@ pnpm check      # typecheck, test, build, pack and bundle checks
 ```
 
 Read [`AGENTS.md`](./AGENTS.md) before contributing. `packages/ui` is the canonical source.
+
+To run the unpublished MCP workspace package locally (contributors only):
 
 ```bash
 pnpm --filter @hewnui/mcp build
