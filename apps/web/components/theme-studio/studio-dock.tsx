@@ -133,9 +133,10 @@ export function StudioDock({
         type="button"
         aria-expanded={expanded}
         aria-controls={panelId}
+        aria-label="Expand Theme Studio authoring"
         onClick={() => setPinned((value) => !value)}
         data-kp-surface
-        className={`relative z-0 flex h-11 w-full items-center px-3 sm:px-4 ${shellSurface} transition-transform active:scale-[0.98] ${
+        className={`relative z-0 flex h-11 w-full items-center px-3 sm:px-4 ${shellSurface} outline-none transition-[transform,box-shadow,background-color,border-color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
           expanded ? "pointer-events-none invisible" : ""
         }`}
       >
@@ -144,6 +145,7 @@ export function StudioDock({
 
       <m.div
         data-kp-surface
+        role="region"
         aria-label="Theme Studio authoring"
         className={`absolute inset-x-0 bottom-0 z-50 flex max-h-[min(88dvh,36rem)] flex-col overflow-hidden ${shellSurface} ${
           expanded ? "" : "pointer-events-none"
@@ -163,8 +165,9 @@ export function StudioDock({
           type="button"
           aria-expanded={expanded}
           aria-controls={panelId}
+          aria-label="Collapse Theme Studio authoring"
           onClick={() => setPinned((value) => !value)}
-          className="flex h-11 w-full shrink-0 items-center border-t border-border/80 px-3 sm:px-4 transition-transform active:scale-[0.98]"
+          className="flex h-11 w-full shrink-0 items-center border-t border-border px-3 sm:px-4 outline-none transition-[transform,background-color,border-color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
         >
           <StudioDockPreview {...previewProps} />
         </button>

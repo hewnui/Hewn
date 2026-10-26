@@ -25,7 +25,7 @@ const TABS = [
 type TabId = (typeof TABS)[number]["id"];
 
 const segmentClass =
-  "inline-flex h-10 min-w-10 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent px-2.5 text-xs font-medium text-muted-foreground transition-[transform,background-color,color,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-muted/55 hover:text-foreground active:scale-[0.96]";
+  "inline-flex h-10 min-w-10 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent px-2.5 text-xs font-medium text-muted-foreground outline-none transition-[transform,background-color,color,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-muted/55 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.96]";
 
 export function StudioDockSheet({
   panelId,
@@ -118,6 +118,7 @@ export function StudioDockSheet({
               type="button"
               role="tab"
               id={`${panelId}-tab-${id}`}
+              aria-label={label}
               aria-selected={selected}
               tabIndex={selected ? 0 : -1}
               {...(selected
@@ -134,8 +135,11 @@ export function StudioDockSheet({
               <Icon
                 className="size-3.5 shrink-0"
                 weight={selected ? "bold" : "regular"}
+                aria-hidden
               />
-              <span className="hidden sm:inline">{label}</span>
+              <span className="hidden sm:inline" aria-hidden>
+                {label}
+              </span>
             </button>
           );
         })}

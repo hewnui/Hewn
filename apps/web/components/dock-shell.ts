@@ -4,7 +4,7 @@ import { useEffect, type Dispatch, type RefObject, type SetStateAction } from "r
 
 /** Chrome for the floating docks — appearance bar and Theme Studio dock. */
 export const dockShellSurface =
-  "rounded-2xl border border-white/10 shadow-[var(--kp-shadow-surface),inset_0_1px_0_oklch(1_0_0/12%)]";
+  "rounded-2xl border border-border bg-surface-raised/95 text-foreground shadow-[var(--kp-shadow-surface),inset_0_1px_0_color-mix(in_oklch,var(--kp-foreground)_8%,transparent)] backdrop-blur-md";
 
 export const dockSpring = {
   type: "spring" as const,
