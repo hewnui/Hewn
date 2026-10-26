@@ -164,6 +164,7 @@ describe("shadcn registry emit", () => {
       await readFile(join(outDir, "shadcn", "tokens.json"), "utf8"),
     ) as {
       type: string;
+      docs?: string;
       cssVars?: { light?: Record<string, string> };
       files: { type: string; target?: string }[];
     };
@@ -175,6 +176,8 @@ describe("shadcn registry emit", () => {
     expect(tokens.files.some((file) => file.target?.endsWith("motion.css"))).toBe(
       true,
     );
+    expect(JSON.stringify(tokens)).not.toContain("@ui/theme");
+    expect(tokens.docs).toContain("@hewnui/themes/tokens.css");
     expect(registryItemSchema.safeParse(tokens).success).toBe(true);
 
     // Existing Hewn registry shape remains unchanged.

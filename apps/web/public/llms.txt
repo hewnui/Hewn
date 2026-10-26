@@ -1,4 +1,4 @@
-# Hewn
+# Hewn UI
 
 > Motion-native, multi-theme React component library with npm and CLI distribution.
 
@@ -91,6 +91,8 @@ Prefer these docs when scaffolding UI. Components use React Aria for behavior, s
 
 ## Optional
 
+- [GitHub repository](https://github.com/hewnui/Hewn): Source, issues, and MIT license
+- [Full docs dump](https://hewnui.dev/llms-full.txt): Complete docs body text for agents
 - [AI component index](https://hewnui.dev/ai/index.json): Machine-readable AI schema for every free component
 - [Registry free index](https://hewnui.dev/r/index.free.json): Machine-readable free component registry
 - [Figma tokens](https://hewnui.dev/figma/hewn.tokens.json): Tokens Studio document for curated packs

@@ -15,9 +15,12 @@ import {
 } from "@hewnui/ui";
 import { FilePlusIcon, FolderOpenIcon, GearIcon } from "@phosphor-icons/react";
 
+const DEMO_HOTKEY = "j";
+
 export function CommandPaletteDemo() {
   const [isOpen, setOpen] = useState(false);
-  useCommandPaletteHotkey({ onOpenChange: setOpen });
+  // Docs search binds ⌘/Ctrl+K — keep the demo on a free key.
+  useCommandPaletteHotkey({ key: DEMO_HOTKEY, onOpenChange: setOpen });
 
   return (
     <div
@@ -28,7 +31,7 @@ export function CommandPaletteDemo() {
         <Button>
           Open commands
           <kbd className="ms-2 rounded-[var(--kp-radius-sm)] border border-[color-mix(in_oklch,var(--kp-accent-foreground)_35%,transparent)] px-1.5 py-0.5 font-mono text-[10px] text-accent-foreground/85">
-            {commandPaletteHotkeyLabel()}
+            {commandPaletteHotkeyLabel(DEMO_HOTKEY)}
           </kbd>
         </Button>
         <CommandPalette>
@@ -39,7 +42,7 @@ export function CommandPaletteDemo() {
                 id="open-project"
                 textValue="Open project"
                 icon={<FolderOpenIcon className="size-4" weight="bold" />}
-                shortcut="⌘O"
+                shortcut={commandPaletteHotkeyLabel("o")}
               >
                 Open project
               </CommandPaletteItem>
@@ -49,7 +52,7 @@ export function CommandPaletteDemo() {
                 id="new-file"
                 textValue="New file"
                 icon={<FilePlusIcon className="size-4" weight="bold" />}
-                shortcut="⌘N"
+                shortcut={commandPaletteHotkeyLabel("n")}
               >
                 New file
               </CommandPaletteItem>
@@ -57,7 +60,7 @@ export function CommandPaletteDemo() {
                 id="settings"
                 textValue="Open settings"
                 icon={<GearIcon className="size-4" weight="bold" />}
-                shortcut="⌘,"
+                shortcut={commandPaletteHotkeyLabel(",")}
               >
                 Open settings
               </CommandPaletteItem>
@@ -66,8 +69,8 @@ export function CommandPaletteDemo() {
         </CommandPalette>
       </CommandPaletteTrigger>
       <p className="mt-3 max-w-[48ch] text-sm leading-relaxed text-muted-foreground">
-        Press {commandPaletteHotkeyLabel()} anywhere on this page — the hook skips
-        composing IME events and picks ⌘ vs Ctrl by platform.
+        Press {commandPaletteHotkeyLabel(DEMO_HOTKEY)} on this page. Ctrl/⌘K is
+        taken by docs search here; in your app the hook defaults to ⌘K / Ctrl+K.
       </p>
     </div>
   );

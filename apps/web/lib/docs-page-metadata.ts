@@ -14,29 +14,33 @@ type DocsPageMetaInput = {
  * Per-docs-page metadata. Must set canonical + openGraph.url so routes do not
  * inherit the homepage values from the root layout. Also points og/twitter
  * images at the per-page `/og/docs/...` ImageResponse route.
+ *
+ * Document title uses the root `%s · Hewn UI` template. OG/Twitter titles set
+ * the brand suffix explicitly because they do not use that template.
  */
 export function docsPageMetadata({
   title,
   description,
   url,
 }: DocsPageMetaInput): Metadata {
+  const brandedTitle = `${title} · ${siteName}`;
   const image = {
     url: docsOgImagePath(url),
     width: ogSize.width,
     height: ogSize.height,
-    alt: `${title} · Hewn docs`,
+    alt: brandedTitle,
   };
 
   const openGraph: NonNullable<Metadata["openGraph"]> = {
-    type: "website",
+    type: "article",
     siteName,
-    title,
+    title: brandedTitle,
     url,
     images: [image],
   };
   const twitter: NonNullable<Metadata["twitter"]> = {
     card: "summary_large_image",
-    title,
+    title: brandedTitle,
     images: [image.url],
   };
 

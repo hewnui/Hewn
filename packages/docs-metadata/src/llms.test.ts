@@ -22,7 +22,9 @@ describe("generateLlmsTxt", () => {
       ],
     });
 
-    expect(text.startsWith("# Hewn\n")).toBe(true);
+    expect(text.startsWith("# Hewn\n") || text.startsWith("# Hewn UI\n")).toBe(
+      true,
+    );
     expect(text).toContain("> Test summary");
     expect(text).toContain("## Guides");
     expect(text).toContain(
@@ -47,12 +49,15 @@ describe("buildLlmsTxt", () => {
       "https://example.com",
     );
 
+    expect(text).toContain("# Hewn UI");
     expect(text).toContain("## Buttons");
     expect(text).toContain(
       "- [Button](https://example.com/docs/components/button): Pressable action",
     );
     expect(text).toContain("## Optional");
     expect(text).toContain("https://example.com/r/index.free.json");
+    expect(text).toContain("https://github.com/hewnui/Hewn");
+    expect(text).toContain("https://example.com/llms-full.txt");
   });
 
   it("defaults baseUrl to the canonical site URL", () => {

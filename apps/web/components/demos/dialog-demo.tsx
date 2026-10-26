@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@hewnui/ui";
 
+/** Non-destructive confirm — avoids alertdialog/outside-click conflict on Archive. */
 export function DialogDemo() {
   return (
     <div
@@ -15,19 +16,17 @@ export function DialogDemo() {
       className="not-prose my-6 rounded-[calc(var(--kp-radius-lg)+0.25rem)] border bg-surface p-5 shadow-[var(--kp-shadow-surface)]"
     >
       <DialogTrigger>
-        <Button>Archive project</Button>
-        <Dialog title="Archive Northwind?">
+        <Button>Export report</Button>
+        <Dialog title="Export Northwind report?">
           <DialogBody>
-            Archived projects stay searchable but leave the active workspace
-            list.
+            Downloads a CSV of the active workspace metrics. You can export again
+            any time.
           </DialogBody>
           <DialogActions>
             <Button variant="secondary" slot="close">
               Cancel
             </Button>
-            <Button variant="danger" slot="close">
-              Archive
-            </Button>
+            <Button slot="close">Export</Button>
           </DialogActions>
         </Dialog>
       </DialogTrigger>

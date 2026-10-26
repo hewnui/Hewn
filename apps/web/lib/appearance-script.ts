@@ -58,7 +58,10 @@ try {
   var allowed = modes[theme];
   root.dataset.theme = theme;
 
-  var mode = localStorage.getItem("kp-mode") || "${defaults.mode}";
+  var storedMode = localStorage.getItem("kp-mode");
+  var mode = storedMode === "dark" || storedMode === "light"
+    ? storedMode
+    : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   root.dataset.mode = allowed.indexOf(mode) >= 0 ? mode : allowed[0];
   root.classList.toggle("dark", root.dataset.mode === "dark");
   root.style.colorScheme = root.dataset.mode;

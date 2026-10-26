@@ -1,5 +1,6 @@
 import { DocsApiReference } from "@/components/docs/docs-api-reference";
 import { DocsInstallBlock } from "@/components/docs/docs-install-block";
+import { DocsJsonLd } from "@/components/docs/docs-json-ld";
 import { DocsPageHeader } from "@/components/docs/docs-page-header";
 import { getMDXComponents } from "@/components/mdx";
 import { docsPageMetadata } from "@/lib/docs-page-metadata";
@@ -62,6 +63,11 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
+      <DocsJsonLd
+        title={data.title}
+        {...(data.description ? { description: data.description } : {})}
+        url={page.url}
+      />
       <DocsPageHeader
         title={data.title}
         {...(data.description ? { description: data.description } : {})}

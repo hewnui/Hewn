@@ -1,0 +1,3001 @@
+# Hewn UI
+
+> Motion-native, multi-theme React component library with npm and CLI distribution.
+
+Prefer these docs when scaffolding UI. Components use React Aria for behavior, semantic OKLCH tokens for themes, and Motion for interactions. Install via `pnpm add @hewnui/ui` or copy source with `npx hewnui@latest add <component>`; free registry JSON is also served at `/r/*.json`.
+
+This file is the full docs dump for agents. Prefer `/llms.txt` for the curated index.
+
+## Documentation
+
+Source: https://hewnui.dev/docs
+
+Browse components, then tune theme, glass, and motion.
+
+React Aria owns behavior. Hewn owns the API, themes, material, and
+motion.
+
+<DocsHomeCards />
+
+---
+
+## CLI
+
+Source: https://hewnui.dev/docs/cli
+
+Copy components into your project with the Hewn CLI.
+
+{/* Install command strings: packages/docs-metadata/src/distribution.ts (PACKAGES_PUBLISHED). */}
+
+The Hewn CLI copies component source from the registry into your
+project. You own the code — edit it, fork it, keep it in sync with your
+design system.
+
+The CLI is published on npm as `hewnui` — run it with `npx hewnui@latest`.
+You can also fetch free component JSON from the live registry without the CLI:
+
+```bash
+curl -s https://hewnui.dev/r/button.json
+```
+
+Or browse the [free registry index](https://hewnui.dev/r/index.free.json).
+
+## Commands
+
+```bash
+npx hewnui@latest <command>
+```
+
+### init
+
+```bash
+npx hewnui@latest init
+```
+
+Detects your project and sets up the foundation:
+
+- TypeScript or JavaScript detection (presence of `tsconfig.json`)
+- Writes `hewn.json` with your component root and language
+- Copies foundation files (providers, shared styles, utilities) in the
+  matching language variant
+- Prints the peer dependencies and CSS import to finish setup
+
+Options: `--root <dir>` to change the component root (default
+`components/hewn`), `--yes` to skip prompts.
+
+### add
+
+```bash
+npx hewnui@latest add button file-upload
+```
+
+Copies components from the free registry into your component root.
+Dependencies between components resolve automatically — adding `file-upload`
+also adds `button` and `spinner`. TypeScript projects receive `.tsx` source;
+JavaScript projects receive the generated `.jsx` variant.
+
+Options: `--overwrite` to replace existing files without prompting,
+`--yes` to accept all prompts.
+
+### theme
+
+```bash
+npx hewnui@latest theme
+npx hewnui@latest theme export
+```
+
+`theme` lists installed packs and supported modes from `@hewnui/themes`.
+`theme export` prints local Figma kit paths (Tokens Studio JSON + sticker
+sheet) when generated, plus import notes.
+
+### lint
+
+```bash
+npx hewnui@latest lint
+npx hewnui@latest lint --json
+npx hewnui@latest lint --fix
+```
+
+Checks tokens-only colour usage, theme AA contrast, reduced-motion patterns,
+labelled overlays, and destructive confirm heuristics. See [CLI lint](/docs/cli-lint)
+for the rule reference, `hewn.json` config, and JSON schema.
+
+## Registry URL
+
+The CLI fetches registry JSON from the canonical site origin
+(`https://hewnui.dev` by default — see `packages/site-url`). Override for local development or mirrors:
+
+```bash
+HEWN_REGISTRY_URL=https://your-mirror.example.com npx hewnui@latest add button
+```
+
+`hewn init` can also set a per-project `registry` field in `hewn.json`.
+
+## npm, Hewn CLI, or shadcn?
+
+All paths ship the same canonical source: install `@hewnui/ui` from npm, copy
+components with the Hewn CLI, or fetch the live `/r/*.json` registry.
+When your project already uses `components.json`, see the
+[shadcn CLI registry](/docs/shadcn).
+
+---
+
+## Themes
+
+Source: https://hewnui.dev/docs/themes
+
+Curated theme packs with intentional light and dark modes.
+
+Themes are complete visual identities, not accent swaps. Each pack sets color,
+radius, shadow, glass tint, density, and motion character.
+
+## Packs
+
+| Pack | Modes | Identity |
+|------|-------|----------|
+| Forest | light, dark | Moss and emerald; grounded organic product UI |
+| Tide | light, dark | Mineral neutrals and desaturated teal |
+| Graphite | light, dark | Technical neutral and restrained steel-blue |
+| Dune | light | Sand, ochre, soft paper surfaces |
+| Clay | light | Warm stone and terracotta |
+| Ember | dark | Charcoal and burnt orange |
+
+Unsupported combinations are never auto-generated. See the
+[visual matrix](/docs/themes/matrix) for the curated list.
+
+## Material
+
+- `solid` — structured product surfaces
+- `glass` — accent-tinted frosted surfaces with blur, saturation, and refraction
+
+## Try it
+
+Open [Theme Lab](/docs/theme-lab) to preview packs against live components,
+[Theme Studio](/docs/theme-studio) to author a custom accent pack,
+[theme export](/docs/themes/export) for DESIGN.md / DTCG / `@theme` / agent skills,
+or the [Figma kit](/docs/themes/figma-kit) to import tokens into Figma.
+
+---
+
+## Motion
+
+Source: https://hewnui.dev/docs/motion
+
+Duration and easing tokens, MotionProvider modes, and the transform-and-opacity contract.
+
+Hewn treats motion as a **global contract**, not a per-component prop.
+Tokens set timing, `MotionProvider` sets the mode, and sources may only animate
+transform, opacity, and filter.
+
+<MotionDemo />
+
+## Tokens
+
+CSS custom properties live in `@hewnui/themes/motion.css` (imported by
+`tokens.css`). Theme packs still tune `--kp-motion-duration` for character;
+the scale below is shared.
+
+| Token | Role | Default |
+|-------|------|---------|
+| `--kp-motion-duration-instant` | Immediate / disabled | `0ms` |
+| `--kp-motion-duration-fast` | Micro feedback | `120ms` |
+| `--kp-motion-duration` | Pack base (theme character) | pack-specific |
+| `--kp-motion-duration-slow` | Presence / draws | `360ms` |
+| `--kp-motion-ease-standard` | Default CSS easing | `cubic-bezier(0.2, 0, 0, 1)` |
+| `--kp-motion-ease-emphasized` | Emphasized settle | `cubic-bezier(0.16, 1, 0.3, 1)` |
+| `--kp-motion-ease-exit` | Exit curves | `cubic-bezier(0.4, 0, 1, 1)` |
+| `--kp-motion-ease-linear` | Progress / meters | `linear` |
+
+TypeScript mirrors for Motion transitions ship from `@hewnui/motion`:
+
+```ts
+import { durations, easings, springs } from "@hewnui/motion";
+
+durations.fast; // 0.12
+easings.standard; // [0.2, 0, 0, 1]
+springs.snappy; // { type: "spring", stiffness: 420, … }
+```
+
+Use CSS vars in class strings (`duration-[var(--kp-motion-duration-fast)]`,
+`ease-[var(--kp-motion-ease-standard)]`) and the TS constants in
+`transition={{ … }}` props. Do not hard-code millisecond or bezier values in
+components.
+
+## Modes
+
+`MotionProvider` exposes three modes:
+
+| Mode | Behavior |
+|------|----------|
+| `full` | Springs, press scale, chart draws, layout presence |
+| `reduced` | `MotionConfig reducedMotion="always"`; CSS durations collapse to `0` |
+| `off` | Same hard stop as reduced for Motion + CSS; static fallbacks only |
+
+Resolution rules:
+
+1. Default preference is `full`.
+2. `prefers-reduced-motion: reduce` caps effective mode at `reduced` — a user
+   preference of `full` cannot win.
+3. Users may only reduce motion further (`full` → `reduced` → `off`).
+4. The effective mode is written to `document.documentElement.dataset.motion`
+   so CSS-only surfaces can key off `[data-motion="reduced"]` / `"off"`.
+
+```tsx
+import { MotionProvider, useMotionMode } from "@hewnui/ui";
+
+<MotionProvider defaultMotion="full">{children}</MotionProvider>
+
+const { motion, effectiveMode, motionEnabled, reducedMotion, setMotion } =
+  useMotionMode();
+```
+
+| Field | Meaning |
+|-------|---------|
+| `motion` | Stored user preference |
+| `effectiveMode` | Preference after OS clamp |
+| `motionEnabled` | `effectiveMode === "full"` |
+| `reducedMotion` | OS preference is active |
+| `setMotion` | Update preference |
+
+`MotionConfig` receives `reducedMotion="never"` in full mode and `"always"`
+otherwise.
+
+## Rules
+
+- Animate **transform, opacity, and filter** only. Never animate layout
+  properties (`width`, `height`, `top`, `left`, `margin`, …).
+- Never use `transition: all` or Tailwind `transition-all`.
+- Press feedback uses `scale(0.96)`.
+- Reduced motion always wins over product defaults and user “more motion”
+  choices.
+- Infinite motion must be isolated, memoized, and disabled when
+  `motionEnabled` is false.
+- `pnpm check:motion` fails the build if `packages/ui` sources violate the
+  transition contract.
+
+## Appearance controls
+
+Docs and Theme Lab appearance docks include the motion mode control next to
+theme, mode, material, and radius. Choices persist in `localStorage`
+(`kp-motion`). Legacy `on` values migrate to `full`.
+
+---
+
+## Theme Lab
+
+Source: https://hewnui.dev/docs/theme-lab
+
+Dashboard preview of packs across foundation tokens and component levels.
+
+Theme Lab is a **dashboard-style preview**: one active pack at a time, inspected
+by level — foundation tokens, actions, forms, navigation, data, and feedback.
+Use the sidebar appearance control to change theme, compatible mode, material,
+radius, and motion. Choices persist while you browse.
+
+<DocsThemeLabFrame />
+
+## Levels
+
+| Level | What you inspect |
+|-------|------------------|
+| Foundation | Semantic colors, typography, surface stack |
+| Actions | Button variants, states, links |
+| Forms | Fields, toggles, slider |
+| Navigation | Breadcrumbs, tabs |
+| Data | Metrics, sparkline, table |
+| Feedback | Progress, skeleton, spinner |
+
+## Exports
+
+The **Free exports** panel downloads or copies four formats for the active pack:
+`DESIGN.md`, DTCG tokens JSON, Tailwind v4 `@theme`, and an agent `SKILL.md`.
+Static copies also live under `/themes/{pack}/` — see
+[Theme export](/docs/themes/export).
+
+## Rules
+
+- One theme at a time
+- Mode options only show curated combinations
+- Glass and motion are global, never per-component props
+- Motion modes are `full` | `reduced` | `off`; OS reduced-motion always wins over `full`
+- Theme Studio authors custom packs; Theme Lab evaluates curated ones in context
+
+---
+
+## Theme Studio
+
+Source: https://hewnui.dev/docs/theme-studio
+
+Author a custom pack from a curated base — accent, radius, CSS export, and AI generate.
+
+Free authoring starts here. Pick a curated base, set an accent seed and radius
+preset, then watch a **full-width live dashboard** update as you edit. Open the
+**bottom dock** (hover on desktop, tap on mobile) for Tokens, Generate and
+Export. Download a drop-in CSS pack when ready. Some advanced token groups are
+planned for Hewn Pro — [join the waitlist](/pro#waitlist).
+
+<DocsThemeStudioFrame />
+
+## Layout
+
+| Area | Purpose |
+|------|---------|
+| **Dashboard** | Full-width Meridian Ops specimen (KPIs, chart, stream, crew) |
+| **Bottom dock** | Collapsed summary; expands to authoring sheet |
+| **Tokens** | Base pack, accent, radius, preview mode |
+| **Generate** | AI prompt, CSS paste, or logo palette |
+| **Pro** | Neutrals, semantics, density, glass, motion (coming soon) |
+| **Export** | Download CSS, reset draft, Pro exporters |
+
+Theme Lab evaluates **curated** packs across the docs shell. Theme Studio
+authors a **custom** pack and proves it on an example dashboard.
+
+## What’s free
+
+- Base pack (Forest, Tide, Graphite, Dune, Clay, Ember)
+- Accent seed (hex or `oklch(...)`) with contrast-safe foreground
+- Radius presets (sharp / soft / rounded / pill)
+- CSS export shaped like curated packs
+- Draft saved in `localStorage` on this browser
+- AI generate: offline heuristics always; optional BYOK OpenAI-compatible call
+
+## AI generate
+
+| Source | Behavior |
+|--------|----------|
+| Prompt | Keyword + embedded-color heuristics; optional BYOK model JSON |
+| CSS | Extract hex/`oklch` → accent + base pack suggestion |
+| Logo | Client canvas palette sample → same proposal path |
+
+Every proposal runs through the authoring engine (`normalize` + `derivePack`).
+Invalid AI output falls back to offline heuristics. BYOK keys stay in
+`localStorage` on this browser — never sent to Hewn servers.
+
+## Pro authoring groups
+
+Stub-gated in the Studio UI (engine already derives them):
+
+| Group | Controls |
+|-------|----------|
+| Neutrals / surfaces | Surface lightness shift, chroma scale |
+| Semantic colors | Danger seed |
+| Shape / density | Compact / default / comfortable |
+| Glass | Tint strength |
+| Motion character | Snappy / balanced / soft |
+
+Extra exporters (Tailwind `@theme`, Style Dictionary, Figma variables) are
+planned for Hewn Pro beside the advanced authoring controls.
+
+## Rules
+
+- Engine clamps accents that fail WCAG AA and reports what changed
+- Dashboard preview is scoped to the draft pack — Theme Lab still owns the docs shell
+- Unsupported modes for a pack never appear (Dune/Clay light-only, Ember dark-only)
+- No free-form CSS editing — guardrails are the product
+- Generation is an accelerator; manual controls always work without a key
+
+---
+
+## Figma kit
+
+Source: https://hewnui.dev/docs/themes/figma-kit
+
+Import curated Hewn tokens into Figma via Tokens Studio.
+
+The Figma kit is generated from the same curated packs as Theme Lab — six
+identities, supported modes only, plus a sticker sheet for surfaces, button,
+and input. No Figma plugin to maintain: Tokens Studio imports the JSON.
+
+## Download
+
+- [hewn.tokens.json](/figma/hewn.tokens.json) — Tokens Studio document
+- [sticker-sheet.svg](/figma/sticker-sheet.svg) — visual reference sheet
+
+Regenerate locally with `pnpm --filter @hewnui/themes generate`.
+
+## Import into Figma
+
+1. Install [Tokens Studio](https://tokens.studio/) in your Figma file
+2. Open Tokens → Import → select `hewn.tokens.json`
+3. Switch themes (for example `forest / light`) and create Figma variables
+4. Paste or place `sticker-sheet.svg` as a starting sticker sheet
+
+Full component parity in Figma is future scope — this kit covers variables and
+the core surface vocabulary.
+
+## CLI
+
+```bash
+hewn theme export
+```
+
+Prints paths and import notes (groundwork). Studio Pro exporters can also emit
+a Tokens Studio document for a single authored pack.
+
+---
+
+## MCP
+
+Source: https://hewnui.dev/docs/mcp
+
+Local stdio MCP server for Hewn registry and AI schema.
+
+`@hewnui/mcp` exposes a read-only Model Context Protocol server over stdio.
+AI coding tools can list and inspect free components without scraping the docs
+site.
+
+The package is **private for the 0.1.0 release** and is not published to npm yet.
+
+## Run
+
+{/* Install command strings: packages/docs-metadata/src/distribution.ts */}
+
+From the monorepo (after `pnpm generate` so registry + AI JSON exist) —
+contributors only:
+
+```bash
+pnpm --filter @hewnui/mcp build
+node packages/mcp/dist/cli.js
+```
+
+Set `HEWN_ROOT` if the server cannot find the workspace root.
+
+## Tools
+
+| Tool | Purpose |
+|------|---------|
+| `list_components` | Registry items |
+| `search_components` | Substring search |
+| `get_component` | Registry row + AI schema JSON |
+| `get_install_command` | npm + CLI install strings |
+| `get_theme` | Curated packs (or one pack by id) |
+| `get_tokens` | Tokens for a component or theme pack |
+
+## Cursor example
+
+```json
+{
+  "mcpServers": {
+    "hewn": {
+      "command": "node",
+      "args": ["packages/mcp/dist/cli.js"],
+      "env": {
+        "HEWN_ROOT": "/absolute/path/to/your-project"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Roadmap
+
+Source: https://hewnui.dev/docs/roadmap
+
+What ships free, what becomes Pro, and what comes next.
+
+Hewn grows in phases. The free core stays free — Pro pays for
+composition, not for primitives.
+
+## Shipped
+
+- **Foundation** — semantic OKLCH tokens, theme/mode/material/motion providers
+- **Reference components** — Button, fields, Checkbox, Switch, Dialog, Select, Tabs, Table
+- **Theme breadth** — six curated packs, tinted glass, Theme Lab
+- **Rich free core** — DatePicker, Combobox, Menu, Toast, Drawer, Progress, Skeleton, DataTable
+- **Distribution** — npm packages (`@hewnui/ui`, `@hewnui/motion`, `@hewnui/themes`), the `hewnui` CLI, the static registry, and the shadcn registry
+- **Theme platform** — Theme Studio, Figma kit, charts, `/llms.txt`
+
+### Next
+
+- **AI schema v1** — `/ai/index.json`
+- **`@hewnui/mcp`** — local stdio MCP
+- **AI theme generation** — BYOK + offline heuristics in Theme Studio
+- **Hewn Pro** — application blocks and pages — [join the waitlist](/pro#waitlist)
+
+AI agents can start from [`/llms.txt`](/llms.txt) for a curated docs index, or
+[`/ai/index.json`](/ai/index.json) for per-component machine-readable schema
+(props, states, keyboard, tokens, install, examples).
+
+## Free vs Pro
+
+Free: all core components (including charts), six theme packs, glass, motion,
+documentation, the curated Figma kit, the static registry, `/llms.txt`, and
+the npm packages and CLI.
+
+Pro (in development): application blocks and pages built on the free core —
+[join the waitlist](/pro#waitlist). Advanced theme authoring and pack exporters
+are planned for Pro.
+
+Pro access is coming soon — GitHub sign-in will unlock it. Nothing to configure
+today.
+
+---
+
+## Button
+
+Source: https://hewnui.dev/docs/components/button
+
+Pressable action control with variants, sizes, and loading state.
+
+A concise action control built on React Aria. Press scale, focus rings, and
+loading feedback follow the global motion setting.
+
+<ButtonDemo />
+
+## Usage
+
+```tsx
+import { Button } from "@hewnui/ui";
+
+export function Example() {
+  return <Button variant="primary">Save changes</Button>;
+}
+```
+
+## Variants
+
+`primary`, `secondary`, `outline`, `ghost`, `glass`, `soft`, `glow`, `danger`, `danger-outline`, and `danger-soft`.
+
+## Sizes
+
+`sm` (40px min height), `md`, and `lg`.
+
+## States
+
+- **Loading** — sets `isDisabled`, shows a spinner glyph
+- **Disabled** — reduces opacity and blocks pointer events
+- **Focus** — visible ring using semantic `--kp-ring`
+
+## Accessibility
+
+- Native button semantics from React Aria
+- Keyboard activation with Enter and Space
+- Loading and disabled states expose `disabled` to assistive tech
+
+---
+
+## AreaChart
+
+Source: https://hewnui.dev/docs/components/area-chart
+
+Filled area chart for cumulative or volume trends.
+
+AreaChart fills under each series with a translucent accent tint and draws the
+same monotone stroke as LineChart.
+
+<AreaChartDemo />
+
+## Usage
+
+```tsx
+import { AreaChart } from "@hewnui/ui";
+
+<AreaChart
+  summary="Active users this month"
+  series={[
+    {
+      id: "users",
+      label: "Active",
+      data: [
+        { x: 1, y: 20 },
+        { x: 2, y: 28 },
+        { x: 3, y: 24 },
+        { x: 4, y: 35 },
+      ],
+    },
+  ]}
+>
+  <AreaChart.Tooltip />
+</AreaChart>
+```
+
+## Accessibility
+
+- The SVG is `role="img"` named by the required `summary`, which is also rendered as an `sr-only` caption
+- Every point is focusable and labelled `"{series}: {x}, {y}"`, so the series can be read with Tab alone
+- Focus opens the same tooltip as hover, and blur closes it
+- Axis ticks and gridlines are `aria-hidden` — the summary carries the shape of the data
+- `status="loading"` and `status="empty"` announce through `role="status"`; `status="error"` uses `role="alert"`
+
+---
+
+## Badge
+
+Source: https://hewnui.dev/docs/components/badge
+
+Status pill and tag indicator with solid, soft, outline, glass, and live dot variants.
+
+Compact status indicator for tags, metadata, and active counts.
+
+<BadgeDemo />
+
+## Usage
+
+```tsx
+import { Badge } from "@hewnui/ui";
+
+export function Example() {
+  return <Badge variant="soft" color="accent">New</Badge>;
+}
+```
+
+## Variants
+
+- `solid` — Bold filled background
+- `soft` — Tinted surface background (default)
+- `outline` — Bordered outline
+- `glass` — Frosted glass material fill
+- `dot` — Status dot indicator with accompanying label
+
+## Colors
+
+`accent`, `muted`, `danger`, `success`, and `warning`.
+
+## Sizes
+
+`sm`, `md` (default), and `lg`.
+
+## Accessibility
+
+- Badge renders a plain `<span>` with no implicit role, so it is announced as part of the
+  surrounding text rather than as a widget
+- The `dot` variant's indicator is `aria-hidden` — the label text has to carry the meaning
+  ("Degraded", not colour alone)
+- When a badge reflects live state, put it inside a `role="status"` region so changes are announced
+- Pass `aria-label` through `...props` when the visible text is an abbreviation (`"P1"` → `"Priority 1"`)
+
+---
+
+## BarChart
+
+Source: https://hewnui.dev/docs/components/bar-chart
+
+Categorical bar chart with optional multi-series grouping.
+
+BarChart maps categories on a band scale and groups series side-by-side.
+Heights animate with a spring when motion is enabled.
+
+<BarChartDemo />
+
+## Usage
+
+```tsx
+import { BarChart } from "@hewnui/ui";
+
+<BarChart
+  summary="Tickets by status"
+  series={[
+    {
+      id: "open",
+      label: "Open",
+      data: [
+        { x: "Mon", y: 4 },
+        { x: "Tue", y: 6 },
+        { x: "Wed", y: 3 },
+      ],
+    },
+  ]}
+>
+  <BarChart.Tooltip />
+</BarChart>
+```
+
+## Accessibility
+
+- The SVG is `role="img"` named by the required `summary`, which is also rendered as an `sr-only` caption
+- Every bar is focusable and labelled `"{series}: {category}, {value}"`, so the data is reachable with Tab alone
+- Focus opens the same tooltip as hover, and blur closes it
+- Axis ticks and gridlines are `aria-hidden` — the summary carries the comparison
+- `status="loading"` and `status="empty"` announce through `role="status"`; `status="error"` uses `role="alert"`
+
+---
+
+## DataTable
+
+Source: https://hewnui.dev/docs/components/data-table
+
+Advanced table powered by TanStack Table on Hewn surfaces.
+
+DataTable keeps Hewn visuals while TanStack owns sorting state and
+column definitions. Use the foundation Table for simpler static grids.
+
+<DataTableDemo />
+
+## Usage
+
+```tsx
+import { DataTable, type ColumnDef } from "@hewnui/ui";
+
+const columns: ColumnDef<Row>[] = [
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "score", header: "Score" },
+];
+
+<DataTable aria-label="Scores" columns={columns} data={rows} />
+```
+
+## Accessibility
+
+- `aria-label` is a required prop, so the table is never unnamed
+- React Aria grid semantics: arrow keys move between cells, Home/End jump along a row
+- The first column is the row header, giving each row a name when a cell is read in isolation
+- Sortable headers expose `aria-sort` (`none`, `ascending`, `descending`) and toggle with Enter or
+  Space — the caret glyph is `aria-hidden`, so sort state never depends on seeing it
+- Sorting is driven through React Aria's `sortDescriptor`, so the announcement stays in sync with
+  the TanStack sort state
+
+---
+
+## DonutChart
+
+Source: https://hewnui.dev/docs/components/donut-chart
+
+Part-to-whole radial chart with a required summary and focusable slices.
+
+DonutChart is the radial sibling of Area and Bar: same status frames, same
+tooltip, slices you can Tab through.
+
+## Usage
+
+```tsx
+import { DonutChart } from "@hewnui/ui";
+
+<DonutChart
+  summary="Traffic share last 24h"
+  slices={[
+    { id: "edge", label: "Edge", value: 62 },
+    { id: "origin", label: "Origin", value: 38 },
+  ]}
+>
+  <DonutChart.Tooltip />
+</DonutChart>
+```
+
+## Preview
+
+<DonutChartDemo />
+
+## Accessibility
+
+- The SVG is `role="img"` named by the required `summary`
+- Every slice is focusable and labelled `"{name}: {value}"`
+- Focus opens the same tooltip as hover
+- `status="loading"` and empty (sum ≤ 0) use `role="status"`; `status="error"` uses `role="alert"`
+
+---
+
+## LineChart
+
+Source: https://hewnui.dev/docs/components/line-chart
+
+Multi-series line chart with optional tooltip.
+
+LineChart plots one or more series with theme-token colors, grid/axis labels,
+and draw-in motion. Use `LineChart.Tooltip` for point details.
+
+<LineChartDemo />
+
+## Usage
+
+```tsx
+import { LineChart } from "@hewnui/ui";
+
+<LineChart
+  summary="Revenue by weekday"
+  series={[
+    {
+      id: "rev",
+      label: "Revenue",
+      data: [
+        { x: "Mon", y: 12 },
+        { x: "Tue", y: 18 },
+        { x: "Wed", y: 15 },
+      ],
+    },
+  ]}
+>
+  <LineChart.Tooltip />
+</LineChart>
+```
+
+## States
+
+`loading`, `empty`, and `error` via the `status` prop (empty also when series
+have no points).
+
+## Accessibility
+
+`role="img"` plus required `summary`. Points are keyboard-focusable when a
+tooltip is used.
+
+---
+
+## Sparkline
+
+Source: https://hewnui.dev/docs/components/sparkline
+
+Compact inline trend line for dense data surfaces.
+
+Sparkline is a minimal trend line for tables, cards, and dashboards. It uses
+`role="img"` with a required summary and respects reduced motion.
+
+<SparklineDemo />
+
+## Usage
+
+```tsx
+import { Sparkline } from "@hewnui/ui";
+
+<Sparkline
+  data={[4, 6, 5, 9, 7, 11]}
+  summary="Signups over the last six weeks"
+/>
+```
+
+## States
+
+- `loading` — skeleton placeholder
+- `empty` — dashed empty message (also when `data` is empty)
+- `error` — alert message
+
+## Accessibility
+
+Provide a concrete `summary`. Prefer a surrounding visually-hidden data table
+when the exact values matter.
+
+---
+
+## Table
+
+Source: https://hewnui.dev/docs/components/table
+
+Accessible data table foundation with sorting and empty states.
+
+Lightweight table built on React Aria. Sorting stays client-side for the
+foundation; TanStack-powered advanced tables come later.
+
+<TableDemo />
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@hewnui/ui";
+
+<Table aria-label="Team">
+  <TableHeader>
+    <TableColumn isRowHeader>Name</TableColumn>
+    <TableColumn>Role</TableColumn>
+  </TableHeader>
+  <TableBody items={rows}>
+    {(item) => (
+      <TableRow id={item.id}>
+        <TableCell>{item.name}</TableCell>
+        <TableCell>{item.role}</TableCell>
+      </TableRow>
+    )}
+  </TableBody>
+</Table>
+```
+
+## States
+
+- Sorted columns via `allowsSorting` + `sortDescriptor`
+- `TableEmpty` for zero-result layouts
+- `TableLoading` for pending fetches
+
+## Accessibility
+
+- Grid semantics from React Aria Table
+- Sortable column announcements
+- Keyboard focus for rows and columns
+
+## Compound API
+
+`TableRoot.Header`, `TableRoot.Column`, `TableRoot.Body`, `TableRoot.Row`,
+`TableRoot.Cell`, `TableRoot.Empty`, and `TableRoot.Loading` are also exported.
+
+---
+
+## DatePicker
+
+Source: https://hewnui.dev/docs/components/date-picker
+
+Accessible date field with calendar popover.
+
+DatePicker wraps React Aria date segments and calendar navigation. Lives under
+**Date and Time** in the component gallery.
+
+<DatePickerDemo />
+
+## Usage
+
+```tsx
+import { DatePicker } from "@hewnui/ui";
+
+export function Example() {
+  return <DatePicker label="Ship date" />;
+}
+```
+
+The field shows localized segments (year, month, day). Open the calendar from
+the trailing button or by completing segment focus and activating the popover
+trigger.
+
+## States
+
+- **Empty / valued** — segments show placeholders until filled
+- **Required** — set `isRequired` when the date cannot be blank
+- **Disabled** — set `isDisabled` to block segment editing and the calendar
+- **Focus** — focused segments and calendar cells use a visible ring
+
+## Keyboard
+
+- `Tab` moves between the date group and the calendar button
+- Arrow keys and typing edit the focused segment
+- `Enter` or `Space` on the calendar button opens the popover
+- Inside the grid, arrows move between days; `Enter` selects
+- `Escape` closes the calendar and returns focus to the field
+- `PageUp` / `PageDown` move by month when the grid is focused
+
+## Accessibility
+
+- Segmented date editing keeps each part individually reachable
+- Calendar grid supports full keyboard navigation
+- Localized formatting and calendar labels come from React Aria
+- The field group is named by the `label` prop
+
+---
+
+## DateRangePicker
+
+Source: https://hewnui.dev/docs/components/date-range-picker
+
+Accessible start and end date fields with a range calendar popover and optional presets.
+
+DateRangePicker wraps React Aria date segments and RangeCalendar navigation with
+optional quick-select presets. Lives under **Date and Time** in the component
+gallery.
+
+<DateRangePickerDemo />
+
+## Usage
+
+```tsx
+import { DateRangePicker } from "@hewnui/ui";
+
+<DateRangePicker
+  label="Travel dates"
+  description="Inclusive stay"
+  startName="start"
+  endName="end"
+/>
+```
+
+## Presets
+
+Built-in presets cover Today, Last 7 days, Last 30 days, and This month. Pass
+`showPresets={false}` to hide them, or supply a custom `presets` list.
+
+```tsx
+<DateRangePicker
+  label="Report range"
+  presets={["today", "last-7-days", "this-month"]}
+/>
+```
+
+## Bounds and unavailable dates
+
+```tsx
+import { getLocalTimeZone, today } from "@internationalized/date";
+
+const now = today(getLocalTimeZone());
+
+<DateRangePicker
+  label="Booking window"
+  minValue={now}
+  maxValue={now.add({ months: 3 })}
+  isDateUnavailable={(date) => date.toDate(getLocalTimeZone()).getDay() === 0}
+/>
+```
+
+## Accessibility
+
+- Dual segmented date fields for start and end
+- Range calendar grid keyboard navigation
+- Localized formatting via React Aria
+- Form submission through `startName` and `endName`
+
+---
+
+## Empty
+
+Source: https://hewnui.dev/docs/components/empty
+
+Status region for lists and tables with nothing to show.
+
+Empty tells people the region is intentional, not broken. Pair it with an action
+when they can populate it.
+
+<EmptyDemo />
+
+## Usage
+
+```tsx
+import { Button, Empty } from "@hewnui/ui";
+
+<Empty title="No jobs" action={<Button>Queue deploy</Button>}>
+  Routed work will land here.
+</Empty>
+```
+
+## Accessibility
+
+- Renders `role="status"` so a newly empty region is announced
+- `title` is the name of the state; supporting copy is optional
+- Keep the action a real control (Button, Link) — do not put the only next step in placeholder art
+
+---
+
+## Progress
+
+Source: https://hewnui.dev/docs/components/progress
+
+Determinate and indeterminate progress feedback.
+
+Progress uses React Aria progressbar semantics and tabular percentages.
+
+<ProgressDemo />
+
+## Usage
+
+```tsx
+import { Progress } from "@hewnui/ui";
+
+<Progress label="Bundle sync" value={47} />
+```
+
+## Accessibility
+
+- React Aria progressbar semantics: `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` track
+  `value`, `minValue`, and `maxValue`
+- `label` renders a real `<Label>` tied to the bar — pass one whenever the bar is not already
+  described by nearby text
+- `isIndeterminate` drops the numeric value so assistive tech announces "busy" rather than a
+  misleading percentage
+- The percentage readout uses tabular numerals so it does not jitter while counting
+- The indeterminate sweep falls back to a pulse under `prefers-reduced-motion`
+
+---
+
+## Skeleton
+
+Source: https://hewnui.dev/docs/components/skeleton
+
+Placeholder blocks for loading layouts.
+
+Skeleton is a lightweight pulse surface. Compose multiple blocks to match
+content geometry.
+
+<SkeletonDemo />
+
+## Usage
+
+```tsx
+import { Skeleton } from "@hewnui/ui";
+
+<Skeleton className="h-4 w-full" />
+```
+
+## Accessibility
+
+- Skeleton is `aria-hidden` — it is decorative geometry, never an announcement
+- Because it is silent, pair it with a live region so screen reader users learn that content is
+  loading:
+
+```tsx
+<div role="status" aria-live="polite">
+  <span className="sr-only">Loading rows…</span>
+  <Skeleton className="h-4 w-full" />
+  <Skeleton className="h-4 w-2/3" />
+</div>
+```
+
+- Remove the live region once the real content lands, or the announcement repeats
+- The pulse is a CSS animation and is suppressed by `prefers-reduced-motion`
+
+---
+
+## Spinner
+
+Source: https://hewnui.dev/docs/components/spinner
+
+Indeterminate loading indicator for inline and status feedback.
+
+Spinner is a decorative indeterminate indicator. It renders `aria-hidden` —
+announce loading through the surrounding region or control text instead.
+
+<SpinnerDemo />
+
+## Usage
+
+```tsx
+import { Spinner } from "@hewnui/ui";
+
+<Spinner />
+```
+
+## Sizing and color
+
+Spinner is a 1rem square by default and inherits `currentColor`, so it takes
+the color of whatever it sits inside. Override either with `className`:
+
+```tsx
+<Spinner className="size-6" />
+<Spinner className="size-8 text-accent" />
+```
+
+## Inside a button
+
+`Button` renders a Spinner for you when `isLoading` is set — you do not need to
+compose one yourself:
+
+```tsx
+<Button isLoading>Saving</Button>
+```
+
+## Accessibility
+
+Spinner is `aria-hidden` by design. A spinning shape carries no meaning for a
+screen reader, so it is never announced on its own — the surrounding context
+has to do that work.
+
+- Pair it with a live region when the spinner is the only signal that something
+  is happening:
+
+```tsx
+<p role="status">
+  <Spinner />
+  Loading results
+</p>
+```
+
+- Inside `Button`, the accessible name already conveys state and the button is
+  disabled while loading — no extra live region is needed.
+- Do not add `role="status"` or `aria-label` to Spinner itself. Announce the
+  state on the region that owns it, or the message is read out of context.
+- Motion respects `prefers-reduced-motion: reduce` in CSS: the rotation stops
+  and the ring resolves to a static, dimmed indicator. No JavaScript involved,
+  so it works before hydration.
+
+---
+
+## Toast
+
+Source: https://hewnui.dev/docs/components/toast
+
+Motion-aware notification stack with global provider.
+
+Toasts stack from the corner with a tone well, lifetime bar, and dismiss
+control. Tones: `default`, `success`, `danger`, `warning`, and `info`.
+Reduced motion softens entrance and freezes the lifetime bar.
+
+<ToastDemo />
+
+## Usage
+
+```tsx
+import { Button, ToastProvider, useToast } from "@hewnui/ui";
+
+function Notify() {
+  const { toast } = useToast();
+  return (
+    <Button
+      onPress={() =>
+        toast({ title: "Draft saved", tone: "success" })
+      }
+    >
+      Notify
+    </Button>
+  );
+}
+```
+
+Wrap the app with `ToastProvider` once — already included in the docs shell.
+
+## Tones
+
+| Tone | Use |
+|------|-----|
+| `default` | Neutral status |
+| `success` | Completed save or sync |
+| `danger` | Failure that needs attention |
+| `warning` | Soft risk or quota pressure |
+| `info` | Tip or non-blocking guidance |
+
+## Accessibility
+
+- `danger` toasts render `role="alert"` with `aria-live="assertive"`; every other tone uses
+  `role="status"` with `aria-live="polite"`, so routine confirmations never interrupt
+- The dismiss control is a real button labelled "Dismiss notification"
+- The countdown bar is `aria-hidden` and freezes when motion is off
+- Toasts auto-dismiss after 4200ms by default. Raise `duration` for longer messages, and do not
+  put an action's only affordance inside a toast — the timer does not pause on hover or focus.
+
+<Callout type="warn">
+  A toast is the wrong home for anything the user must act on. For blocking errors or decisions,
+  use an inline message or a Dialog, which stay on screen until dismissed.
+</Callout>
+
+---
+
+## Checkbox
+
+Source: https://hewnui.dev/docs/components/checkbox
+
+Binary selection control with motion-aware check feedback.
+
+Checkbox uses React Aria selection behavior and a compact indicator. When motion
+is on, the check mark springs in; reduced motion keeps an instant mark.
+
+<CheckboxDemo />
+
+## Usage
+
+```tsx
+import { Checkbox } from "@hewnui/ui";
+
+export function Example() {
+  return <Checkbox defaultSelected>Email product updates</Checkbox>;
+}
+```
+
+Use `isSelected` / `onChange` for controlled forms. Pair related options with
+`CheckboxGroup` when they share one label and validation message.
+
+## States
+
+- **Selected / unselected** — animated check mark when motion is enabled
+- **Indeterminate** — set `isIndeterminate` for partial selection parents
+- **Invalid** — set `isInvalid` to mark a required unchecked choice
+- **Disabled** — reduces opacity and blocks activation
+- **Pressed** — scale feedback on the indicator when motion is on
+- **Focus** — ring on the indicator via `--kp-ring`
+
+## Keyboard
+
+- `Tab` moves focus to the checkbox
+- `Space` toggles selection
+- Disabled checkboxes are not focusable
+
+## Accessibility
+
+- Native checkbox role and checked state from React Aria
+- Indeterminate is exposed to assistive tech separately from checked
+- Keep the label as children so the hit target includes the text
+- Visible focus ring stays on the indicator box
+
+---
+
+## CheckboxGroup
+
+Source: https://hewnui.dev/docs/components/checkbox-group
+
+Labeled multi-select checkbox set with shared validation messaging.
+
+Wraps React Aria CheckboxGroup around Hewn `Checkbox` items. Use when
+several related toggles share one label and error channel.
+
+<CheckboxGroupDemo />
+
+## Usage
+
+```tsx
+import { Checkbox, CheckboxGroup } from "@hewnui/ui";
+
+<CheckboxGroup label="Notify me about" defaultValue={["billing"]}>
+  <Checkbox value="billing">Billing</Checkbox>
+  <Checkbox value="product">Product updates</Checkbox>
+</CheckboxGroup>
+```
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled group or individual checkboxes
+
+## Accessibility
+
+- Group label associates with the set
+- Each checkbox keeps its own accessible name
+- Keyboard and screen reader behavior from React Aria
+
+---
+
+## FileUpload
+
+Source: https://hewnui.dev/docs/components/file-upload
+
+Drag-and-drop file zone with browse trigger and removable file list.
+
+Combines React Aria DropZone and FileTrigger. Browse or drop files, then remove
+items from the list before submit.
+
+<FileUploadDemo />
+
+## Usage
+
+```tsx
+import { FileUpload } from "@hewnui/ui";
+
+<FileUpload
+  label="Brand mark"
+  acceptedFileTypes={["image/png", "image/svg+xml"]}
+  allowsMultiple={false}
+  onFilesChange={(files) => console.log(files)}
+/>
+```
+
+## States
+
+- Empty drop prompt with browse action
+- Drop target highlight (solid accent edge + press scale)
+- Selected file list with remove actions
+- Invalid + `errorMessage`
+- Disabled
+
+Under the global **glass** material, the zone and file rows pick up tinted frost
+while the dashed drop edge stays readable.
+
+## Accessibility
+
+- Drop zone is keyboard focusable
+- Browse uses a pressable Button via FileTrigger
+- Remove actions are named per file
+
+---
+
+## Form
+
+Source: https://hewnui.dev/docs/components/form
+
+Accessible form container for native and custom field validation.
+
+Thin wrapper around React Aria Form. Compose Hewn fields inside and use
+native constraint validation or `validationErrors` for server feedback.
+
+<FormDemo />
+
+## Usage
+
+```tsx
+import { Button, Form, TextField } from "@hewnui/ui";
+
+<Form onSubmit={(event) => event.preventDefault()}>
+  <TextField label="Email" name="email" type="email" isRequired />
+  <Button type="submit">Continue</Button>
+</Form>
+```
+
+## Notes
+
+- No React Hook Form or Formik dependency
+- Fields keep their own labels, descriptions, and errors
+- Use `validationErrors` for server-side messages keyed by field name
+
+## Accessibility
+
+- Landmark `form` role when labeled
+- Focus moves to the first invalid field on failed submit
+
+---
+
+## InputGroup
+
+Source: https://hewnui.dev/docs/components/input-group
+
+Text field with prefix and suffix affixes inside shared input chrome.
+
+Compose units, schemes, or icons beside an input without leaving the shared
+field surface. Concise `prefix` / `suffix` props cover most cases; compound
+parts support custom layouts.
+
+<InputGroupDemo />
+
+## Usage
+
+```tsx
+import { InputGroup } from "@hewnui/ui";
+
+<InputGroup label="Site" prefix="https://" suffix=".studio" placeholder="andruia" />
+```
+
+## Compound API
+
+```tsx
+<InputGroup label="Amount">
+  <InputGroup.Prefix>$</InputGroup.Prefix>
+  <InputGroup.Input placeholder="4,280" />
+  <InputGroup.Suffix>USD</InputGroup.Suffix>
+</InputGroup>
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+
+## Accessibility
+
+- Affixes are presentational; the input keeps the accessible name
+- Focus ring applies to the shared group surface
+
+---
+
+## InputOTP
+
+Source: https://hewnui.dev/docs/components/input-otp
+
+Segmented one-time code entry with paste and keyboard navigation.
+
+Compositional OTP control for email codes and short PINs. Digits advance on
+entry, Backspace retreats, and paste fills the whole code.
+
+<InputOtpDemo />
+
+## Usage
+
+```tsx
+import { InputOTP } from "@hewnui/ui";
+
+<InputOTP label="Email code" length={6} onComplete={(code) => console.log(code)} />
+```
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+- Controlled `value` or `defaultValue`
+
+## Accessibility
+
+- Group role with labeled digit slots
+- Arrow keys move between digits
+- Hidden `name` input for form submission when provided
+
+---
+
+## NumberField
+
+Source: https://hewnui.dev/docs/components/number-field
+
+Localized number input with accessible increment and decrement steppers.
+
+Built on React Aria NumberField. Values use tabular numerals and format through
+`Intl.NumberFormat` options.
+
+<NumberFieldDemo />
+
+## Usage
+
+```tsx
+import { NumberField } from "@hewnui/ui";
+
+<NumberField label="Quantity" defaultValue={3} minValue={0} />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled / read-only
+- Min and max bounds
+
+## Accessibility
+
+- Stepper buttons labeled for increment and decrement
+- Arrow keys adjust the value
+- Hit targets are at least 40×40px
+
+---
+
+## PasswordField
+
+Source: https://hewnui.dev/docs/components/password-field
+
+Password input with an accessible show and hide toggle.
+
+Built on React Aria TextField with a Group and reveal button. Defaults to
+masked input; the toggle swaps to plain text without leaving the field chrome.
+
+<PasswordFieldDemo />
+
+## Usage
+
+```tsx
+import { PasswordField } from "@hewnui/ui";
+
+<PasswordField label="Password" placeholder="Enter passphrase" />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+- `defaultVisible` starts revealed
+
+## Accessibility
+
+- Toggle button has show/hide accessible names
+- Hit target is at least 40×40px
+- Label and error association from React Aria
+
+---
+
+## RadioGroup
+
+Source: https://hewnui.dev/docs/components/radio-group
+
+Mutually exclusive choice set with animated selection indicator.
+
+Compound `RadioGroup` and `Radio` built on React Aria. Use for single-select
+settings where options should stay visible.
+
+<RadioGroupDemo />
+
+## Usage
+
+```tsx
+import { Radio, RadioGroup } from "@hewnui/ui";
+
+<RadioGroup label="Plan" defaultValue="pro">
+  <Radio value="free">Free</Radio>
+  <Radio value="pro">Pro</Radio>
+</RadioGroup>
+```
+
+## Orientation
+
+`vertical` (default) or `horizontal`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled group or individual radios
+
+## Accessibility
+
+- Arrow keys move selection within the group
+- Selection indicator respects reduced motion
+- Focus ring on the active radio
+
+---
+
+## SearchField
+
+Source: https://hewnui.dev/docs/components/search-field
+
+Search input with clear control and Escape-to-clear behavior.
+
+Built on React Aria SearchField. Escape clears the value; Enter can submit via
+`onSubmit`.
+
+<SearchFieldDemo />
+
+## Usage
+
+```tsx
+import { SearchField } from "@hewnui/ui";
+
+<SearchField label="Find projects" placeholder="Name or owner" />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+- Clear button when the field has a value
+
+## Accessibility
+
+- Native search semantics
+- Clear button has an accessible name
+- Escape clears; Enter submits when `onSubmit` is provided
+
+---
+
+## Slider
+
+Source: https://hewnui.dev/docs/components/slider
+
+Single-value range control with tabular output and accessible thumb.
+
+Built on React Aria Slider. Output uses tabular numerals; the thumb keeps a
+40×40 hit target.
+
+<SliderDemo />
+
+## Usage
+
+```tsx
+import { Slider } from "@hewnui/ui";
+
+<Slider label="Opacity" defaultValue={42} minValue={0} maxValue={100} />
+```
+
+## States
+
+- Description helper text
+- Disabled
+- Dragging press scale on the thumb
+
+## Accessibility
+
+- Role `slider` with keyboard arrow support
+- Label and output are associated automatically
+- Focus ring on the thumb
+
+---
+
+## Switch
+
+Source: https://hewnui.dev/docs/components/switch
+
+Immediate on/off control for preferences and modes.
+
+Switch is for instant settings, not delayed form commits. The track and thumb
+use CSS transforms, and press scale follows the global motion setting.
+
+<SwitchDemo />
+
+## Usage
+
+```tsx
+import { Switch } from "@hewnui/ui";
+
+export function Example() {
+  return <Switch defaultSelected>Enable motion</Switch>;
+}
+```
+
+Controlled usage takes `isSelected` with `onChange`. Uncontrolled usage prefers
+`defaultSelected`.
+
+## States
+
+- **Selected / unselected** — thumb travels along the track
+- **Disabled** — reduces opacity and blocks pointer and keyboard activation
+- **Focus** — visible ring on the track via `--kp-ring`
+- **Pressed** — scale feedback when motion is enabled
+
+## Keyboard
+
+- `Tab` moves focus to the switch
+- `Space` toggles the value
+- Disabled switches are skipped in the tab order
+
+## Accessibility
+
+- Exposes the native `switch` role from React Aria
+- The label text is associated with the control; keep meaningful children
+- Selected state is announced to assistive tech
+- Focus-visible ring stays on the track, not the label text
+
+---
+
+## TextArea
+
+Source: https://hewnui.dev/docs/components/text-area
+
+Multiline labeled field with description and validation messaging.
+
+Built on React Aria TextField with a TextArea control. Labels sit above the
+control with optional helper and error text below.
+
+<TextAreaDemo />
+
+## Usage
+
+```tsx
+import { TextArea } from "@hewnui/ui";
+
+<TextArea label="Notes" placeholder="Add context" rows={4} />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+## Sizes
+
+`sm`, `md` (default), and `lg`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+
+## Accessibility
+
+- Label association through React Aria
+- Error text connected via field semantics
+- Keyboard focus ring on the textarea
+
+---
+
+## TextField
+
+Source: https://hewnui.dev/docs/components/text-field
+
+Labeled text input with description and validation messaging.
+
+Built on React Aria TextField. Labels sit above the control with optional
+helper and error text below.
+
+<TextFieldDemo />
+
+## Usage
+
+```tsx
+import { TextField } from "@hewnui/ui";
+
+<TextField label="Email" type="email" placeholder="you@studio.dev" />
+```
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`.
+
+Under the global **glass** material, boxed variants pick up tinted frost and
+refraction. `flushed` stays underline-only so the bottom edge remains legible.
+
+## Sizes
+
+`sm`, `md` (default), and `lg`.
+
+## States
+
+- Description helper text
+- Invalid + `errorMessage`
+- Disabled
+
+## Accessibility
+
+- Label association through React Aria
+- Error text connected via field semantics
+- Keyboard focus ring on the input
+
+---
+
+## Card
+
+Source: https://hewnui.dev/docs/components/card
+
+Elevated panel with optional header, body, and footer.
+
+Card is for hierarchy that needs a surface — not a wrapper around every metric.
+Prefer `divide` and spacing on dense desks.
+
+<CardDemo />
+
+## Usage
+
+```tsx
+import { Card } from "@hewnui/ui";
+
+<Card>
+  <Card.Header>Latency</Card.Header>
+  <Card.Body>p95 is 211ms across the canary.</Card.Body>
+  <Card.Footer>vs prior window</Card.Footer>
+</Card>
+```
+
+## Accessibility
+
+- Card is a generic grouping element with no implicit widget role
+- Put headings in `Card.Header` so the structure is readable without color
+- Do not nest interactive regions that already have their own labels without a heading
+
+---
+
+## Breadcrumbs
+
+Source: https://hewnui.dev/docs/components/breadcrumbs
+
+Hierarchical trail linking ancestors to the current page.
+
+Compound `Breadcrumbs` and `Breadcrumb` built on React Aria. Ancestor crumbs
+render as links; the current page renders as plain text with
+`aria-current="page"`.
+
+<BreadcrumbsDemo />
+
+## Usage
+
+```tsx
+import { Breadcrumb, Breadcrumbs } from "@hewnui/ui";
+
+export function Example() {
+  return (
+    <Breadcrumbs>
+      <Breadcrumb href="/docs">Docs</Breadcrumb>
+      <Breadcrumb href="/docs/components">Components</Breadcrumb>
+      <Breadcrumb>Button</Breadcrumb>
+    </Breadcrumbs>
+  );
+}
+```
+
+Omit `href` (or set `isCurrent`) on the final crumb. Set `aria-label` on
+`Breadcrumbs` when the page has more than one navigation landmark.
+
+## States
+
+- **Current** — last crumb without `href`, announced as the current page
+- **Disabled** — `isDisabled` on `Breadcrumbs` mutes the whole trail
+- **Focus** — link crumbs show a focus ring on keyboard focus
+
+## Keyboard
+
+- `Tab` moves through ancestor links
+- `Enter` activates the focused ancestor
+- The current page crumb is not a link and is skipped as a tab stop
+- Disabled trails remove all crumbs from the tab order
+
+## Accessibility
+
+- Renders a navigation landmark; provide `aria-label` when needed
+- Current page is marked with `aria-current="page"`
+- Separators are presentational and hidden from the accessibility tree
+- Keep crumb labels short and unique within the trail
+
+---
+
+## Link
+
+Source: https://hewnui.dev/docs/components/link
+
+Accessible navigation link with accent, muted, and underline variants.
+
+Styled React Aria Link for in-app and external navigation. Prefer Link over raw
+anchors so focus, press, and disabled states stay consistent with the rest of
+the system.
+
+<LinkDemo />
+
+## Usage
+
+```tsx
+import { Link } from "@hewnui/ui";
+
+export function Example() {
+  return <Link href="/docs/getting-started">Getting started</Link>;
+}
+```
+
+Pass `href` for navigation. For external destinations, React Aria still owns
+keyboard and focus behavior; add `target` / `rel` only when you need them.
+
+## Variants
+
+`accent` (default), `muted`, and `underline`.
+
+## States
+
+- **Hover / press** — color shift and press scale when motion is on
+- **Focus** — visible ring using semantic `--kp-ring`
+- **Disabled** — set `isDisabled` to block navigation and mute the style
+
+## Keyboard
+
+- `Tab` moves focus to the link
+- `Enter` activates navigation
+- Disabled links are removed from the tab order
+
+## Accessibility
+
+- Native link semantics from React Aria
+- Press scale feedback does not replace a clear focus ring
+- Disabled state exposes `aria-disabled` and prevents activation
+- Prefer descriptive link text over “click here”
+
+---
+
+## Pagination
+
+Source: https://hewnui.dev/docs/components/pagination
+
+Accessible page navigation with numbered pages, ellipsis, and optional links.
+
+Pagination is a navigation landmark with previous/next controls, numbered pages,
+ellipsis gaps, and an optional link mode for SEO-friendly listings. Lives under
+**Navigation** in the component gallery.
+
+<PaginationDemo />
+
+## Usage
+
+```tsx
+import { Pagination } from "@hewnui/ui";
+
+<Pagination total={12} defaultPage={1} onPageChange={(page) => console.log(page)} />
+```
+
+### Link mode
+
+```tsx
+<Pagination
+  total={12}
+  page={2}
+  getHref={(page) => `/docs?page=${page}`}
+/>
+```
+
+## States
+
+- Current page marked with `aria-current="page"`
+- Previous/next disabled at the ends
+- Optional fully disabled pager
+
+## Accessibility
+
+- `nav` landmark with an accessible name
+- Keyboard focusable controls activated with Enter or Space
+- Page numbers use tabular numerals
+- Ellipsis markers are presentational
+
+---
+
+## Stepper
+
+Source: https://hewnui.dev/docs/components/stepper
+
+Multi-step progress indicator with horizontal and vertical orientations.
+
+Stepper tracks wizard progress with complete, current, upcoming, error, and
+optional states. Pair it with `useStepper` for controlled flows.
+
+<StepperDemo />
+
+## Usage
+
+```tsx
+import { Stepper, StepperStep, useStepper } from "@hewnui/ui";
+
+const { currentIndex, goTo, next, previous } = useStepper({ count: 3 });
+
+<Stepper currentIndex={currentIndex} onStepChange={goTo}>
+  <StepperStep description="Name and owners">Account</StepperStep>
+  <StepperStep>Details</StepperStep>
+  <StepperStep isOptional>Review</StepperStep>
+</Stepper>
+```
+
+## States
+
+- Complete, current, upcoming (derived or explicit)
+- Error — alert glyph in the indicator
+- Optional — dashed indicator + Optional label
+
+## Accessibility
+
+- Navigation landmark with an accessible name
+- Current step exposes `aria-current="step"`
+- Indicators are presentational; titles provide the accessible name
+- Clickable completed steps are real buttons with 40×40 indicators and press scale
+- Connectors are `aria-hidden`
+
+---
+
+## Tabs
+
+Source: https://hewnui.dev/docs/components/tabs
+
+Sectioned content with a shared motion indicator.
+
+Tabs use React Aria keyboard behavior. When motion is enabled, the active
+indicator shares a layout spring across tabs.
+
+<TabsDemo />
+
+## Usage
+
+```tsx
+import { Tab, TabList, TabPanel, Tabs } from "@hewnui/ui";
+
+<Tabs defaultSelectedKey="overview">
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="tokens">Tokens</Tab>
+  </TabList>
+  <TabPanel id="overview">Overview content</TabPanel>
+  <TabPanel id="tokens">Token content</TabPanel>
+</Tabs>
+```
+
+## Accessibility
+
+- Tablist / tab / tabpanel roles
+- Arrow key navigation between tabs
+- Selected tab remains discoverable to assistive tech
+
+---
+
+## CommandPalette
+
+Source: https://hewnui.dev/docs/components/command-palette
+
+Modal ⌘K command finder with grouped actions, shortcuts, and async loading.
+
+CommandPalette pairs a dialog trigger with React Aria Autocomplete and Menu.
+Filter grouped commands, show shortcut hints, and wire an optional global hotkey.
+
+<CommandPaletteDemo />
+
+## Usage
+
+```tsx
+import {
+  Button,
+  CommandPalette,
+  CommandPaletteGroup,
+  CommandPaletteInput,
+  CommandPaletteItem,
+  CommandPaletteList,
+  CommandPaletteTrigger,
+  useCommandPaletteHotkey,
+} from "@hewnui/ui";
+
+const [isOpen, setOpen] = useState(false);
+useCommandPaletteHotkey({ onOpenChange: setOpen });
+
+<CommandPaletteTrigger isOpen={isOpen} onOpenChange={setOpen}>
+  <Button>Commands</Button>
+  <CommandPalette>
+    <CommandPaletteInput />
+    <CommandPaletteList>
+      <CommandPaletteGroup heading="Actions">
+        <CommandPaletteItem id="new" shortcut="⌘N" textValue="New file">
+          New file
+        </CommandPaletteItem>
+      </CommandPaletteGroup>
+    </CommandPaletteList>
+  </CommandPalette>
+</CommandPaletteTrigger>
+```
+
+## States
+
+- Loading — `CommandPaletteList isLoading` shows a polite status with spinner
+- Empty — filtered Menu `renderEmptyState` via `emptyLabel`
+- Disabled — `CommandPaletteItem isDisabled`
+
+## Accessibility
+
+- Dialog role with an accessible name; focus moves into the search field on open
+- Escape and outside click dismiss; focus returns to the trigger
+- Arrow keys move between commands; Enter activates; typeahead filtering via Autocomplete
+- Shortcut hints use the `Keyboard` element; icons are presentational
+- Reduced motion: enter/exit transitions fall back with `motion-reduce`
+
+## Docs search note
+
+The docs site still uses Fumadocs search. CommandPalette could wrap that surface later
+(same trigger + Autocomplete pattern) without changing this component’s API — not
+refactored in this release.
+
+---
+
+## Dialog
+
+Source: https://hewnui.dev/docs/components/dialog
+
+Modal surface for confirmations and focused tasks.
+
+Dialog pairs a trigger with a dismissible modal. Content uses compound parts
+for title, body, and actions.
+
+<DialogDemo />
+
+## Usage
+
+```tsx
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogTrigger,
+} from "@hewnui/ui";
+
+<DialogTrigger>
+  <Button>Open</Button>
+  <Dialog title="Confirm">
+    <DialogBody>Archive this draft?</DialogBody>
+    <DialogActions>
+      <Button variant="secondary" slot="close">Cancel</Button>
+      <Button slot="close">Confirm</Button>
+    </DialogActions>
+  </Dialog>
+</DialogTrigger>
+```
+
+## Accessibility
+
+- Dialog role and labeled title
+- Escape and outside click dismiss
+- Focus moves into the modal while open
+
+---
+
+## Drawer
+
+Source: https://hewnui.dev/docs/components/drawer
+
+Side panel overlay for filters and dense tools.
+
+Drawer docks to the left or right edge for filters and dense tools. Escape,
+overlay click, and the header close button all dismiss it while restoring focus
+to the trigger.
+
+<DrawerDemo />
+
+## Usage
+
+```tsx
+import { Button, Drawer, DrawerTrigger } from "@hewnui/ui";
+
+export function Example() {
+  return (
+    <DrawerTrigger>
+      <Button>Filters</Button>
+      <Drawer title="Filters" side="right">
+        Content
+      </Drawer>
+    </DrawerTrigger>
+  );
+}
+```
+
+Wrap the trigger and panel in `DrawerTrigger`. Control open state with `isOpen`
+and `onOpenChange` when the host page owns the lifecycle.
+
+## Variants
+
+`side="right"` (default) and `side="left"`. Title is required so the dialog has
+an accessible name.
+
+## States
+
+- **Closed / open** — focus moves into the panel while open
+- **Dismissing** — Escape, overlay press, and the close button all close it
+- **Focus** — close control and in-panel controls keep visible focus rings
+
+## Keyboard
+
+- Activate the trigger with `Enter` or `Space`
+- `Tab` / `Shift+Tab` cycle focus inside the open drawer
+- `Escape` dismisses and returns focus to the trigger
+- The header close button is reachable by keyboard and named “Close drawer”
+
+## Accessibility
+
+- Dialog semantics with a titled heading from the `title` prop
+- Overlay is dismissible; outside click and Escape both close when enabled
+- Focus is trapped in the panel while open
+- Close glyph is decorative; the button carries an accessible name
+
+---
+
+## Menu
+
+Source: https://hewnui.dev/docs/components/menu
+
+Action menu triggered from a button.
+
+Use Menu for compact action lists. Separators group destructive choices.
+
+<MenuDemo />
+
+## Usage
+
+```tsx
+import { Menu, MenuButton, MenuItem, MenuTrigger } from "@hewnui/ui";
+
+<MenuTrigger>
+  <MenuButton>Actions</MenuButton>
+  <Menu>
+    <MenuItem id="edit">Edit</MenuItem>
+    <MenuItem id="archive">Archive</MenuItem>
+  </Menu>
+</MenuTrigger>
+```
+
+## Accessibility
+
+- `MenuTrigger` wires `aria-haspopup` and `aria-expanded` onto the button and moves focus into the
+  menu when it opens
+- Arrow keys move between items, Home/End jump to the ends, and typeahead matches by first letters
+- Enter or Space fires `onAction`; Escape closes the menu and returns focus to the trigger
+- Items marked `isDisabled` are exposed as disabled and cannot be activated
+- `MenuSeparator` renders `role="separator"` so groups are announced as distinct
+
+---
+
+## Popover
+
+Source: https://hewnui.dev/docs/components/popover
+
+Anchored content panel for short explanations without a modal layer.
+
+DialogTrigger + Popover pattern for lightweight overlays. Heavier confirmations
+still belong in Dialog.
+
+<PopoverDemo />
+
+## Usage
+
+```tsx
+import {
+  Button,
+  Popover,
+  PopoverBody,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@hewnui/ui";
+
+<PopoverTrigger>
+  <Button>Details</Button>
+  <Popover>
+    <PopoverTitle>Latency</PopoverTitle>
+    <PopoverBody>Median response is 47.2ms.</PopoverBody>
+  </Popover>
+</PopoverTrigger>
+```
+
+## Accessibility
+
+- Opens as a dialog for focus management
+- Esc and outside click dismiss
+- Title uses the dialog heading slot
+
+---
+
+## Tooltip
+
+Source: https://hewnui.dev/docs/components/tooltip
+
+Short contextual hint anchored to a trigger on hover or focus.
+
+Built on React Aria TooltipTrigger and Tooltip. Prefer for brief labels; use
+Popover when the content needs a title or actions.
+
+<TooltipDemo />
+
+## Usage
+
+```tsx
+import { Button, Tooltip, TooltipTrigger } from "@hewnui/ui";
+
+<TooltipTrigger>
+  <Button>Help</Button>
+  <Tooltip>Keyboard shortcut</Tooltip>
+</TooltipTrigger>
+```
+
+## Placement
+
+Defaults to `top`. Pass `placement` for other overlay sides.
+
+## Accessibility
+
+- Appears on hover and keyboard focus
+- Exposed with `role="tooltip"`
+- Delay defaults to 400ms; demos often use a shorter delay
+
+---
+
+## ColorPicker
+
+Source: https://hewnui.dev/docs/components/color-picker
+
+Composable color picker with area, hue and alpha sliders, hex field, and swatch presets.
+
+ColorPicker synchronizes React Aria ColorArea, ColorSlider, ColorField, and
+swatch presets. Returns a hex string and can show a read-only OKLCH readout.
+Lives under **Pickers** in the component gallery.
+
+<ColorPickerDemo />
+
+## Usage
+
+```tsx
+import { ColorPicker } from "@hewnui/ui";
+
+<ColorPicker label="Brand accent" defaultValue="#1a6b4a" />
+```
+
+## Inline panel
+
+```tsx
+<ColorPicker
+  label="Fill color"
+  variant="inline"
+  showOklch
+  description="Hex is editable; OKLCH is display-only."
+/>
+```
+
+## Presets and alpha
+
+```tsx
+<ColorPicker
+  label="Opaque only"
+  showAlpha={false}
+  presets={["#1a6b4a", "#0f766e", "#b45309", "#334155"]}
+/>
+```
+
+## Accessibility
+
+- Labeled saturation/brightness area, hue slider, and alpha slider
+- Hex field for precise entry
+- Keyboard navigation across area, sliders, field, and swatches
+- Hidden `name` input for HTML form submission
+
+---
+
+## Combobox
+
+Source: https://hewnui.dev/docs/components/combobox
+
+Searchable single-select built on React Aria ComboBox.
+
+Combobox keeps typing and list filtering in one field. Lives under **Pickers**
+in the component gallery.
+
+<ComboboxDemo />
+
+## Usage
+
+```tsx
+import { Combobox, ComboboxItem } from "@hewnui/ui";
+
+<Combobox label="City" defaultSelectedKey="lisbon">
+  <ComboboxItem id="lisbon">Lisbon</ComboboxItem>
+  <ComboboxItem id="porto">Porto</ComboboxItem>
+</Combobox>
+```
+
+## Accessibility
+
+- The input carries `role="combobox"` with `aria-expanded` and is wired to the listbox popover
+- `label` renders a real `<Label>` bound to the input — pass `aria-label` instead only when the
+  field is already labelled by adjacent text
+- Arrow keys move through options, Enter selects the focused option, Escape closes the popover
+- The toggle button is labelled by React Aria, so the ▾ glyph is never read aloud
+- Pass `textValue` on `ComboboxItem` when its children are not plain text, so typeahead and
+  announcements still have something to say
+
+---
+
+## Select
+
+Source: https://hewnui.dev/docs/components/select
+
+Single-select control with popover listbox.
+
+Select keeps a concise labeled trigger while list items stay composable. Lives
+under **Pickers** in the component gallery.
+
+<SelectDemo />
+
+## Usage
+
+```tsx
+import { Select, SelectItem } from "@hewnui/ui";
+
+export function Example() {
+  return (
+    <Select label="Theme pack" defaultSelectedKey="forest">
+      <SelectItem id="forest">Forest</SelectItem>
+      <SelectItem id="tide">Tide</SelectItem>
+    </Select>
+  );
+}
+```
+
+Use `selectedKey` / `onSelectionChange` for controlled value. Pass `textValue`
+on `SelectItem` when children are not plain text so typeahead still works.
+
+## Variants
+
+`outline` (default), `filled`, `flushed`, and `glass`. Under the global glass
+material, boxed variants pick up tinted frost; `flushed` stays underline-only.
+
+## States
+
+- **Placeholder** — shown until a key is selected
+- **Disabled** — `isDisabled` mutes the trigger and blocks opening
+- **Invalid / required** — `isInvalid` and `isRequired` for form validation
+- **Focus** — ring on the trigger; list items highlight on keyboard focus
+
+## Keyboard
+
+- `Tab` focuses the trigger
+- `Enter`, `Space`, or `ArrowDown` / `ArrowUp` opens the listbox
+- Arrow keys move through options; typeahead jumps by printable characters
+- `Enter` selects the focused option; `Escape` closes without changing value
+- Disabled selects are skipped in the tab order
+
+## Accessibility
+
+- Trigger uses button/combobox semantics from React Aria with `aria-expanded`
+- `label` renders a real field label bound to the trigger
+- Selected option is announced when the popover closes
+- Listbox items expose selected and disabled states to assistive tech
+
+---
+
+## TagField
+
+Source: https://hewnui.dev/docs/components/tag-field
+
+Filterable multi-select that shows selections as removable tags.
+
+TagField (also exported as `MultiSelect`) combines React Aria ComboBox
+multi-select with a TagGroup of removable chips. Lives under **Pickers** in the
+component gallery.
+
+<TagFieldDemo />
+
+## Usage
+
+```tsx
+import { TagField, TagFieldItem } from "@hewnui/ui";
+
+<TagField label="Skills" defaultValue={["react"]} maxSelections={3} name="skills">
+  <TagFieldItem id="react">React</TagFieldItem>
+  <TagFieldItem id="svelte">Svelte</TagFieldItem>
+  <TagFieldItem id="vue" isDisabled>
+    Vue
+  </TagFieldItem>
+</TagField>
+```
+
+`MultiSelect` / `MultiSelectItem` are aliases for the same API.
+
+## States
+
+- Empty tag list (optional `emptyLabel`)
+- Empty filtered list (`listEmptyLabel`)
+- Disabled field and disabled items
+- Invalid + `errorMessage`
+- Maximum selections reached (announced live)
+
+## Accessibility
+
+- Combobox + listbox semantics from React Aria
+- Selected values render in a TagGroup grid with remove buttons
+- Backspace on an empty input removes the last tag
+- Arrow keys move between tags; Delete/remove clears the focused tag
+- Screen readers hear selection count and max-selection announcements
+
+---
+
+## CLI lint
+
+Source: https://hewnui.dev/docs/cli-lint
+
+Static checks for Hewn tokens, contrast, motion, and overlay a11y.
+
+`hewn lint` walks your project (and this monorepo in CI) for design-system
+guarantees. It uses the TypeScript compiler API when available and prints
+`file:line:column` findings with rule ids.
+
+```bash
+npx hewnui@latest lint
+npx hewnui@latest lint src/components --json
+npx hewnui@latest lint --fix
+```
+
+Exit code is `1` when any **error**-severity finding remains. Warnings do not
+fail the process.
+
+## Configuration
+
+Extend `hewn.json` (created by `hewn init`):
+
+```json
+{
+  "root": "components/hewn",
+  "tsx": true,
+  "lint": {
+    "include": ["**/*.{ts,tsx,css}"],
+    "ignore": ["**/*.test.*", "**/dist/**"],
+    "themes": ["**/node_modules/@hewnui/themes/**/*.css"],
+    "rules": {
+      "tokens-only": "error",
+      "aa-contrast": "error",
+      "reduced-motion": "error",
+      "labelled-overlays": "error",
+      "destructive-confirms": "warn"
+    }
+  }
+}
+```
+
+Set a rule to `"off"` to disable it. `ignore` globs apply to source files and
+theme CSS used by `aa-contrast`.
+
+## Rule reference
+
+### `tokens-only`
+
+Flags raw colour literals in components — hex, `rgb`/`hsl`/`oklch`/`oklab`, and
+Tailwind arbitrary colours such as `bg-[#…]`. Prefer semantic tokens
+(`var(--kp-foreground)`, `bg-accent`, …).
+
+Allowlisted: Hewn token definitions (`--kp-*`), fragment `href="#…"`
+anchors, and neutral black/white OKLCH recipes used for shadows and glass
+refraction (`oklch(0 0 0 / α)`, `oklch(1 0 0 / α)`).
+
+### `aa-contrast`
+
+Reads theme pack CSS (or paths in `lint.themes`) and checks semantic pairs:
+
+| Pair | Minimum |
+|------|---------|
+| `--kp-foreground` on `--kp-background` / `--kp-surface` | 4.5:1 text |
+| `--kp-accent-foreground` on `--kp-accent` | 4.5:1 text |
+| `--kp-muted-foreground` on `--kp-background` / `--kp-muted` | 3:1 large/UI |
+| `--kp-accent` / `--kp-danger` on `--kp-background` | 3:1 UI |
+
+Contrast math converts OKLCH → sRGB → WCAG relative luminance.
+
+### `reduced-motion`
+
+Flags `transition-all` / `transition: all`, and Motion usage
+(`motion/react` or `framer-motion`) without a statically detectable
+reduced-motion path (`useReducedMotion`, `useMotionMode`, `motionEnabled`,
+`MotionConfig`, or `prefers-reduced-motion`).
+
+`--fix` rewrites `transition-all` to an explicit property list
+(`color`, `background-color`, `border-color`, `opacity`, `transform`,
+`box-shadow`).
+
+### `labelled-overlays`
+
+Flags `Dialog` / `Modal` / `Sheet` / `Drawer` usages without an accessible
+name (`aria-label`, `aria-labelledby`, `title` prop, or `Heading` slot).
+Passthrough composition shells (`<Dialog>{children}</Dialog>`) are skipped.
+Popovers are not flagged — they typically inherit the trigger name.
+
+### `destructive-confirms` (warning)
+
+Heuristic: `Button` with a danger/destructive variant whose press handler or
+label looks delete-like (`delete`, `remove`, …) without a confirm pattern
+(`Dialog`, `AlertDialog`, `window.confirm`, …) in the same file.
+
+## JSON output
+
+```bash
+npx hewnui@latest lint --json
+```
+
+```json
+{
+  "errorCount": 1,
+  "warnCount": 0,
+  "fixed": 0,
+  "findings": [
+    {
+      "ruleId": "tokens-only",
+      "severity": "error",
+      "message": "Raw colour literal — use a semantic token…",
+      "file": "src/Button.tsx",
+      "line": 12,
+      "column": 18
+    }
+  ]
+}
+```
+
+---
+
+## Components
+
+Source: https://hewnui.dev/docs/components
+
+Free-core index with live specimens tied to the active theme.
+
+Pick a control, keep appearance open — every specimen follows the active pack.
+
+<DocsGallery />
+
+---
+
+## Getting started
+
+Source: https://hewnui.dev/docs/getting-started
+
+Install from npm, then wire providers and Tailwind CSS v4.
+
+{/* Install command strings: packages/docs-metadata/src/distribution.ts (PACKAGES_PUBLISHED). */}
+
+Hewn is a motion-native React component library built on React Aria,
+Tailwind CSS v4, and Motion. Install the packages from npm, copy components
+into your project with the CLI, or fetch component JSON from the [live
+registry](https://hewnui.dev/r/index.free.json).
+
+## Install
+
+Install the components and theme layers from npm:
+
+```bash
+pnpm add @hewnui/ui @hewnui/themes
+```
+
+Or pull a component's source straight from the registry:
+
+```bash
+curl -s https://hewnui.dev/r/button.json
+```
+
+Peer dependencies (needed whether you install from npm or own the source):
+
+```bash
+pnpm add react react-dom react-aria-components motion
+```
+
+| Peer | Supported range |
+|------|-----------------|
+| `react` | `^19.2.7` |
+| `react-dom` | `^19.2.7` |
+| `react-aria-components` | `^1.19.0` |
+| `motion` | `^12.42.2` |
+
+Prefer to own the source? Run `npx hewnui@latest init`, then
+`npx hewnui@latest add button` — see the [CLI reference](/docs/cli).
+
+## Tailwind CSS v4
+
+Hewn targets Tailwind v4, which is configured in CSS rather than a
+`tailwind.config.js`. Import Tailwind and the theme layers in your global
+stylesheet. These resolve from the `@hewnui/themes` package installed
+above.
+
+```css
+@import "tailwindcss";
+
+@import "@hewnui/themes/tokens.css";
+@import "@hewnui/themes/radius.css";
+@import "@hewnui/themes/glass.css";
+@import "@hewnui/themes/glass-buttons.css";
+```
+
+`tokens.css` is required — it defines the semantic `--kp-*` custom properties
+every component reads. The rest are opt-in: `radius.css` powers the global
+radius scale, and the two `glass` layers are only needed if you use the tinted
+glass material.
+
+Tailwind v4 only generates classes it can see, so point `@source` at the
+installed package or it will strip the component styles:
+
+```css
+@source "../node_modules/@hewnui/ui/dist/**/*.js";
+```
+
+If you copied source instead, point `@source` at your component root (for
+example `components/hewn`) — or omit it entirely when the files already
+sit inside your default content paths.
+
+<Callout type="warn">
+  Do not configure the Tailwind v3 PostCSS plugin. Hewn requires
+  `@tailwindcss/postcss`; the legacy plugin will not resolve the `@import`
+  layers above.
+</Callout>
+
+## Providers
+
+Wrap your app once, as high as possible. Each provider owns one global concern
+and writes a `data-*` attribute on `<html>` that the token layers respond to.
+
+```tsx
+"use client";
+
+import {
+  MaterialProvider,
+  MotionProvider,
+  RadiusProvider,
+  ThemeProvider,
+  ToastProvider,
+} from "@hewnui/ui";
+import type { ReactNode } from "react";
+
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider defaultTheme="forest" defaultMode="light">
+      <MaterialProvider defaultMaterial="solid">
+        <RadiusProvider defaultRadius="soft">
+          <MotionProvider defaultMotion="full">
+            <ToastProvider>{children}</ToastProvider>
+          </MotionProvider>
+        </RadiusProvider>
+      </MaterialProvider>
+    </ThemeProvider>
+  );
+}
+```
+
+| Provider | Controls | Values |
+|----------|----------|--------|
+| `ThemeProvider` | Active pack and mode | `forest`, `tide`, `graphite`, `dune`, `clay`, `ember` |
+| `MaterialProvider` | Global surface material | `solid`, `glass` |
+| `RadiusProvider` | Global radius scale | `sharp`, `soft`, `rounded`, `pill` |
+| `MotionProvider` | Global motion mode | `full`, `reduced`, `off` |
+| `ToastProvider` | Toast queue and region | — |
+
+Only `ThemeProvider` is strictly required. Add the others when you want global
+control over material, radius, motion, or toasts.
+
+Not every pack supports both modes — Dune and Clay are light-only, Ember is
+dark-only, and Forest, Tide, and Graphite support both. Requesting an
+unsupported mode falls back to the pack's first allowed mode. See
+[Themes](/docs/themes) for the full matrix.
+
+<Callout>
+  `MotionProvider` never overrides the OS. `prefers-reduced-motion: reduce`
+  caps the effective mode at `reduced` — a `full` preference cannot win. See
+  [Motion](/docs/motion) for tokens and the transform-only contract.
+</Callout>
+
+## First component
+
+```tsx
+import { Button } from "@hewnui/ui";
+
+export function Example() {
+  return <Button variant="primary">Save changes</Button>;
+}
+```
+
+## Next steps
+
+- [Browse the components](/docs/components) — every free component with live examples
+- [Theme Lab](/docs/theme-lab) — preview a theme across every state and variant
+- [Theme Studio](/docs/theme-studio) — author your own pack from an accent seed
+
+---
+
+## shadcn CLI
+
+Source: https://hewnui.dev/docs/shadcn
+
+Install Hewn through the shadcn CLI and MCP with a namespaced registry.
+
+Hewn publishes a **shadcn-schema** registry alongside the native
+Hewn CLI registry. Use it when you already standardize on
+`components.json`, the shadcn CLI, or the shadcn MCP.
+
+The native `hewn` CLI and `/r/*.json` payloads are unchanged. The shadcn
+output lives at `/r/shadcn/` and is generated from the same `packages/ui`
+source.
+
+## Configure the namespace
+
+Add `@hewnui` to `components.json` under `registries`. The URL always
+comes from this deployment’s site origin — do not hard-code a domain:
+
+<DocsShadcnRegistrySnippet />
+
+Or register it with the CLI:
+
+```bash
+npx shadcn@latest registry add @hewnui=<site-url>/r/shadcn/{name}.json
+```
+
+Replace `<site-url>` with the origin shown above (or your preview URL).
+
+Point the UI alias at a folder that can hold nested component packages (the
+registry installs into `@ui/<name>/…` and shared `@ui/utils`, `@ui/providers`.
+Theme CSS lands under `@/components/hewn/theme/…`, or use the npm package):
+
+```json
+{
+  "aliases": {
+    "ui": "@/components/hewn"
+  }
+}
+```
+
+## Install components
+
+<DocsShadcnAddExample />
+
+Shared foundation items resolve automatically via `registryDependencies`:
+
+| Item | Type | Role |
+|------|------|------|
+| `utils` | `registry:lib` | `cn` helper |
+| `providers` | `registry:lib` | theme / material / radius / motion providers |
+| `styles` | `registry:lib` | shared field and overlay classes |
+| `motion-presets` | `registry:lib` | Motion springs + LazyMotion loader |
+| `tokens` | `registry:theme` | pack CSS, radius, glass, `@theme` bridge |
+
+npm packages listed on each item (`react-aria-components`, `motion`,
+`@tanstack/react-table`, …) are installed by the shadcn CLI.
+
+## Wire CSS and providers
+
+After the first install, import the theme layer in your global CSS (Tailwind
+v4):
+
+```css
+@import "tailwindcss";
+@import "@hewnui/themes/tokens.css";
+@import "@hewnui/themes/radius.css";
+```
+
+Or, after the `tokens` registry item is copied locally:
+
+```css
+@import "../components/hewn/theme/tokens.css";
+@import "../components/hewn/theme/radius.css";
+```
+
+Wrap the app with the copied providers (theme is required). Import each file
+from `@/components/hewn/providers/`:
+
+```tsx
+import { ThemeProvider } from "@/components/hewn/providers/theme-provider";
+import { MaterialProvider } from "@/components/hewn/providers/material-provider";
+import { RadiusProvider } from "@/components/hewn/providers/radius-provider";
+import { MotionProvider } from "@/components/hewn/providers/motion-provider";
+```
+
+## shadcn MCP
+
+With the same `components.json` registries entry, the shadcn MCP can list and
+inspect `@hewnui/*` items. Catalog discovery uses
+`/r/shadcn/registry.json`; individual items use `/r/shadcn/{name}.json`.
+
+## Native CLI still available
+
+Prefer copy-via-Hewn tooling? Use [`hewn` CLI](/docs/cli) and the
+original `/r/*.json` registry — both channels stay in sync from
+`packages/ui`.
+
+---
+
+## Theme export
+
+Source: https://hewnui.dev/docs/themes/export
+
+Download DESIGN.md, DTCG tokens, Tailwind v4 @theme, and agent skills for every curated pack.
+
+Every curated Hewn theme can be exported in four free formats — from Theme
+Lab for the active pack, from Theme Studio for a draft, or as static files under
+`/themes/{pack}/`.
+
+## Formats
+
+| Format | File | Use |
+|--------|------|-----|
+| Design brief | `DESIGN.md` | Human- and AI-readable palette, typography, radius, motion, do/don't |
+| DTCG tokens | `tokens.dtcg.json` | W3C Design Tokens (`$value` / `$type`) with light and dark modes |
+| Tailwind v4 | `theme.css` | `@theme` block plus mode remaps |
+| Agent skill | `SKILL.md` | Cursor-style skill telling agents how to apply the theme |
+
+All six packs are free. Advanced Studio exporters (Style Dictionary, Figma
+variables) remain structured for a future unlock and are separate from these
+formats.
+
+## Static paths
+
+Files are generated at build time. Replace `{pack}` with `forest`, `tide`,
+`graphite`, `dune`, `clay`, or `ember`:
+
+- [`/themes/{pack}/DESIGN.md`](/themes/forest/DESIGN.md)
+- [`/themes/{pack}/tokens.dtcg.json`](/themes/forest/tokens.dtcg.json)
+- [`/themes/{pack}/theme.css`](/themes/forest/theme.css)
+- [`/themes/{pack}/SKILL.md`](/themes/forest/SKILL.md)
+- [`/themes/index.json`](/themes/index.json) — catalog of packs and formats
+
+Regenerate with `pnpm --filter @hewnui/themes generate` (also runs during
+`pnpm generate` / docs build).
+
+## Theme Lab
+
+Open [Theme Lab](/docs/theme-lab), pick a pack in the appearance controls, then
+use **Download** or **Copy** on each format. Buttons are keyboard-focusable with
+visible labels and live regions for copy confirmation.
+
+## Theme Studio
+
+Author a custom accent pack in [Theme Studio](/docs/theme-studio), open the
+**Export** tab, and download the same four formats for your draft (plus drop-in
+pack CSS).
+
+## Engine
+
+Exporters are pure functions in `@hewnui/themes/authoring`:
+
+- `exportDesignMd`
+- `exportDtcg`
+- `exportTailwindTheme`
+- `exportSkillMd`
+- `THEME_EXPORT_FORMATS` — catalog with `tier: "free"` today
+
+---
+
+## Visual matrix
+
+Source: https://hewnui.dev/docs/themes/matrix
+
+Curated theme, mode, and material combinations for visual checks.
+
+Only these combinations are supported. Use Theme Lab to inspect one row at a
+time—never side-by-side theme matrices in the product UI.
+
+## Supported rows
+
+| Theme | Mode | Solid | Glass |
+|-------|------|-------|-------|
+| Forest | light | yes | yes |
+| Forest | dark | yes | yes |
+| Tide | light | yes | yes |
+| Tide | dark | yes | yes |
+| Graphite | light | yes | yes |
+| Graphite | dark | yes | yes |
+| Dune | light | yes | yes |
+| Clay | light | yes | yes |
+| Ember | dark | yes | yes |
+
+## Motion overlay
+
+Every row above can run with motion `on` or `off`. `prefers-reduced-motion`
+forces the off path.
+
+## Checklist
+
+When reviewing visuals, confirm:
+
+1. Accent remains singular and unsaturated
+2. Glass keeps an opaque fallback
+3. Dark packs use softer inner refraction edges
+4. Numbers in tables stay tabular
+5. Hit targets remain at least 40×40px
+
+---

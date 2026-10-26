@@ -1,6 +1,7 @@
 import { AppearanceControlsDeferred } from "@/components/appearance-controls-deferred";
 import { HewnLogo } from "@/components/brand/hewn-logo";
 import { navLinks } from "@/components/home/content";
+import { HomeGithubLink } from "@/components/home/home-github-link";
 import { HomeNavMobileDeferred } from "@/components/home/home-nav-mobile-deferred";
 import Link from "next/link";
 
@@ -32,6 +33,7 @@ export function HomeNav() {
         </nav>
 
         <div className="relative z-40 ml-auto flex shrink-0 items-center gap-1">
+          <HomeGithubLink />
           <AppearanceControlsDeferred className="relative w-fit" />
           <HomeNavMobileDeferred />
         </div>

@@ -3,6 +3,7 @@ import { HomeNav } from "@/components/home/home-nav";
 import { ProAtmosphere } from "@/components/pro/pro-atmosphere";
 import { ProBlocks } from "@/components/pro/pro-blocks";
 import { ProHero } from "@/components/pro/pro-hero";
+import { ProJsonLd } from "@/components/pro/pro-json-ld";
 import { ProPrivacy } from "@/components/pro/pro-privacy";
 import { proCopy } from "@/components/pro/pro-content";
 import {
@@ -43,6 +44,7 @@ export default function ProPage() {
 
   return (
     <main className="relative min-h-[100dvh] overflow-x-clip">
+      <ProJsonLd />
       <ProAtmosphere />
       <HomeNav />
       <ProHero preorder={preorder} />

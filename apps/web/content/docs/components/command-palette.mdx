@@ -13,6 +13,7 @@ Filter grouped commands, show shortcut hints, and wire an optional global hotkey
 ## Usage
 
 ```tsx
+import { useState } from "react";
 import {
   Button,
   CommandPalette,
@@ -21,11 +22,13 @@ import {
   CommandPaletteItem,
   CommandPaletteList,
   CommandPaletteTrigger,
+  commandPaletteHotkeyLabel,
   useCommandPaletteHotkey,
 } from "@hewnui/ui";
 
 const [isOpen, setOpen] = useState(false);
-useCommandPaletteHotkey({ onOpenChange: setOpen });
+// Docs search owns ⌘/Ctrl+K on this site — demos use J instead.
+useCommandPaletteHotkey({ key: "j", onOpenChange: setOpen });
 
 <CommandPaletteTrigger isOpen={isOpen} onOpenChange={setOpen}>
   <Button>Commands</Button>
@@ -33,7 +36,11 @@ useCommandPaletteHotkey({ onOpenChange: setOpen });
     <CommandPaletteInput />
     <CommandPaletteList>
       <CommandPaletteGroup heading="Actions">
-        <CommandPaletteItem id="new" shortcut="⌘N" textValue="New file">
+        <CommandPaletteItem
+          id="new"
+          shortcut={commandPaletteHotkeyLabel("n")}
+          textValue="New file"
+        >
           New file
         </CommandPaletteItem>
       </CommandPaletteGroup>
@@ -56,8 +63,7 @@ useCommandPaletteHotkey({ onOpenChange: setOpen });
 - Shortcut hints use the `Keyboard` element; icons are presentational
 - Reduced motion: enter/exit transitions fall back with `motion-reduce`
 
-## Docs search note
+## Hotkey on this page
 
-The docs site still uses Fumadocs search. CommandPalette could wrap that surface later
-(same trigger + Autocomplete pattern) without changing this component’s API — not
-refactored in this release.
+Press Ctrl+J (⌘J on Mac) on this page. Ctrl/⌘K is taken by docs search here; in
+your app the hook defaults to ⌘K / Ctrl+K.
