@@ -83,13 +83,15 @@ for the rule reference, `hewn.json` config, and JSON schema.
 ## Registry URL
 
 The CLI fetches registry JSON from the canonical site origin
-(`https://hewnui.dev` by default — see `packages/site-url`). Override for local development or mirrors:
+(`https://hewnui.dev` by default). Override for local development or mirrors:
 
 ```bash
 HEWN_REGISTRY_URL=https://your-mirror.example.com npx hewnui@latest add button
 ```
 
-`hewn init` can also set a per-project `registry` field in `hewn.json`.
+`npx hewnui@latest init` can also set a per-project `registry` field in
+`hewn.json`. Installed globally or as a devDependency, the package also
+provides a short `hewn` alias.
 
 ## npm, Hewn CLI, or shadcn?
 

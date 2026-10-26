@@ -3,6 +3,7 @@
 import {
   CLI_PACKAGE_NAME,
   PACKAGE_MANAGERS,
+  THEMES_PACKAGE_NAME,
   UI_PACKAGE_NAME,
   cliAddCommand,
   packageInstallCommand,
@@ -11,6 +12,7 @@ import {
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TerminalWindowIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { docsCodeViewportProps } from "@/components/docs/docs-code-viewport";
 
 const MANAGER_LABEL: Record<PackageManager, string> = {
@@ -52,6 +54,8 @@ export function DocsInstallBlock({ componentName }: { componentName: string }) {
         <p className="text-xs text-muted-foreground">
           <span className="font-mono text-foreground">{UI_PACKAGE_NAME}</span>
           {" · "}
+          <span className="font-mono text-foreground">{THEMES_PACKAGE_NAME}</span>
+          {" · "}
           <span className="font-mono text-foreground">{CLI_PACKAGE_NAME}</span>
         </p>
       </div>
@@ -59,13 +63,26 @@ export function DocsInstallBlock({ componentName }: { componentName: string }) {
       <Tabs items={TAB_ITEMS} defaultIndex={1} className="kp-docs-install-tabs">
         {PACKAGE_MANAGERS.map((pm) => (
           <Tab key={pm} value={MANAGER_LABEL[pm]}>
-            <InstallSnippet code={packageInstallCommand(pm)} />
+            <InstallSnippet
+              code={packageInstallCommand(pm, { componentName })}
+            />
           </Tab>
         ))}
         <Tab value="CLI">
           <InstallSnippet code={cliAddCommand(componentName)} />
         </Tab>
       </Tabs>
+
+      <p className="mt-3 text-sm text-muted-foreground text-pretty">
+        First install? Follow{" "}
+        <Link
+          href="/docs/getting-started"
+          className="font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground"
+        >
+          Getting started
+        </Link>{" "}
+        for peers, CSS and providers.
+      </p>
     </section>
   );
 }

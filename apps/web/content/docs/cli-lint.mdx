@@ -5,8 +5,8 @@ status: stable
 tier: free
 ---
 
-`hewn lint` walks your project (and this monorepo in CI) for design-system
-guarantees. It uses the TypeScript compiler API when available and prints
+`npx hewnui@latest lint` walks your project for design-system guarantees. It
+uses the TypeScript compiler API when available and prints
 `file:line:column` findings with rule ids.
 
 ```bash
@@ -20,7 +20,7 @@ fail the process.
 
 ## Configuration
 
-Extend `hewn.json` (created by `hewn init`):
+Extend `hewn.json` (created by `npx hewnui@latest init`):
 
 ```json
 {

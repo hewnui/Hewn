@@ -1,6 +1,7 @@
 import { join } from "path";
 import { detectProject } from "../lib/detect.js";
 import { pathExists, writeFileEnsured } from "../lib/fsx.js";
+import { pinnedSpecs } from "../lib/peer-ranges.js";
 import { confirm } from "../lib/prompt.js";
 import { createRegistryClient, registryBase } from "../lib/registry.js";
 import { aliasForRoot, readTsconfigPaths } from "../lib/tsconfig-paths.js";
@@ -65,10 +66,16 @@ export async function initCommand(options: {
     console.log(`import alias: ${alias}  (e.g. import { Button } from "${alias}/button")`);
   }
   console.log("\nnext steps:");
-  console.log(
-    `  1. ${install} react-aria-components motion @hewnui/motion @hewnui/themes`,
-  );
+  const packages = pinnedSpecs([
+    "react-aria-components",
+    "motion",
+    "@hewnui/motion",
+    "@hewnui/themes",
+  ]);
+  console.log(`  1. ${install} ${packages.join(" ")}`);
   console.log('  2. import "@hewnui/themes/tokens.css" in your global css');
-  console.log(`  3. hewn add <name> to add components under ${importHint}`);
+  console.log(
+    `  3. npx hewnui@latest add <name> to add components under ${importHint}`,
+  );
   return 0;
 }

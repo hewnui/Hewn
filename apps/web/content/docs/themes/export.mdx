@@ -19,8 +19,7 @@ Lab for the active pack, from Theme Studio for a draft, or as static files under
 | Agent skill | `SKILL.md` | Cursor-style skill telling agents how to apply the theme |
 
 All six packs are free. Advanced Studio exporters (Style Dictionary, Figma
-variables) remain structured for a future unlock and are separate from these
-formats.
+variables) are planned for Hewn Pro and are separate from these formats.
 
 ## Static paths
 
@@ -33,8 +32,7 @@ Files are generated at build time. Replace `{pack}` with `forest`, `tide`,
 - [`/themes/{pack}/SKILL.md`](/themes/forest/SKILL.md)
 - [`/themes/index.json`](/themes/index.json) — catalog of packs and formats
 
-Regenerate with `pnpm --filter @hewnui/themes generate` (also runs during
-`pnpm generate` / docs build).
+Static files ship with the docs site under `/themes`.
 
 ## Theme Lab
 
