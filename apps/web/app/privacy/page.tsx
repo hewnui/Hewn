@@ -98,7 +98,9 @@ export default function PrivacyPage() {
               >
                 hewnui/Hewn
               </a>{" "}
-              and include the email address you used on the waitlist.
+              asking to leave the waitlist — do not put your email in the
+              issue. A maintainer will follow up privately to confirm the
+              address and remove it.
             </p>
           </section>
         </div>

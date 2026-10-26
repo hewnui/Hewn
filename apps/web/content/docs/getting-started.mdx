@@ -14,23 +14,15 @@ registry](https://hewnui.dev/r/index.free.json).
 
 ## Install
 
-Install the components and theme layers from npm:
+### Option A — use the npm package
 
 ```bash
-pnpm add @hewnui/ui @hewnui/themes
+pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"
 ```
 
-Or pull a component's source straight from the registry:
-
-```bash
-curl -s https://hewnui.dev/r/button.json
-```
-
-Peer dependencies (needed whether you install from npm or own the source):
-
-```bash
-pnpm add react react-dom react-aria-components motion
-```
+`@hewnui/ui` requires React `^19.2.7` and `react-dom` `^19.2.7`
+(`peerDependencies` in its package.json). Pinning Motion to `^12.42.2`
+matches the same peers — unpinned `motion` can resolve to a newer major.
 
 | Peer | Supported range |
 |------|-----------------|
@@ -39,8 +31,21 @@ pnpm add react react-dom react-aria-components motion
 | `react-aria-components` | `^1.19.0` |
 | `motion` | `^12.42.2` |
 
-Prefer to own the source? Run `npx hewnui@latest init`, then
-`npx hewnui@latest add button` — see the [CLI reference](/docs/cli).
+Or pull a component's source straight from the registry:
+
+```bash
+curl -s https://hewnui.dev/r/button.json
+```
+
+### Option B — copy the source into your project (you own the code)
+
+```bash
+npx hewnui@latest init
+npx hewnui@latest add button
+```
+
+See the [CLI reference](/docs/cli). Install the same peers (including the
+Motion pin and React `^19.2.7`) when you go this path.
 
 ## Tailwind CSS v4
 
@@ -58,10 +63,10 @@ above.
 @import "@hewnui/themes/glass-buttons.css";
 ```
 
-`tokens.css` is required — it defines the semantic `--kp-*` custom properties
-every component reads. The rest are opt-in: `radius.css` powers the global
-radius scale, and the two `glass` layers are only needed if you use the tinted
-glass material.
+`tokens.css` is required — it defines the semantic theme tokens every
+component reads. The rest are opt-in: `radius.css` powers the global radius
+scale, and the two `glass` layers are only needed if you use the tinted glass
+material.
 
 Tailwind v4 only generates classes it can see, so point `@source` at the
 installed package or it will strip the component styles:
@@ -75,9 +80,10 @@ example `components/hewn`) — or omit it entirely when the files already
 sit inside your default content paths.
 
 <Callout type="warn">
-  Do not configure the Tailwind v3 PostCSS plugin. Hewn requires
-  `@tailwindcss/postcss`; the legacy plugin will not resolve the `@import`
-  layers above.
+  Use Tailwind CSS v4. In Next.js (and other PostCSS setups) install
+  `@tailwindcss/postcss`. In Vite, use `@tailwindcss/vite` instead. Do not
+  configure the legacy Tailwind v3 PostCSS plugin — it will not resolve the
+  `@import` layers above.
 </Callout>
 
 ## Providers

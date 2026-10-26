@@ -4,34 +4,43 @@ Accessible React components built on React Aria, Tailwind v4 and Motion: 46 appl
 
 ## Install
 
+### Option A — use the npm package
+
 ```bash
-pnpm add @hewnui/ui react react-dom react-aria-components motion
+pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"
 ```
 
-| Peer | Range |
-|---|---|
-| react / react-dom | ^19.2.7 |
-| react-aria-components | ^1.19.0 |
-| motion | ^12.42.2 |
+`@hewnui/ui` requires React `^19.2.7` and `react-dom` `^19.2.7` (`peerDependencies` in its package.json). Pinning Motion to `^12.42.2` matches the same peers — unpinned `motion` can resolve to a newer major.
 
-Prefer to own the source?
+| Peer | Supported range |
+|------|-----------------|
+| `react` | `^19.2.7` |
+| `react-dom` | `^19.2.7` |
+| `react-aria-components` | `^1.19.0` |
+| `motion` | `^12.42.2` |
+
+`@hewnui/themes` is required for CSS imports under pnpm (it is not hoisted from `@hewnui/ui`).
+
+### Option B — copy the source into your project (you own the code)
 
 ```bash
+npx hewnui@latest init
 npx hewnui@latest add button
 ```
+
+Install the same peers (including the Motion pin and React `^19.2.7`) when you go this path.
 
 ## Setup (Tailwind v4)
 
 ```css
 @import "tailwindcss";
 @import "@hewnui/themes/tokens.css";
-@import "@hewnui/themes/motion.css";
 @import "@hewnui/themes/radius.css";
 @import "@hewnui/themes/glass.css";
 @source "../node_modules/@hewnui/ui/dist/**/*.js";
 ```
 
-Use `@tailwindcss/postcss`. The Tailwind v3 PostCSS plugin is not supported.
+`tokens.css` is required (it already imports motion tokens). `radius.css` and `glass.css` are opt-in. Use Tailwind CSS v4: `@tailwindcss/postcss` for Next/PostCSS, or `@tailwindcss/vite` for Vite. The Tailwind v3 PostCSS plugin is not supported.
 
 ## Usage
 

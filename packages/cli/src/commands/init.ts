@@ -57,6 +57,6 @@ export async function initCommand(options: {
   ]);
   console.log(`  1. ${install} ${packages.join(" ")}`);
   console.log('  2. import "@hewnui/themes/tokens.css" in your global css');
-  console.log("  3. hewn add <name> to add components");
+  console.log("  3. npx hewnui@latest add <name> to add components");
   return 0;
 }

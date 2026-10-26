@@ -184,10 +184,10 @@ export async function resolveComponentApi(
     compoundParts: meta.compoundParts,
     partProps,
     install: {
-      npm: packageInstallCommand("npm"),
-      pnpm: packageInstallCommand("pnpm"),
-      yarn: packageInstallCommand("yarn"),
-      bun: packageInstallCommand("bun"),
+      npm: packageInstallCommand("npm", { componentName: meta.name }),
+      pnpm: packageInstallCommand("pnpm", { componentName: meta.name }),
+      yarn: packageInstallCommand("yarn", { componentName: meta.name }),
+      bun: packageInstallCommand("bun", { componentName: meta.name }),
       cli: cliAddCommand(meta.name),
     },
   };

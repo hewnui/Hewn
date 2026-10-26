@@ -1,9 +1,12 @@
 #!/usr/bin/env node
+import { createRequire } from "module";
 import { parseArgs } from "util";
 import { addCommand } from "./commands/add.js";
 import { initCommand } from "./commands/init.js";
 import { lintCommand } from "./commands/lint.js";
 import { themeCommand } from "./commands/theme.js";
+
+const require = createRequire(import.meta.url);
 
 const HELP = `hewn — Hewn CLI
 
@@ -13,9 +16,13 @@ Usage:
   hewn theme [export]
   hewn lint [paths...] [--fix] [--json]
   hewn --help
+  hewn --version
 
 Environment:
   HEWN_REGISTRY_URL  override the registry base url
+
+Tip: via npx, prefer \`npx hewnui@latest <command>\` so the bin is on PATH.
+Installed globally or as a devDependency, the package also provides a short \`hewn\` alias.
 `;
 
 async function main(): Promise<number> {
@@ -30,8 +37,15 @@ async function main(): Promise<number> {
       fix: { type: "boolean", default: false },
       json: { type: "boolean", default: false },
       help: { type: "boolean", short: "h", default: false },
+      version: { type: "boolean", short: "v", default: false },
     },
   });
+
+  if (values.version) {
+    const pkg = require("../package.json") as { version: string };
+    console.log(pkg.version);
+    return 0;
+  }
 
   const [command, ...rest] = positionals;
   if (values.help || !command) {

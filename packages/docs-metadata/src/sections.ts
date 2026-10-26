@@ -54,7 +54,7 @@ export function componentSections(
 export const GUIDE_LINKS: DocsLink[] = [
   {
     title: "Getting started",
-    path: "/docs",
+    path: "/docs/getting-started",
     description: "Providers, themes, and the free component core",
   },
   {

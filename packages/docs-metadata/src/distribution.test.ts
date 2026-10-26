@@ -20,7 +20,7 @@ describe("distribution copy", () => {
 
   it("labels unpublished install commands until PACKAGES_PUBLISHED", () => {
     if (PACKAGES_PUBLISHED) {
-      expect(npmUiCommand()).toBe("pnpm add @hewnui/ui");
+      expect(npmUiCommand()).toBe("pnpm add @hewnui/ui @hewnui/themes");
       expect(cliAddCommand("button")).toBe(
         "npx hewnui@latest add button",
       );
