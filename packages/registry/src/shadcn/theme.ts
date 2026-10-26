@@ -58,7 +58,9 @@ async function readThemeFile(
     path: `theme/${relative}`,
     content,
     type: "registry:theme",
-    target: `@ui/theme/${relative}`,
+    // Plain path (not `@ui/theme/...`) so install targets are not mistaken for
+    // an import alias. Lands next to other Hewn copies under components/hewn.
+    target: `components/hewn/theme/${relative}`,
   };
 }
 
@@ -87,7 +89,7 @@ export async function buildTokensItem(themesRoot: string): Promise<ShadcnItem> {
       "Semantic OKLCH theme packs, radius scale, glass layers, and Tailwind v4 @theme bridges.",
     files,
     categories: ["themes"],
-    docs: "Import @ui/theme/tokens.css (and optionally radius/glass) in your global CSS.",
+    docs: 'Import "@hewnui/themes/tokens.css" (and optionally radius/glass) from the @hewnui/themes package, or "@/components/hewn/theme/tokens.css" after this item is copied.',
   };
   if (cssVars) item.cssVars = cssVars;
   return item;

@@ -6,12 +6,15 @@ import type { LlmsTxtInput } from "./types";
 
 export { DEFAULT_SITE_URL };
 
+/** Public GitHub repo — kept here so llms generation does not import apps/web. */
+export const GITHUB_REPO_URL = "https://github.com/hewnui/Hewn";
+
 export function buildLlmsInput(
   items: RegistryIndexItem[],
   baseUrl = DEFAULT_SITE_URL,
 ): LlmsTxtInput {
   return {
-    siteName: "Hewn",
+    siteName: "Hewn UI",
     summary: llmsSummary(),
     baseUrl,
     intro: [llmsIntro()],
@@ -21,6 +24,16 @@ export function buildLlmsInput(
       {
         heading: "Optional",
         links: [
+          {
+            title: "GitHub repository",
+            path: GITHUB_REPO_URL,
+            description: "Source, issues, and MIT license",
+          },
+          {
+            title: "Full docs dump",
+            path: "/llms-full.txt",
+            description: "Complete docs body text for agents",
+          },
           {
             title: "AI component index",
             path: "/ai/index.json",

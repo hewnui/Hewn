@@ -23,6 +23,7 @@ test("registry, themes, ai, seo endpoints resolve", async ({ request }) => {
     "/themes/forest/theme.css",
     "/themes/forest/SKILL.md",
     "/llms.txt",
+    "/llms-full.txt",
     "/robots.txt",
     "/sitemap.xml",
   ];

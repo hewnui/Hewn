@@ -2,13 +2,20 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 import type { AiProp } from "@hewnui/docs-metadata";
 
+export type DocsApiPartDocument = {
+  name: string;
+  description?: string;
+  props: AiProp[];
+};
+
 export type DocsApiDocument = {
   name: string;
   exportName: string;
   importPath: string;
-  source: "types" | "ai" | "merged";
+  source: "types" | "ai" | "merged" | "tsx";
   props: AiProp[];
   compoundParts: Array<{ name: string; description: string }>;
+  partProps?: DocsApiPartDocument[];
   install: {
     npm: string;
     pnpm: string;

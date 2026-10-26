@@ -15,6 +15,10 @@ column definitions. Use the foundation Table for simpler static grids.
 ```tsx
 import { DataTable, type ColumnDef } from "@hewnui/ui";
 
+type Row = { name: string; score: number };
+
+const rows: Row[] = [{ name: "Nova Hale", score: 92 }];
+
 const columns: ColumnDef<Row>[] = [
   { accessorKey: "name", header: "Name" },
   { accessorKey: "score", header: "Score" },

@@ -17,6 +17,7 @@
         "public/themes/**",
         "public/pro/previews/**",
         "public/llms.txt",
+        "public/llms-full.txt",
         "public/ai/**",
         "public/ai/api/**"
       ]

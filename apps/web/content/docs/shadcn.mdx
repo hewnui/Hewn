@@ -29,8 +29,8 @@ npx shadcn@latest registry add @hewnui=<site-url>/r/shadcn/{name}.json
 Replace `<site-url>` with the origin shown above (or your preview URL).
 
 Point the UI alias at a folder that can hold nested component packages (the
-registry installs into `@ui/<name>/…` and shared `@ui/utils`, `@ui/providers`,
-`@ui/theme`):
+registry installs into `@ui/<name>/…` and shared `@ui/utils`, `@ui/providers`.
+Theme CSS lands under `@/components/hewn/theme/…`, or use the npm package):
 
 ```json
 {
@@ -64,6 +64,13 @@ v4):
 
 ```css
 @import "tailwindcss";
+@import "@hewnui/themes/tokens.css";
+@import "@hewnui/themes/radius.css";
+```
+
+Or, after the `tokens` registry item is copied locally:
+
+```css
 @import "../components/hewn/theme/tokens.css";
 @import "../components/hewn/theme/radius.css";
 ```

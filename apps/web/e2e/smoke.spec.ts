@@ -8,11 +8,11 @@ test("reduced-motion emulation does not break demos", async ({ page }) => {
     page.getByRole("heading", { name: "Dialog", level: 1 }),
   ).toBeVisible();
 
-  const trigger = page.getByRole("button", { name: "Archive project" });
+  const trigger = page.getByRole("button", { name: "Export report" });
   await expect(trigger).toBeVisible();
   await expect(trigger).toHaveAttribute("data-react-aria-pressable", "true");
   await trigger.click();
-  const dialog = page.getByRole("dialog", { name: "Archive Northwind?" });
+  const dialog = page.getByRole("dialog", { name: "Export Northwind report?" });
   await expect(dialog).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
