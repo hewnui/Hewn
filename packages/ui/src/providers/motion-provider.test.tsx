@@ -55,6 +55,28 @@ function mockMatchMedia(matches: boolean) {
   return media;
 }
 
+describe("useMotionMode without provider", () => {
+  beforeEach(() => {
+    mockMatchMedia(false);
+  });
+
+  it("defaults to full when OS allows motion", () => {
+    render(<Probe />);
+    expect(screen.getByTestId("preference").textContent).toBe("full");
+    expect(screen.getByTestId("effective").textContent).toBe("full");
+    expect(screen.getByTestId("enabled").textContent).toBe("true");
+  });
+
+  it("clamps to reduced when OS prefers reduced motion", () => {
+    mockMatchMedia(true);
+    render(<Probe />);
+    expect(screen.getByTestId("preference").textContent).toBe("full");
+    expect(screen.getByTestId("effective").textContent).toBe("reduced");
+    expect(screen.getByTestId("enabled").textContent).toBe("false");
+    expect(screen.getByTestId("os").textContent).toBe("true");
+  });
+});
+
 describe("MotionProvider", () => {
   beforeEach(() => {
     mockMatchMedia(false);

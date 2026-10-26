@@ -2,12 +2,14 @@ import { join } from "path";
 import { detectProject } from "../lib/detect.js";
 import { pathExists, writeFileEnsured } from "../lib/fsx.js";
 import { confirm } from "../lib/prompt.js";
-import { pinnedSpecs } from "../lib/peer-ranges.js";
 import { createRegistryClient, registryBase } from "../lib/registry.js";
+import { aliasForRoot, readTsconfigPaths } from "../lib/tsconfig-paths.js";
 
 export type CliConfig = {
   root: string;
   tsx: boolean;
+  /** Import path prefix for the components root (e.g. `@/components/hewn`). */
+  alias?: string;
   registry?: string;
 };
 
@@ -30,8 +32,16 @@ export async function initCommand(options: {
     }
   }
 
-  const root = options.root ?? "components/hewn";
-  const config: CliConfig = { root, tsx: project.tsx };
+  const root = options.root ?? project.componentsRoot;
+  const alias =
+    options.root != null
+      ? aliasForRoot(root, readTsconfigPaths(project.root))
+      : project.alias;
+  const config: CliConfig = {
+    root,
+    tsx: project.tsx,
+    ...(alias ? { alias } : {}),
+  };
   await writeFileEnsured(configPath, `${JSON.stringify(config, null, 2)}\n`);
 
   const client = createRegistryClient(registryBase());
@@ -46,17 +56,19 @@ export async function initCommand(options: {
       ? "npm install"
       : `${project.packageManager} add`;
 
-  console.log(`\nwrote hewn.json (${project.tsx ? "TypeScript" : "JavaScript"} project)`);
+  const importHint = alias ?? root;
+  console.log(
+    `\nwrote hewn.json (${project.tsx ? "TypeScript" : "JavaScript"} project)`,
+  );
   console.log(`wrote ${files.length} foundation files to ${root}/`);
+  if (alias) {
+    console.log(`import alias: ${alias}  (e.g. import { Button } from "${alias}/button")`);
+  }
   console.log("\nnext steps:");
-  const packages = pinnedSpecs([
-    "react-aria-components",
-    "motion",
-    "@hewnui/motion",
-    "@hewnui/themes",
-  ]);
-  console.log(`  1. ${install} ${packages.join(" ")}`);
+  console.log(
+    `  1. ${install} react-aria-components motion @hewnui/motion @hewnui/themes`,
+  );
   console.log('  2. import "@hewnui/themes/tokens.css" in your global css');
-  console.log("  3. hewn add <name> to add components");
+  console.log(`  3. hewn add <name> to add components under ${importHint}`);
   return 0;
 }
