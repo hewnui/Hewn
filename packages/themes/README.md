@@ -10,14 +10,23 @@ Part of [Hewn](https://hewnui.dev).
 pnpm add @hewnui/themes
 ```
 
+When installing with `@hewnui/ui`, include themes in the same command and pin
+Motion to the peer range:
+
+```bash
+pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"
+```
+
 ## CSS entrypoints
 
 ```css
 @import "@hewnui/themes/tokens.css";
-@import "@hewnui/themes/motion.css";
 @import "@hewnui/themes/radius.css";
 @import "@hewnui/themes/glass.css";
 ```
+
+`tokens.css` is required (it already imports motion tokens). `radius.css` and
+`glass.css` are opt-in.
 
 Packs live under `@hewnui/themes/packs/*`. Public theme exports (DESIGN.md, DTCG, Tailwind `@theme`, SKILL.md) are also published on the docs site at `/themes`.
 

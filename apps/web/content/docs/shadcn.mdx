@@ -9,24 +9,20 @@ Hewn publishes a **shadcn-schema** registry alongside the native
 Hewn CLI registry. Use it when you already standardize on
 `components.json`, the shadcn CLI, or the shadcn MCP.
 
-The native `hewn` CLI and `/r/*.json` payloads are unchanged. The shadcn
-output lives at `/r/shadcn/` and is generated from the same `packages/ui`
-source.
+The native Hewn CLI and `/r/*.json` payloads are unchanged. The shadcn
+output lives at `/r/shadcn/`.
 
 ## Configure the namespace
 
-Add `@hewnui` to `components.json` under `registries`. The URL always
-comes from this deployment’s site origin — do not hard-code a domain:
+Add `@hewnui` to `components.json` under `registries`:
 
 <DocsShadcnRegistrySnippet />
 
 Or register it with the CLI:
 
 ```bash
-npx shadcn@latest registry add @hewnui=<site-url>/r/shadcn/{name}.json
+npx shadcn@latest registry add @hewnui=https://hewnui.dev/r/shadcn/{name}.json
 ```
-
-Replace `<site-url>` with the origin shown above (or your preview URL).
 
 Point the UI alias at a folder that can hold nested component packages (the
 registry installs into `@ui/<name>/…` and shared `@ui/utils`, `@ui/providers`,
@@ -86,6 +82,6 @@ inspect `@hewnui/*` items. Catalog discovery uses
 
 ## Native CLI still available
 
-Prefer copy-via-Hewn tooling? Use [`hewn` CLI](/docs/cli) and the
-original `/r/*.json` registry — both channels stay in sync from
-`packages/ui`.
+Prefer copy-via-Hewn tooling? Use the [`hewnui` CLI](/docs/cli)
+(`npx hewnui@latest`) and the original `/r/*.json` registry — both channels
+stay in sync from `packages/ui`.

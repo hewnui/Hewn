@@ -1,6 +1,8 @@
-import { ProBlockFrame } from "@/components/pro/pro-block-frame";
 import { proCopy } from "@/components/pro/pro-content";
 import { PRO_BLOCK_CATALOG } from "@/lib/pro/blocks-catalog";
+
+const SECTIONS = PRO_BLOCK_CATALOG.filter((block) => block.kind === "section");
+const PAGES = PRO_BLOCK_CATALOG.filter((block) => block.kind === "page");
 
 export function ProBlocks() {
   return (
@@ -23,19 +25,58 @@ export function ProBlocks() {
           {proCopy.blocksSupport}
         </p>
 
-        <ul className="mt-10 grid list-none gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {PRO_BLOCK_CATALOG.map((block) => (
-            <li key={block.id}>
-              <ProBlockFrame
-                id={block.id}
-                name={block.name}
-                description={block.description}
-                kind={block.kind}
-              />
-            </li>
-          ))}
-        </ul>
+        <div className="mt-10 grid gap-10 md:grid-cols-2">
+          <PlannedList
+            headingId="pro-planned-blocks"
+            title="Planned blocks"
+            items={SECTIONS.map((block) => ({
+              id: block.id,
+              name: block.name,
+              description: block.description,
+            }))}
+          />
+          <PlannedList
+            headingId="pro-planned-pages"
+            title="Planned pages"
+            items={PAGES.map((block) => ({
+              id: block.id,
+              name: block.name,
+              description: block.description,
+            }))}
+          />
+        </div>
       </div>
     </section>
+  );
+}
+
+function PlannedList({
+  headingId,
+  title,
+  items,
+}: {
+  headingId: string;
+  title: string;
+  items: readonly { id: string; name: string; description: string }[];
+}) {
+  return (
+    <div>
+      <h3
+        id={headingId}
+        className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground"
+      >
+        {title}
+      </h3>
+      <ul className="mt-4 list-none space-y-3" aria-labelledby={headingId}>
+        {items.map((item) => (
+          <li key={item.id} className="border-b border-border/50 pb-3 last:border-b-0">
+            <p className="text-sm font-medium text-foreground">{item.name}</p>
+            <p className="mt-1 text-sm text-pretty text-muted-foreground">
+              {item.description}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

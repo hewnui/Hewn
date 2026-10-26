@@ -12,7 +12,7 @@ export function HomeIdentity() {
             Identity
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
-            Themes with a point of view.
+            Six themes. Six identities.
           </h2>
           <p className="mt-4 max-w-[48ch] text-muted-foreground">
             Six curated packs. Compatible modes only. No fake dark mode bolted

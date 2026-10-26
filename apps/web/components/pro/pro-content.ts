@@ -1,3 +1,7 @@
+import { proCatalogSummary } from "@/lib/pro/blocks-catalog";
+
+const catalog = proCatalogSummary();
+
 export const proCopy = {
   brand: "Hewn Pro",
   eyebrow: "Pro",
@@ -7,8 +11,7 @@ export const proCopy = {
   waitlistHeading: "Join the Pro waitlist",
   waitlistSupport:
     "A plain email form, no account needed. We write when Pro is ready to try — no spam, and no prices on this page.",
-  blocksIntro:
-    "Blocks: app sidebar and header, metrics row, chart panel, activity feed, jobs table, confirm action, profile settings, team members, API keys. Pages: dashboard and settings. Previews here are static images only — block source never ships to this site.",
+  blocksIntro: `Blocks (${catalog.blockCount}): ${catalog.blocksLabel}. Pages (${catalog.pageCount}): ${catalog.pagesLabel}. Names below match the catalog — block source never ships to this site.`,
   consent:
     "By joining, you agree we may email you about Hewn Pro. See the privacy note.",
   privacyHref: "#privacy",
@@ -17,7 +20,7 @@ export const proCopy = {
     "We store your email, the time you joined, and which page you came from. We use Upstash Redis for this waitlist only. You can ask to be removed by emailing the address we reply from. We do not sell waitlist data.",
   blocksHeading: "Pro blocks",
   blocksSupport:
-    "Static previews of blocks and pages in development. Final designs may change before release.",
+    "Planned application blocks and pages in development. Final designs may change before release. Preview images are withheld until real captures ship.",
   placeholderLabel: "Preview placeholder",
   successNew: "You are on the waitlist.",
   successExisting: "You are already on the waitlist.",

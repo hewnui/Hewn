@@ -18,9 +18,14 @@ export { scanAiComponents } from "./ai-scan";
 export { buildAiIndex, enrichAiDocument } from "./ai-emit";
 export {
   UI_PACKAGE_NAME,
+  THEMES_PACKAGE_NAME,
   CLI_PACKAGE_NAME,
+  MOTION_PEER_RANGE,
   PACKAGE_MANAGERS,
   packageInstallCommand,
+  fullNpmInstallCommand,
+  peerInstallCommand,
+  motionPeerSpec,
   cliAddCommand,
   installCommands,
   type PackageManager,

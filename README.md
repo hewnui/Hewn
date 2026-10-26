@@ -3,14 +3,21 @@
 **Application UI for teams who care about accessibility and theming.**
 Accessible React components built on React Aria, Tailwind v4 and Motion, with six themes that have guardrails.
 
-[Docs](https://hewnui.dev) · [Getting started](https://hewnui.dev/docs/getting-started) · [Theme Studio](https://hewnui.dev/docs/theme-studio) · [Pro waitlist](https://hewnui.dev/pro#waitlist) · [MCP](https://hewnui.dev/docs/mcp) · [Roadmap](https://hewnui.dev/docs/roadmap)
+[Docs](https://hewnui.dev/docs) · [Getting started](https://hewnui.dev/docs/getting-started) · [Theme Studio](https://hewnui.dev/docs/theme-studio) · [Pro waitlist](https://hewnui.dev/pro#waitlist) · [MCP](https://hewnui.dev/docs/mcp) · [Roadmap](https://hewnui.dev/docs/roadmap)
 
 ## Install
 
-Install from npm, or copy component source into your project with the CLI:
+### Option A — use the npm package
 
 ```bash
-pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components motion
+pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"
+```
+
+Peers match `@hewnui/ui`: React `^19.2.7`, `react-aria-components` `^1.19.0`, `motion` `^12.42.2`. Pinning Motion avoids a newer major outside that range.
+
+### Option B — copy the source into your project (you own the code)
+
+```bash
 npx hewnui@latest init
 npx hewnui@latest add button
 ```
@@ -26,9 +33,12 @@ Then add this to your global CSS (Tailwind v4):
 ```css
 @import "tailwindcss";
 @import "@hewnui/themes/tokens.css";
-@import "@hewnui/themes/motion.css";
+@import "@hewnui/themes/radius.css";
+@import "@hewnui/themes/glass.css";
 @source "../node_modules/@hewnui/ui/dist/**/*.js";
 ```
+
+`tokens.css` is required (it already pulls in motion tokens). `radius.css` and `glass.css` are opt-in.
 
 Wrap the app:
 
@@ -65,12 +75,12 @@ Full guide: [Getting started](https://hewnui.dev/docs/getting-started)
 | [`@hewnui/ui`](./packages/ui) | Components and providers |
 | [`@hewnui/themes`](./packages/themes) | Tokens, theme packs, glass/radius/motion CSS, exports |
 | [`@hewnui/motion`](./packages/motion) | Shared motion primitives and tokens |
-| [`hewnui`](./packages/cli) | `hewn` CLI: init, add, theme, lint |
+| [`hewnui`](./packages/cli) | CLI (`npx hewnui@latest`; short `hewn` alias when installed): init, add, theme, lint |
 | [`@hewnui/mcp`](./packages/mcp) | MCP server for registry and AI schema |
 
 ## Requirements
 
-React 19 (`^19.2.7`), `react-aria-components` ^1.19, `motion` ^12.42, Tailwind CSS v4 (`@tailwindcss/postcss`), and Node ≥ 22 for the CLI.
+React 19 (`^19.2.7`), `react-aria-components` ^1.19, `motion` ^12.42.2, Tailwind CSS v4 (`@tailwindcss/postcss` for Next/PostCSS, or `@tailwindcss/vite` for Vite), and Node ≥ 22 for the CLI.
 
 ## Hewn Pro
 

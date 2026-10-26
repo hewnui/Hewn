@@ -97,3 +97,24 @@ export const PRO_BLOCK_CATALOG: readonly ProBlockPreview[] = [
 ] as const;
 
 export type ProBlockId = (typeof PRO_BLOCK_CATALOG)[number]["id"];
+
+/** Human-readable summary kept in sync with `PRO_BLOCK_CATALOG`. */
+export function proCatalogSummary(): {
+  blocksLabel: string;
+  pagesLabel: string;
+  blockCount: number;
+  pageCount: number;
+} {
+  const sections = PRO_BLOCK_CATALOG.filter((b) => b.kind === "section");
+  const pages = PRO_BLOCK_CATALOG.filter((b) => b.kind === "page");
+  const nameList = (items: readonly { name: string }[]) =>
+    items
+      .map((item) => item.name.replace(/\s+page$/i, "").toLowerCase())
+      .join(", ");
+  return {
+    blocksLabel: nameList(sections),
+    pagesLabel: nameList(pages),
+    blockCount: sections.length,
+    pageCount: pages.length,
+  };
+}

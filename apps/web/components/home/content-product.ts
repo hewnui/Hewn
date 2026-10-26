@@ -87,7 +87,7 @@ export const studio = {
       id: "ship",
       title: "Ship",
       detail:
-        "Download a drop-in CSS pack. Tailwind @theme, Style Dictionary, and Figma variables come out of the same engine.",
+        "Download a drop-in CSS pack. Every curated theme also exports DESIGN.md, DTCG tokens and a Tailwind v4 @theme file.",
     },
   ],
   /** Rendered with live var(--kp-*) so the ladder repaints with the active theme. */
