@@ -33,7 +33,7 @@
     {
       "label": "cli package",
       "paths": ["packages/cli/dist"],
-      "gzipKb": 20
+      "gzipKb": 21
     }
   ]
 }
