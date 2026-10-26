@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import {
   Button,
   Calendar,
@@ -20,17 +19,15 @@ import {
 } from "react-aria-components";
 import { fieldTriggerClass, popoverSurfaceClass } from "../../styles/overlays";
 import { cn } from "../../utils/cn";
+import type { DatePickerProps } from "./date-picker.types";
+
+export type { DatePickerProps } from "./date-picker.types";
 
 export function DatePicker({
   className,
   label = "Date",
   ...props
-}: {
-  className?: string | undefined;
-  label?: ReactNode;
-  isDisabled?: boolean;
-  isRequired?: boolean;
-}) {
+}: DatePickerProps) {
   return (
     <AriaDatePicker
       {...props}

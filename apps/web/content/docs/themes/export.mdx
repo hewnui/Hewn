@@ -46,6 +46,13 @@ Author a custom accent pack in [Theme Studio](/docs/theme-studio), open the
 **Export** tab, and download the same four formats for your draft (plus drop-in
 pack CSS).
 
+### Use your exported pack
+
+Import the drop-in CSS, then set `ThemeProvider`’s `defaultTheme` to the pack id
+in the file (Theme Studio drafts use `studio-draft`). Custom ids are supported —
+without that, the provider would keep `data-theme` on a curated pack and your
+export would not apply. See [Theme Studio → Use your exported pack](/docs/theme-studio#use-your-exported-pack).
+
 ## Engine
 
 Exporters are pure functions in `@hewnui/themes/authoring`:

@@ -101,7 +101,10 @@ export function StudioDockPreview({
           {accentLabel(accentSeed)}
         </span>
         {adjustments.length > 0 ? (
-          <span className="rounded-full border border-border/70 bg-muted/40 px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+          <span
+            className="rounded-full border border-border bg-muted px-2 py-0.5 font-mono text-[10px] text-foreground"
+            aria-label={`${adjustments.length} adjustments`}
+          >
             {adjustments.length}
           </span>
         ) : null}

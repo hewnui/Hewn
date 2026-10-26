@@ -39,6 +39,8 @@
     "generate": "tsx ../../tooling/build-figma-kit.ts && tsx ../../tooling/build-theme-exports.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "prepack": "node ../../tooling/strip-private-workspace-deps.mjs prepack",
+    "postpack": "node ../../tooling/strip-private-workspace-deps.mjs postpack",
     "prepublishOnly": "node ../../tooling/guard-publish.mjs"
   },
   "files": [

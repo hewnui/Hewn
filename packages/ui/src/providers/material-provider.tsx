@@ -58,10 +58,15 @@ export function MaterialProvider({
   );
 }
 
-export function useMaterial() {
-  const value = useContext(MaterialContext);
-  if (!value) {
-    throw new Error("useMaterial must be used within MaterialProvider");
-  }
-  return value;
+const fallbackMaterial: MaterialContextValue = {
+  material: "glass",
+  setMaterial: () => {},
+};
+
+/**
+ * Reads material from MaterialProvider when present.
+ * Outside a provider, defaults to `glass` so components still render.
+ */
+export function useMaterial(): MaterialContextValue {
+  return useContext(MaterialContext) ?? fallbackMaterial;
 }

@@ -2,6 +2,7 @@
 
 import { themeBlurbs } from "@/components/home/content";
 import {
+  supportedModesFor,
   themePacks,
   useTheme,
   type ThemeName,
@@ -50,7 +51,7 @@ export function HomeIdentityInteractive() {
             </p>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-            Modes · {themePacks[theme].join(" / ")}
+            Modes · {supportedModesFor(theme).join(" / ")}
           </p>
         </div>
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">

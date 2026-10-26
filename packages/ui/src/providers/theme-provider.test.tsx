@@ -1,7 +1,11 @@
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ThemeProvider, useTheme } from "./theme-provider";
+import {
+  ThemeProvider,
+  isBuiltInTheme,
+  useTheme,
+} from "./theme-provider";
 
 afterEach(() => {
   cleanup();
@@ -12,7 +16,24 @@ afterEach(() => {
   document.documentElement.style.colorScheme = "";
 });
 
-function Probe() {
+function ThemeProbe() {
+  const { theme, mode, supportedModes, setTheme } = useTheme();
+  return (
+    <div>
+      <span data-testid="theme">{theme}</span>
+      <span data-testid="mode">{mode}</span>
+      <span data-testid="modes">{supportedModes.join(",")}</span>
+      <button type="button" onClick={() => setTheme("studio-draft")}>
+        custom
+      </button>
+      <button type="button" onClick={() => setTheme("forest")}>
+        forest
+      </button>
+    </div>
+  );
+}
+
+function ModeProbe() {
   const { mode, setMode } = useTheme();
   return (
     <div>
@@ -45,6 +66,48 @@ function mockColorScheme(matchesDark: boolean) {
   });
 }
 
+describe("ThemeProvider custom packs", () => {
+  beforeEach(() => {
+    mockColorScheme(false);
+    localStorage.clear();
+  });
+
+  it("keeps built-in ids distinct from custom strings", () => {
+    expect(isBuiltInTheme("forest")).toBe(true);
+    expect(isBuiltInTheme("studio-draft")).toBe(false);
+  });
+
+  it("sets data-theme to a custom pack id instead of remapping to forest", async () => {
+    render(
+      <ThemeProvider defaultTheme="studio-draft" defaultMode="light">
+        <ThemeProbe />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(document.documentElement.dataset.theme).toBe("studio-draft");
+    });
+    expect(screen.getByTestId("theme").textContent).toBe("studio-draft");
+    expect(document.documentElement.dataset.mode).toBe("light");
+    expect(screen.getByTestId("modes").textContent).toBe("light,dark");
+  });
+
+  it("can switch to a custom id via setTheme", async () => {
+    render(
+      <ThemeProvider defaultTheme="forest">
+        <ThemeProbe />
+      </ThemeProvider>,
+    );
+    await waitFor(() => {
+      expect(document.documentElement.dataset.theme).toBe("forest");
+    });
+    screen.getByRole("button", { name: "custom" }).click();
+    await waitFor(() => {
+      expect(document.documentElement.dataset.theme).toBe("studio-draft");
+    });
+  });
+});
+
 describe("ThemeProvider system mode", () => {
   beforeEach(() => {
     localStorage.clear();
@@ -54,7 +117,7 @@ describe("ThemeProvider system mode", () => {
     mockColorScheme(true);
     render(
       <ThemeProvider>
-        <Probe />
+        <ModeProbe />
       </ThemeProvider>,
     );
 
@@ -72,7 +135,7 @@ describe("ThemeProvider system mode", () => {
 
     render(
       <ThemeProvider>
-        <Probe />
+        <ModeProbe />
       </ThemeProvider>,
     );
 
@@ -87,7 +150,7 @@ describe("ThemeProvider system mode", () => {
     const user = userEvent.setup();
     render(
       <ThemeProvider>
-        <Probe />
+        <ModeProbe />
       </ThemeProvider>,
     );
 

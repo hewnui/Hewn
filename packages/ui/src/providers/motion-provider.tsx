@@ -35,6 +35,43 @@ type MotionContextValue = {
 
 const HewnMotionContext = createContext<MotionContextValue | null>(null);
 const STORAGE_KEY = "kp-motion";
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+/** No-op when components render outside MotionProvider. */
+function noopSetMotion(_motion: MotionMode) {}
+
+function readOsReducedMotion(): boolean {
+  if (typeof window === "undefined" || typeof matchMedia !== "function") {
+    return false;
+  }
+  return matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+/** SSR-safe OS reduced-motion (sync on client, false during SSR). */
+function useOsReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(readOsReducedMotion);
+  useEffect(() => {
+    if (typeof matchMedia !== "function") return;
+    const query = matchMedia(REDUCED_MOTION_QUERY);
+    const sync = () => setReduced(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+  return reduced;
+}
+
+function fallbackMotionValue(osReduced: boolean): MotionContextValue {
+  const motion: MotionMode = "full";
+  const effectiveMode = resolveMotionMode(motion, osReduced);
+  return {
+    motion,
+    effectiveMode,
+    motionEnabled: effectiveMode === "full",
+    reducedMotion: osReduced,
+    setMotion: noopSetMotion,
+  };
+}
 
 export function MotionProvider({
   children,
@@ -94,10 +131,16 @@ export function MotionProvider({
   );
 }
 
-export function useMotionMode() {
+/**
+ * Reads motion preference from MotionProvider when present.
+ * Outside a provider, defaults to `full` and still respects OS
+ * `prefers-reduced-motion` via matchMedia (SSR-safe).
+ */
+export function useMotionMode(): MotionContextValue {
   const value = useContext(HewnMotionContext);
-  if (!value) {
-    throw new Error("useMotionMode must be used within MotionProvider");
-  }
-  return value;
+  const osReduced = useOsReducedMotion();
+  return useMemo(() => {
+    if (value) return value;
+    return fallbackMotionValue(osReduced);
+  }, [value, osReduced]);
 }

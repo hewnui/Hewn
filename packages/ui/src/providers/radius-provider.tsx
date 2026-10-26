@@ -105,10 +105,15 @@ export function RadiusProvider({
   );
 }
 
-export function useRadius() {
-  const value = useContext(RadiusContext);
-  if (!value) {
-    throw new Error("useRadius must be used within RadiusProvider");
-  }
-  return value;
+const fallbackRadius: RadiusContextValue = {
+  radius: "soft",
+  setRadius: () => {},
+};
+
+/**
+ * Reads radius scale from RadiusProvider when present.
+ * Outside a provider, defaults to `soft` (theme token defaults).
+ */
+export function useRadius(): RadiusContextValue {
+  return useContext(RadiusContext) ?? fallbackRadius;
 }

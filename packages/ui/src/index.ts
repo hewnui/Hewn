@@ -1,7 +1,11 @@
 export {
   ThemeProvider,
+  isBuiltInTheme,
+  isThemeId,
+  supportedModesFor,
   themePacks,
   useTheme,
+  type BuiltInThemeName,
   type ThemeMode,
   type ThemeName,
 } from "./providers/theme-provider";
@@ -140,7 +144,10 @@ export {
   TableRoot,
   TableRow,
 } from "./components/table";
-export { DatePicker } from "./components/date-picker";
+export {
+  DatePicker,
+  type DatePickerProps,
+} from "./components/date-picker";
 export {
   DateRangePicker,
   type CalendarDate,
