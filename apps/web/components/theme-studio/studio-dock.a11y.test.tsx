@@ -18,7 +18,13 @@ function renderDock() {
             radiusPreset="soft"
             previewMode="light"
             adjustments={["accent"]}
-            pro={{}}
+            pro={{
+              neutrals: {},
+              semantic: {},
+              shape: {},
+              glass: {},
+              motion: "balanced",
+            }}
             onBasePack={noop}
             onAccent={noop}
             onRadius={noop}
