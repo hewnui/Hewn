@@ -11,7 +11,7 @@ async function main(): Promise<void> {
     componentsRoot: join(uiSrc, "components"),
     docsContentRoot: join(repoRoot, "apps/web/content"),
     outDir: join(repoRoot, "packages/registry/generated"),
-    sharedRoots: ["providers", "styles", "utils", "theme"].map((dir) =>
+    sharedRoots: ["providers", "styles", "utils", "theme", "chart"].map((dir) =>
       join(uiSrc, dir),
     ),
     shadcn: {

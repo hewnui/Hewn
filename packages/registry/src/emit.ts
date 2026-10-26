@@ -5,12 +5,17 @@ import type { RegistryFileEntry } from "./types";
 
 export type BuiltRegistryItem = RegistryItem & {
   sharedDependencies: string[];
+  /** Type-only packages a TypeScript project needs (e.g. @types/d3-scale). */
+  devDependencies?: string[];
 };
 
 export type BuiltItem = {
   item: BuiltRegistryItem;
   files: RegistryFileEntry[];
   jsxFiles: RegistryFileEntry[];
+  /** Shared files shipped with the CLI item only (paths start with ../). */
+  extraFiles?: RegistryFileEntry[];
+  extraJsxFiles?: RegistryFileEntry[];
 };
 
 export type EmitResult = {
@@ -46,11 +51,11 @@ export async function emitRegistry(
   await mkdir(join(outDir, "r"), { recursive: true });
 
   let filesEmitted = 0;
-  for (const { item, files, jsxFiles } of free) {
+  for (const { item, files, jsxFiles, extraFiles, extraJsxFiles } of free) {
     await writeJson(join(outDir, "r", `${item.name}.json`), {
       ...item,
-      files,
-      jsxFiles,
+      files: [...files, ...(extraFiles ?? [])],
+      jsxFiles: [...jsxFiles, ...(extraJsxFiles ?? [])],
     });
     filesEmitted += 1;
   }

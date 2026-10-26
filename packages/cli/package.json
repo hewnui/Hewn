@@ -33,7 +33,8 @@
   "scripts": {
     "build": "tsx ../../tooling/sync-site-url.ts && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "node ../../tooling/guard-publish.mjs"
   },
   "peerDependencies": {
     "typescript": ">=5"

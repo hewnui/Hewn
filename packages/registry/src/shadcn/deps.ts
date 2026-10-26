@@ -1,9 +1,18 @@
 const IMPORT_RE = /from\s+["']([^"']+)["']/g;
 
+/**
+ * Keep these in sync with packages/ui/package.json peerDependencies (a test
+ * enforces it). Unpinned "motion" resolves to a major Hewn doesn't support.
+ */
+export const PEER_RANGES = {
+  motion: "^12.42.2",
+  "react-aria-components": "^1.19.0",
+} as const;
+
 const PACKAGE_MAP: Record<string, string> = {
-  "react-aria-components": "react-aria-components",
-  "motion/react": "motion",
-  motion: "motion",
+  "react-aria-components": `react-aria-components@${PEER_RANGES["react-aria-components"]}`,
+  "motion/react": `motion@${PEER_RANGES.motion}`,
+  motion: `motion@${PEER_RANGES.motion}`,
   // Pin v8 — v9 renames useReactTable and breaks our DataTable source.
   "@tanstack/react-table": "@tanstack/react-table@8.21.3",
   "@internationalized/date": "@internationalized/date",
@@ -31,10 +40,8 @@ const SHARED_PREFIX_TO_ITEM: Record<string, string> = {
 };
 
 function normalizeDeclared(name: string): string {
-  if (name === "@tanstack/react-table" || name.startsWith("@tanstack/react-table@")) {
-    return PACKAGE_MAP["@tanstack/react-table"]!;
-  }
-  return name;
+  const bare = name.replace(/(?!^)@.*$/, "");
+  return PACKAGE_MAP[bare] ?? name;
 }
 
 export function detectNpmDependencies(
@@ -62,6 +69,17 @@ export function detectNpmDependencies(
     }
   }
   return [...found].sort();
+}
+
+/** Packages that ship no types and need @types/* for a TypeScript install. */
+const UNTYPED_PACKAGES = new Set(["d3-array", "d3-scale", "d3-shape"]);
+
+export function detectTypeDependencies(dependencies: string[]): string[] {
+  return dependencies
+    .map((dep) => dep.replace(/(?!^)@.*$/, ""))
+    .filter((dep) => UNTYPED_PACKAGES.has(dep))
+    .map((dep) => `@types/${dep}`)
+    .sort();
 }
 
 export function sharedPathToRegistryItem(sharedPath: string): string | null {

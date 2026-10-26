@@ -4,7 +4,14 @@ import type { RegistryFileEntry } from "../scan";
 import {
   collectRegistryDependencies,
   detectNpmDependencies,
+  detectTypeDependencies,
+  PEER_RANGES,
 } from "./deps";
+import {
+  rewriteSharedComponentImports,
+  sharedComponentRefs,
+  sharedModuleRefs,
+} from "../layout";
 import { contentNeedsMotionPresets, rewriteShadcnContent } from "./rewrite";
 import {
   SHADCN_ITEM_SCHEMA,
@@ -40,7 +47,7 @@ const LIB_META: Record<
 function toShadcnLibFile(file: RegistryFileEntry): ShadcnFile {
   return {
     path: file.path,
-    content: rewriteShadcnContent(file.content),
+    content: rewriteSharedComponentImports(rewriteShadcnContent(file.content)),
     type: "registry:lib",
     target: `@ui/${file.path}`,
   };
@@ -91,7 +98,7 @@ export async function buildMotionPresetsItem(
     title: "Motion presets",
     description:
       "Shared Motion springs, tokens, resolve helpers, and LazyMotion loader.",
-    dependencies: ["motion"],
+    dependencies: [`motion@${PEER_RANGES.motion}`],
     files,
     categories: ["utilities"],
   };
@@ -109,20 +116,30 @@ export function buildSharedLibItems(
     const needsMotion = originalContents.some(contentNeedsMotionPresets);
     const shadcnFiles = files.map(toShadcnLibFile);
     const depInput: Parameters<typeof collectRegistryDependencies>[0] = {
-      internal: [],
-      shared: name === "styles" ? ["utils/cn"] : [],
+      // e.g. chart/frame.tsx → ../components/skeleton and ../utils/cn
+      internal: [...new Set(originalContents.flatMap(sharedComponentRefs))],
+      shared: [
+        ...new Set(
+          originalContents
+            .flatMap(sharedModuleRefs)
+            .filter((ref) => ref.split("/")[0] !== name),
+        ),
+      ],
       needsMotionPresets: needsMotion,
       namespace,
     };
     if (meta.includeTokens) depInput.includeTokens = true;
     const registryDependencies = collectRegistryDependencies(depInput);
+    const dependencies = detectNpmDependencies(originalContents);
+    const devDependencies = detectTypeDependencies(dependencies);
     const item: ShadcnItem = {
       $schema: SHADCN_ITEM_SCHEMA,
       name,
       type: "registry:lib" satisfies ShadcnItemType,
       title: meta.title,
       description: meta.description,
-      dependencies: detectNpmDependencies(originalContents),
+      dependencies,
+      ...(devDependencies.length > 0 ? { devDependencies } : {}),
       files: shadcnFiles,
       categories: ["utilities"],
     };

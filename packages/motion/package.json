@@ -43,9 +43,10 @@
     "vitest": "4.1.10"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && tsx ../../tooling/fix-esm-relative-extensions.ts dist",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "node ../../tooling/guard-publish.mjs"
   },
   "homepage": "https://hewnui.dev",
   "bugs": {

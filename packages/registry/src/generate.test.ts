@@ -53,7 +53,7 @@ describe("generateRegistry", () => {
       name: string;
       internalDependencies: string[];
       sharedDependencies: string[];
-      files: { path: string }[];
+      files: { path: string; content: string }[];
       jsxFiles: { path: string; content: string }[];
     };
     expect(alpha.name).toBe("alpha");
@@ -67,6 +67,12 @@ describe("generateRegistry", () => {
       "alpha.jsx",
       "index.js",
     ]);
+    // The CLI writes <root>/alpha/ beside <root>/utils/, so shared imports
+    // must be one level up, not ../../ as in the source tree.
+    const alphaSource = alpha.files[0]?.content ?? "";
+    expect(alphaSource).toContain('"../utils/cn"');
+    expect(alphaSource).not.toContain("../../");
+    expect(alpha.jsxFiles[0]?.content).toContain('"../utils/cn"');
     expect(alpha.jsxFiles[0]?.content).toContain("<div");
     expect(alpha.jsxFiles[0]?.content).not.toContain("BetaProps");
 

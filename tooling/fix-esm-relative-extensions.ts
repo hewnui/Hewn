@@ -1,9 +1,10 @@
 /**
- * Append `.js` to extensionless relative specifiers in emitted ESM `.js` files.
- * tsc (moduleResolution: Bundler) leaves them bare, which breaks plain Node ESM.
+ * Append `.js` (or `/index.js` for directories) to extensionless relative
+ * specifiers in emitted ESM `.js` and `.d.ts` files. tsc (moduleResolution:
+ * Bundler) leaves them bare, which breaks plain Node ESM and NodeNext types.
  */
-import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
-import { join } from "path";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import { dirname, join, resolve } from "path";
 
 const root = process.argv[2];
 if (!root) {
@@ -18,7 +19,7 @@ function walk(dir: string, files: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) walk(full, files);
-    else if (full.endsWith(".js")) files.push(full);
+    else if (full.endsWith(".js") || full.endsWith(".d.ts")) files.push(full);
   }
   return files;
 }
@@ -28,6 +29,10 @@ for (const file of walk(root)) {
   const before = readFileSync(file, "utf8");
   const after = before.replace(RELATIVE, (match, prefix: string, quote: string, spec: string) => {
     if (/\.[cm]?js$|\.json$|\.node$|\.css$/i.test(spec)) return match;
+    const base = resolve(dirname(file), spec);
+    if (!existsSync(`${base}.js`) && existsSync(join(base, "index.js"))) {
+      return `${prefix}${quote}${spec.replace(/\/$/, "")}/index.js${quote}`;
+    }
     return `${prefix}${quote}${spec}.js${quote}`;
   });
   if (after !== before) {

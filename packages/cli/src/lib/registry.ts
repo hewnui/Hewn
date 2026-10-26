@@ -15,6 +15,7 @@ export type RegistryIndexPayload = {
 export type RegistryItemPayload = {
   name: string;
   dependencies?: string[];
+  devDependencies?: string[];
   internalDependencies?: string[];
   sharedDependencies?: string[];
   files: RegistryFilePayload[];

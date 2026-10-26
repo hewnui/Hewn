@@ -1,4 +1,5 @@
-import { join } from "path";
+import { readFile } from "fs/promises";
+import { join, relative, resolve } from "path";
 import { detectProject } from "../lib/detect.js";
 import { pathExists, readJsonFile, writeFileEnsured } from "../lib/fsx.js";
 import { confirm } from "../lib/prompt.js";
@@ -56,8 +57,19 @@ export async function addCommand(
   for (const name of result.order) {
     const item = await client.item(name);
     const files = config.tsx ? item.files : item.jsxFiles;
+    const componentsRoot = resolve(project.root, config.root);
     for (const file of files) {
-      const target = join(project.root, config.root, item.name, file.path);
+      const target = join(componentsRoot, item.name, file.path);
+      // Shared files (../chart/…) may land beside the component folder, but
+      // never outside the configured components root.
+      if (relative(componentsRoot, target).startsWith("..")) {
+        console.error(`refusing to write outside ${config.root}: ${file.path}`);
+        return 1;
+      }
+      if (pathExists(target)) {
+        const existing = await readFile(target, "utf8").catch(() => null);
+        if (existing === file.content) continue;
+      }
       if (pathExists(target) && !options.overwrite && !options.yes) {
         const replace = await confirm(`${target} exists. Overwrite?`);
         if (!replace) continue;
@@ -67,9 +79,19 @@ export async function addCommand(
     }
     if (item.dependencies && item.dependencies.length > 0) {
       console.log(
-        `note: ${item.name} also needs npm package(s): ${item.dependencies.join(" ")}`,
+        `note: ${item.name} also needs npm package(s): ${quoteSpecs(item.dependencies).join(" ")}`,
+      );
+    }
+    if (config.tsx && item.devDependencies && item.devDependencies.length > 0) {
+      console.log(
+        `note: ${item.name} also needs dev package(s) for TypeScript: ${item.devDependencies.join(" ")}`,
       );
     }
   }
   return 0;
+}
+
+/** Quote `name@^range` specs so the printed command is shell-safe. */
+function quoteSpecs(specs: string[]): string[] {
+  return specs.map((spec) => (/[\^~<>| ]/.test(spec) ? `"${spec}"` : spec));
 }
