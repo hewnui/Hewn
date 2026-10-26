@@ -113,7 +113,7 @@ export function ProWaitlistForm({ source = "pro" }: ProWaitlistFormProps) {
             href={proCopy.privacyHref}
             className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
           >
-            Privacy note
+            {proCopy.privacyLinkLabel}
           </Link>
           .
         </p>

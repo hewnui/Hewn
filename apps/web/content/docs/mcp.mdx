@@ -1,31 +1,19 @@
 ---
 title: MCP
-description: Local stdio MCP server for Hewn registry and AI schema.
+description: Local stdio MCP server for Hewn registry and AI schema — coming soon.
 status: new
 tier: free
 ---
 
-`@hewnui/mcp` exposes a read-only Model Context Protocol server over stdio.
-AI coding tools can list and inspect free components without scraping the docs
-site.
+`@hewnui/mcp` is a read-only Model Context Protocol server over stdio. When it
+ships, AI coding tools will be able to list and inspect free components without
+scraping the docs site.
 
-The package is **private for the 0.1.0 release** and is not published to npm yet.
+**Coming soon.** The package is not published to npm yet — there is no install
+command today. Until then, use [`/llms.txt`](/llms.txt) and
+[`/ai/index.json`](/ai/index.json).
 
-## Run
-
-{/* Install command strings: packages/docs-metadata/src/distribution.ts */}
-
-From the monorepo (after `pnpm generate` so registry + AI JSON exist) —
-contributors only:
-
-```bash
-pnpm --filter @hewnui/mcp build
-node packages/mcp/dist/cli.js
-```
-
-Set `HEWN_ROOT` if the server cannot find the workspace root.
-
-## Tools
+## Planned tools
 
 | Tool | Purpose |
 |------|---------|
@@ -36,18 +24,14 @@ Set `HEWN_ROOT` if the server cannot find the workspace root.
 | `get_theme` | Curated packs (or one pack by id) |
 | `get_tokens` | Tokens for a component or theme pack |
 
-## Cursor example
+## Contributors (monorepo only)
 
-```json
-{
-  "mcpServers": {
-    "hewn": {
-      "command": "node",
-      "args": ["packages/mcp/dist/cli.js"],
-      "env": {
-        "HEWN_ROOT": "/absolute/path/to/your-project"
-      }
-    }
-  }
-}
+The workspace package can be built from this repository after `pnpm generate`.
+That path is for contributors developing the server — not a public install.
+
+```bash
+pnpm --filter @hewnui/mcp build
+node packages/mcp/dist/cli.js
 ```
+
+Set `HEWN_ROOT` if the server cannot find the workspace root.

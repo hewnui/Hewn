@@ -63,8 +63,8 @@ export function getInstallCommand(
     // Keep in sync with packages/docs-metadata/src/distribution.ts
     // (PACKAGES_PUBLISHED). MCP stays dependency-light so this is duplicated.
     return ok({
-      npm: "Available at launch: npm install @hewnui/ui",
-      cli: `Available at launch: npx hewnui@latest add ${name}. Until then copy from docs or https://hewnui.dev/r/${name}.json`,
+      npm: "npm install @hewnui/ui",
+      cli: `npx hewnui@latest add ${name}`,
     });
   }
   return ok(ai.install);
