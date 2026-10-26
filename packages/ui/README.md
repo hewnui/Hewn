@@ -4,23 +4,31 @@ Accessible React components built on React Aria, Tailwind v4 and Motion: 46 appl
 
 ## Install
 
+### Option A — use the npm package
+
 ```bash
 pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"
 ```
 
-| Peer | Range |
-|---|---|
-| react / react-dom | ^19.2.7 |
-| react-aria-components | ^1.19.0 |
-| motion | ^12.42.2 |
+`@hewnui/ui` requires React `^19.2.7` and `react-dom` `^19.2.7` (`peerDependencies` in its package.json). Pinning Motion to `^12.42.2` matches the same peers — unpinned `motion` can resolve to a newer major.
 
-`@hewnui/themes` is required for CSS imports under pnpm (it is not hoisted from `@hewnui/ui`). Pinning Motion matches the peer range — unpinned `motion` can resolve to a newer major.
+| Peer | Supported range |
+|------|-----------------|
+| `react` | `^19.2.7` |
+| `react-dom` | `^19.2.7` |
+| `react-aria-components` | `^1.19.0` |
+| `motion` | `^12.42.2` |
 
-Prefer to own the source?
+`@hewnui/themes` is required for CSS imports under pnpm (it is not hoisted from `@hewnui/ui`).
+
+### Option B — copy the source into your project (you own the code)
 
 ```bash
+npx hewnui@latest init
 npx hewnui@latest add button
 ```
+
+Install the same peers (including the Motion pin and React `^19.2.7`) when you go this path.
 
 ## Setup (Tailwind v4)
 

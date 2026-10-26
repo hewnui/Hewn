@@ -10,8 +10,9 @@ Part of [Hewn](https://hewnui.dev).
 pnpm add @hewnui/themes
 ```
 
-When installing with `@hewnui/ui`, include themes in the same command and pin
-Motion to the peer range:
+When installing with `@hewnui/ui`, use the same Option A line as the root
+README / `@hewnui/ui` README / getting-started (React `^19.2.7` from
+`@hewnui/ui` peerDependencies):
 
 ```bash
 pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"

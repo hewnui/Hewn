@@ -13,7 +13,14 @@ Accessible React components built on React Aria, Tailwind v4 and Motion, with si
 pnpm add @hewnui/ui @hewnui/themes react react-dom react-aria-components "motion@^12.42.2"
 ```
 
-Peers match `@hewnui/ui`: React `^19.2.7`, `react-aria-components` `^1.19.0`, `motion` `^12.42.2`. Pinning Motion avoids a newer major outside that range.
+`@hewnui/ui` requires React `^19.2.7` and `react-dom` `^19.2.7` (`peerDependencies` in its package.json). Pinning Motion to `^12.42.2` matches the same peers — unpinned `motion` can resolve to a newer major.
+
+| Peer | Supported range |
+|------|-----------------|
+| `react` | `^19.2.7` |
+| `react-dom` | `^19.2.7` |
+| `react-aria-components` | `^1.19.0` |
+| `motion` | `^12.42.2` |
 
 ### Option B — copy the source into your project (you own the code)
 
@@ -21,6 +28,8 @@ Peers match `@hewnui/ui`: React `^19.2.7`, `react-aria-components` `^1.19.0`, `m
 npx hewnui@latest init
 npx hewnui@latest add button
 ```
+
+Install the same peers (including the Motion pin and React `^19.2.7`) when you go this path.
 
 You can also fetch component JSON straight from the live registry:
 
@@ -80,7 +89,7 @@ Full guide: [Getting started](https://hewnui.dev/docs/getting-started)
 
 ## Requirements
 
-React 19 (`^19.2.7`), `react-aria-components` ^1.19, `motion` ^12.42.2, Tailwind CSS v4 (`@tailwindcss/postcss` for Next/PostCSS, or `@tailwindcss/vite` for Vite), and Node ≥ 22 for the CLI.
+React `^19.2.7` and `react-dom` `^19.2.7` (from `@hewnui/ui` peerDependencies), `react-aria-components` `^1.19.0`, `motion` `^12.42.2`, Tailwind CSS v4 (`@tailwindcss/postcss` for Next/PostCSS, or `@tailwindcss/vite` for Vite), and Node ≥ 22 for the CLI.
 
 ## Hewn Pro
 

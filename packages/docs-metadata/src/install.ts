@@ -5,8 +5,19 @@ export const UI_PACKAGE_NAME = "@hewnui/ui";
 export const THEMES_PACKAGE_NAME = "@hewnui/themes";
 export const CLI_PACKAGE_NAME = "hewnui";
 
-/** Motion peer range — must match `@hewnui/ui` peerDependencies. */
-export const MOTION_PEER_RANGE = "^12.42.2";
+/**
+ * Peer ranges copied from `@hewnui/ui` package.json peerDependencies.
+ * install.test.ts asserts these stay in sync — do not guess or drift.
+ */
+export const UI_PEER_RANGES = {
+  react: "^19.2.7",
+  "react-dom": "^19.2.7",
+  "react-aria-components": "^1.19.0",
+  motion: "^12.42.2",
+} as const;
+
+/** @deprecated Use UI_PEER_RANGES.motion */
+export const MOTION_PEER_RANGE = UI_PEER_RANGES.motion;
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 
@@ -31,12 +42,20 @@ function maybeLaunchLabel(command: string): string {
 
 /** Shell-safe motion pin so zsh/fish keep the caret. */
 export function motionPeerSpec(): string {
-  return `"motion@${MOTION_PEER_RANGE}"`;
+  return `"motion@${UI_PEER_RANGES.motion}"`;
 }
 
 /** Packages needed for CSS `@import "@hewnui/themes/…"`. */
 export function packageInstallPackages(): string {
   return `${UI_PACKAGE_NAME} ${THEMES_PACKAGE_NAME}`;
+}
+
+/**
+ * Canonical Option A install line — root README, `@hewnui/ui` README, and
+ * getting-started must paste this exact string (see install.test.ts).
+ */
+export function fullNpmInstallPackages(): string {
+  return `${packageInstallPackages()} react react-dom react-aria-components ${motionPeerSpec()}`;
 }
 
 /**
@@ -71,9 +90,7 @@ export function packageInstallCommand(
  * Motion is pinned — unpinned `motion` resolves to a newer major outside peers.
  */
 export function fullNpmInstallCommand(pm: PackageManager = "pnpm"): string {
-  return maybeLaunchLabel(
-    `${ADD[pm]} ${packageInstallPackages()} react react-dom react-aria-components ${motionPeerSpec()}`,
-  );
+  return maybeLaunchLabel(`${ADD[pm]} ${fullNpmInstallPackages()}`);
 }
 
 /** Peer-only install when `@hewnui/ui` + `@hewnui/themes` are already listed. */
