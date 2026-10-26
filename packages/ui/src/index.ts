@@ -1,7 +1,11 @@
 export {
   ThemeProvider,
+  isBuiltInTheme,
+  isThemeId,
+  supportedModesFor,
   themePacks,
   useTheme,
+  type BuiltInThemeName,
   type ThemeMode,
   type ThemeName,
 } from "./providers/theme-provider";

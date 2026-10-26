@@ -439,6 +439,8 @@
     "build": "tsc -p tsconfig.build.json && tsx ../../tooling/fix-esm-relative-extensions.ts dist",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "prepack": "node ../../tooling/strip-private-workspace-deps.mjs prepack",
+    "postpack": "node ../../tooling/strip-private-workspace-deps.mjs postpack",
     "prepublishOnly": "node ../../tooling/guard-publish.mjs"
   },
   "homepage": "https://hewnui.dev",

@@ -34,6 +34,8 @@
     "build": "tsx ../../tooling/sync-site-url.ts && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "prepack": "node ../../tooling/strip-private-workspace-deps.mjs prepack",
+    "postpack": "node ../../tooling/strip-private-workspace-deps.mjs postpack",
     "prepublishOnly": "node ../../tooling/guard-publish.mjs"
   },
   "peerDependencies": {

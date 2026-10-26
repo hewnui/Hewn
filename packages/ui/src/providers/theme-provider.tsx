@@ -19,7 +19,13 @@ export const themePacks = {
   ember: ["dark"],
 } as const;
 
-export type ThemeName = keyof typeof themePacks;
+export type BuiltInThemeName = keyof typeof themePacks;
+/**
+ * Built-in pack ids stay autocomplete-friendly; custom Theme Studio / authored
+ * pack ids (e.g. `studio-draft`) are plain strings so exports can drive
+ * `data-theme` without being remapped to Forest.
+ */
+export type ThemeName = BuiltInThemeName | (string & {});
 export type ThemeMode = "light" | "dark";
 
 type ThemeContextValue = {
@@ -33,13 +39,23 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 const THEME_KEY = "kp-theme";
 const MODE_KEY = "kp-mode";
+const CUSTOM_MODES = ["light", "dark"] as const satisfies readonly ThemeMode[];
 
-function isTheme(value: string): value is ThemeName {
-  return value in themePacks;
+export function isBuiltInTheme(value: string): value is BuiltInThemeName {
+  return Object.hasOwn(themePacks, value);
+}
+
+/** Non-empty theme id suitable for `data-theme` (built-in or custom). */
+export function isThemeId(value: string): value is ThemeName {
+  return value.trim().length > 0;
+}
+
+export function supportedModesFor(theme: ThemeName): readonly ThemeMode[] {
+  return isBuiltInTheme(theme) ? themePacks[theme] : CUSTOM_MODES;
 }
 
 function normalizeMode(theme: ThemeName, mode: ThemeMode): ThemeMode {
-  const modes = themePacks[theme] as readonly ThemeMode[];
+  const modes = supportedModesFor(theme);
   return modes.includes(mode) ? mode : modes[0]!;
 }
 
@@ -61,7 +77,7 @@ export function ThemeProvider({
     const storedTheme = localStorage.getItem(THEME_KEY);
     const storedMode = localStorage.getItem(MODE_KEY);
     const nextTheme =
-      storedTheme && isTheme(storedTheme) ? storedTheme : defaultTheme;
+      storedTheme && isThemeId(storedTheme) ? storedTheme : defaultTheme;
     const parsedMode: ThemeMode =
       storedMode === "dark" || storedMode === "light"
         ? storedMode
@@ -97,7 +113,7 @@ export function ThemeProvider({
     () => ({
       theme,
       mode,
-      supportedModes: themePacks[theme] as readonly ThemeMode[],
+      supportedModes: supportedModesFor(theme),
       setTheme,
       setMode,
     }),

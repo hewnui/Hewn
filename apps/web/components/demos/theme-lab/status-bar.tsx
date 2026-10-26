@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  themePacks,
+  supportedModesFor,
   useMaterial,
   useMotionMode,
   useRadius,
@@ -48,7 +48,7 @@ export function ThemeLabStatusBar() {
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Sidebar appearance controls style this page and the docs shell.
-            Modes: {themePacks[theme].join(", ")}.
+            Modes: {supportedModesFor(theme).join(", ")}.
           </p>
         </div>
         <dl className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">

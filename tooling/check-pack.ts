@@ -58,14 +58,32 @@ function checkPackage(pkgDir: string, workDir: string): string[] {
     dependencies?: Record<string, string>;
     peerDependencies?: Record<string, string>;
     optionalDependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
   };
 
   // What consumers install is the packed manifest itself, so check that and
   // not publishConfig (0.1.0 shipped workspace:* deps and ./src exports).
-  for (const field of ["dependencies", "peerDependencies", "optionalDependencies"] as const) {
+  for (const field of [
+    "dependencies",
+    "devDependencies",
+    "peerDependencies",
+    "optionalDependencies",
+  ] as const) {
     for (const [dep, range] of Object.entries(pkg[field] ?? {})) {
       if (range.startsWith("workspace:")) {
         errors.push(`${pkg.name}: packed ${field}.${dep} is "${range}"`);
+      }
+      // Private workspace packages are not published to npm (e.g. @hewnui/tsconfig@0.0.0).
+      if (
+        dep === "@hewnui/tsconfig" ||
+        dep === "@hewnui/registry" ||
+        dep === "@hewnui/site-url" ||
+        dep === "@hewnui/docs-metadata" ||
+        dep === "@hewnui/mcp"
+      ) {
+        errors.push(
+          `${pkg.name}: packed ${field} must not include unpublished workspace package ${dep}`,
+        );
       }
     }
   }

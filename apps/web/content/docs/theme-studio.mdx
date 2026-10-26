@@ -63,6 +63,28 @@ Stub-gated in the Studio UI (engine already derives them):
 Extra exporters (Tailwind `@theme`, Style Dictionary, Figma variables) are
 planned for Hewn Pro beside the advanced authoring controls.
 
+## Use your exported pack
+
+Theme Studio CSS targets `[data-theme="<pack-id>"]` (drafts use `studio-draft`).
+Point `ThemeProvider` at that id so it sets the matching `data-theme` instead of
+a curated pack:
+
+```tsx
+import { ThemeProvider } from "@hewnui/ui";
+import "./studio-draft.css"; // drop-in CSS from Export
+
+export function App({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider defaultTheme="studio-draft" defaultMode="light">
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+`defaultTheme` accepts the six built-in packs **or** any custom pack id string.
+Import the exported CSS after `@hewnui/themes/tokens.css` so your accent wins.
+
 ## Rules
 
 - Engine clamps accents that fail WCAG AA and reports what changed
