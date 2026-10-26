@@ -39,8 +39,31 @@ export function packageInstallPackages(): string {
   return `${UI_PACKAGE_NAME} ${THEMES_PACKAGE_NAME}`;
 }
 
-export function packageInstallCommand(pm: PackageManager): string {
-  return maybeLaunchLabel(`${ADD[pm]} ${packageInstallPackages()}`);
+/**
+ * Extra packages a specific component's install tab should list.
+ * These are often direct deps of `@hewnui/ui` that app code still imports
+ * (values/types); pnpm does not hoist them for the app.
+ */
+export function componentExtraPackages(componentName: string): string[] {
+  if (componentName === "date-range-picker") {
+    return ["@internationalized/date"];
+  }
+  return [];
+}
+
+export function packageInstallCommand(
+  pm: PackageManager,
+  options?: { componentName?: string; extraPackages?: string[] },
+): string {
+  const extras = [
+    ...(options?.extraPackages ?? []),
+    ...(options?.componentName
+      ? componentExtraPackages(options.componentName)
+      : []),
+  ];
+  const unique = [...new Set(extras)];
+  const pkgs = [packageInstallPackages(), ...unique].join(" ");
+  return maybeLaunchLabel(`${ADD[pm]} ${pkgs}`);
 }
 
 /**
@@ -72,7 +95,10 @@ export function installCommands(componentName: string) {
     themesPackage: THEMES_PACKAGE_NAME,
     cliPackage: CLI_PACKAGE_NAME,
     managers: Object.fromEntries(
-      PACKAGE_MANAGERS.map((pm) => [pm, packageInstallCommand(pm)]),
+      PACKAGE_MANAGERS.map((pm) => [
+        pm,
+        packageInstallCommand(pm, { componentName }),
+      ]),
     ) as Record<PackageManager, string>,
     cli: cliAddCommand(componentName),
   };

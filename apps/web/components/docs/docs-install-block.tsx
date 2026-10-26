@@ -63,7 +63,9 @@ export function DocsInstallBlock({ componentName }: { componentName: string }) {
       <Tabs items={TAB_ITEMS} defaultIndex={1} className="kp-docs-install-tabs">
         {PACKAGE_MANAGERS.map((pm) => (
           <Tab key={pm} value={MANAGER_LABEL[pm]}>
-            <InstallSnippet code={packageInstallCommand(pm)} />
+            <InstallSnippet
+              code={packageInstallCommand(pm, { componentName })}
+            />
           </Tab>
         ))}
         <Tab value="CLI">

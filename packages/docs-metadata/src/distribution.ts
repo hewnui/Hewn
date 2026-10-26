@@ -79,8 +79,11 @@ export function installCommandsForComponent(name: string): {
   cli: string;
 } {
   if (PACKAGES_PUBLISHED) {
+    // Keep in sync with componentExtraPackages() in install.ts (avoid import cycle).
+    const extras =
+      name === "date-range-picker" ? " @internationalized/date" : "";
     return {
-      npm: PUBLISHED_COMMANDS.npmUiNpm,
+      npm: `${PUBLISHED_COMMANDS.npmUiNpm}${extras}`,
       cli: PUBLISHED_COMMANDS.cliAdd(name),
     };
   }

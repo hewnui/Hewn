@@ -23,6 +23,7 @@ export {
   MOTION_PEER_RANGE,
   PACKAGE_MANAGERS,
   packageInstallCommand,
+  componentExtraPackages,
   fullNpmInstallCommand,
   peerInstallCommand,
   motionPeerSpec,

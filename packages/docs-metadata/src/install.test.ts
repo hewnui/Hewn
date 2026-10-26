@@ -44,4 +44,14 @@ describe("install commands", () => {
       'pnpm add react react-dom react-aria-components "motion@^12.42.2"',
     );
   });
+
+  it("adds @internationalized/date on the DateRangePicker install tab", () => {
+    if (!PACKAGES_PUBLISHED) return;
+    expect(packageInstallCommand("pnpm", { componentName: "date-range-picker" })).toBe(
+      "pnpm add @hewnui/ui @hewnui/themes @internationalized/date",
+    );
+    expect(packageInstallCommand("pnpm", { componentName: "button" })).toBe(
+      "pnpm add @hewnui/ui @hewnui/themes",
+    );
+  });
 });
