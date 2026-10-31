@@ -1,7 +1,7 @@
 import { Providers } from "@/components/providers";
 import { appearanceScript } from "@/lib/appearance-script";
 import { isIndexableDeployment } from "@/lib/deployment-indexing";
-import { siteDescription, siteName, siteUrl } from "@/lib/site";
+import { siteDescription, siteName, siteTitle, siteUrl } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -45,7 +45,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: siteName,
+    default: siteTitle,
     template: `%s · ${siteName}`,
   },
   description: siteDescription,

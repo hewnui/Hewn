@@ -12,8 +12,11 @@ import {
   getConfiguredPriceDisplay,
 } from "@/lib/checkout";
 import { getProMode } from "@/lib/pro/mode";
+import { proOgCopy } from "@/lib/og/pro-og-copy";
 import { siteName } from "@/lib/site";
 import type { Metadata } from "next";
+
+const proShare = proOgCopy();
 
 export const metadata: Metadata = {
   title: "Pro",
@@ -22,13 +25,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName,
-    title: `${proCopy.brand} · ${siteName}`,
+    title: `${proShare.brand} · Waitlist`,
     description: proCopy.support,
     url: "/pro",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${proCopy.brand} · ${siteName}`,
+    title: `${proShare.brand} · Waitlist`,
     description: proCopy.support,
   },
 };
