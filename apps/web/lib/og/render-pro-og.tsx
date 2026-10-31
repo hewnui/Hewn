@@ -1,20 +1,23 @@
 import { ogFonts } from "@/lib/og/fonts";
 import { ogPalette } from "@/lib/og/palette";
+import { proOgCopy } from "@/lib/og/pro-og-copy";
 import { OgShell } from "@/lib/og/shell";
 import { ogSize } from "@/lib/og/size";
-import { siteName } from "@/lib/site";
 import { ImageResponse } from "next/og";
 
 export function renderProOgImage() {
+  const copy = proOgCopy();
   return new ImageResponse(
     (
       <OgShell
-        headerMeta="Pro · Waitlist"
+        headerMeta="Pro · Coming soon"
         footer={
           <div
             style={{
               display: "flex",
-              gap: 14,
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
               fontFamily: "IBM Plex Mono",
               fontSize: 20,
               fontWeight: 500,
@@ -23,11 +26,8 @@ export function renderProOgImage() {
               textTransform: "uppercase",
             }}
           >
-            <span>Blocks + pages</span>
-            <span>·</span>
-            <span>Static previews</span>
-            <span>·</span>
-            <span>Join the waitlist</span>
+            <span>{copy.footerLeft}</span>
+            <span>{copy.footerRight}</span>
           </div>
         }
       >
@@ -40,19 +40,19 @@ export function renderProOgImage() {
             marginBottom: 12,
           }}
         >
-          Hewn Pro
+          {copy.brand}
         </span>
         <span
           style={{
             fontFamily: "IBM Plex Sans",
-            fontSize: 56,
+            fontSize: 52,
             fontWeight: 600,
             lineHeight: 1.08,
             letterSpacing: -1.4,
             maxWidth: 920,
           }}
         >
-          Assembled product UI, ready when you are.
+          {copy.headline}
         </span>
         <span
           style={{
@@ -65,8 +65,7 @@ export function renderProOgImage() {
             marginTop: 8,
           }}
         >
-          Static previews of Pro blocks. No prices on this card — join the
-          waitlist for early access.
+          {copy.support}
         </span>
       </OgShell>
     ),
@@ -76,5 +75,3 @@ export function renderProOgImage() {
     },
   );
 }
-
-export const proOgAlt = `${siteName} Pro — join the waitlist`;

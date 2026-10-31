@@ -29,5 +29,9 @@ export const siteHost = new URL(siteUrl).host;
 
 export const siteName = "Hewn UI";
 
+/** Homepage document + OG/Twitter title (≤60 chars). Other pages use the `%s · Hewn UI` template. */
+export const siteTitle =
+  "Hewn UI: Accessible React Aria, Tailwind v4 & Motion";
+
 export const siteDescription =
   "Accessible React components built on React Aria, Tailwind v4 and Motion — curated themes, tinted glass, and accessibility that ships with the control.";

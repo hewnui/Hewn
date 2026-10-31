@@ -18,7 +18,7 @@ import { HomeProduct } from "@/components/home/home-product";
 import { HomeProTeaser } from "@/components/home/home-pro-teaser";
 import { HomeStates } from "@/components/home/home-states";
 import { HomeStudio } from "@/components/home/home-studio";
-import { siteDescription, siteName } from "@/lib/site";
+import { siteDescription, siteName, siteTitle } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,13 +26,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName,
-    title: siteName,
+    title: siteTitle,
     description: siteDescription,
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: siteName,
+    title: siteTitle,
     description: siteDescription,
   },
 };
